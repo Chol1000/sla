@@ -41,7 +41,7 @@ const AlumniForm = () => {
     formDataToSend.append('order', '0');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/alumni/', {
+      const response = await fetch('https://sla.pythonanywhere.com/api/alumni/', {
         method: 'POST',
         body: formDataToSend
       });
@@ -239,11 +239,11 @@ const StudentLife = () => {
 
   const getMediaUrl = (url) => {
     if (!url) return '';
-    return url.startsWith('http') ? url : `http://127.0.0.1:8000${url}`;
+    return url.startsWith('http') ? url : `https://sla.pythonanywhere.com${url}`;
   };
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/alumni/')
+    fetch('https://sla.pythonanywhere.com/api/alumni/')
       .then(res => res.json())
       .then(data => {
         const formattedData = data.results.map(alumni => ({

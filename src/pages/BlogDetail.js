@@ -8,7 +8,7 @@ const BlogDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/blog/posts/${id}`)
+    fetch(`https://sla.pythonanywhere.com/api/blog/posts/${id}`)
       .then(res => res.json())
       .then(data => {
         setPost(data);
@@ -28,11 +28,11 @@ const BlogDetail = () => {
   const getMediaUrl = (post) => {
     if (post.image) {
       if (post.image.startsWith('http')) return post.image;
-      return `http://127.0.0.1:8000${post.image}`;
+      return `https://sla.pythonanywhere.com${post.image}`;
     }
     if (post.video) {
       if (post.video.startsWith('http')) return post.video;
-      return `http://127.0.0.1:8000${post.video}`;
+      return `https://sla.pythonanywhere.com${post.video}`;
     }
     if (post.video_url) return post.video_url;
     return 'https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';

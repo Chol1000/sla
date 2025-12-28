@@ -20,7 +20,7 @@ const Home = () => {
     }, 100);
     
     // Fetch blog posts
-    fetch('http://127.0.0.1:8000/api/blog/posts/')
+    fetch('https://sla.pythonanywhere.com/api/blog/posts/')
       .then(res => res.json())
       .then(data => {
         setBlogPosts(data.results || data);
@@ -32,7 +32,7 @@ const Home = () => {
       });
     
     // Fetch campus tour
-    fetch('http://127.0.0.1:8000/api/campus/tours/')
+    fetch('https://sla.pythonanywhere.com/api/campus/tours/')
       .then(res => res.json())
       .then(data => {
         const tours = data.results || data;
@@ -41,7 +41,7 @@ const Home = () => {
       .catch(err => console.error('Error fetching campus tour:', err));
     
     // Fetch hero section
-    fetch('http://127.0.0.1:8000/api/hero/sections/')
+    fetch('https://sla.pythonanywhere.com/api/hero/sections/')
       .then(res => res.json())
       .then(data => {
         const sections = data.results || data;
@@ -50,7 +50,7 @@ const Home = () => {
       .catch(err => console.error('Error fetching hero section:', err));
     
     // Fetch registration status
-    fetch('http://127.0.0.1:8000/api/admissions/registration-status/')
+    fetch('https://sla.pythonanywhere.com/api/admissions/registration-status/')
       .then(res => res.json())
       .then(data => {
         const status = data.results ? data.results[0] : (Array.isArray(data) ? data[0] : data);
@@ -84,11 +84,11 @@ const Home = () => {
     if (post.image) {
       // Check if it's already a full URL
       if (post.image.startsWith('http')) return post.image;
-      return `http://127.0.0.1:8000${post.image}`;
+      return `https://sla.pythonanywhere.com${post.image}`;
     }
     if (post.video) {
       if (post.video.startsWith('http')) return post.video;
-      return `http://127.0.0.1:8000${post.video}`;
+      return `https://sla.pythonanywhere.com${post.video}`;
     }
     if (post.video_url) return post.video_url;
     return 'https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
@@ -119,7 +119,7 @@ const Home = () => {
               )
             ) : heroSection.video ? (
               <video autoPlay muted loop playsInline>
-                <source src={heroSection.video.startsWith('http') ? heroSection.video : `http://127.0.0.1:8000${heroSection.video}`} type="video/mp4" />
+                <source src={heroSection.video.startsWith('http') ? heroSection.video : `https://sla.pythonanywhere.com${heroSection.video}`} type="video/mp4" />
               </video>
             ) : heroSection.images && heroSection.images.length > 0 ? (
               heroSection.images.map((img, index) => (
@@ -1175,7 +1175,7 @@ const Home = () => {
                   ></iframe>
                 ) : (
                   <video controls style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}>
-                    <source src={`http://127.0.0.1:8000${campusTour.video}`} />
+                    <source src={`https://sla.pythonanywhere.com${campusTour.video}`} />
                   </video>
                 )}
               </div>

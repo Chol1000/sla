@@ -5,7 +5,7 @@ const StaffCard = ({ id, image, name, position, shortDesc, fullDesc, linkedin, t
   const getMediaUrl = (url) => {
     if (!url) return 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400';
     if (url.startsWith('http')) return url;
-    return `http://127.0.0.1:8000${url}`;
+    return `https://sla.pythonanywhere.com${url}`;
   };
 
   return (
@@ -54,7 +54,7 @@ const About = () => {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/staff/members/')
+    fetch('https://sla.pythonanywhere.com/api/staff/members/')
       .then(res => res.json())
       .then(data => {
         const staff = data.results || data;

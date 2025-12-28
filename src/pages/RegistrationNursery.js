@@ -17,7 +17,7 @@ const RegistrationNursery = () => {
   const [isClosed, setIsClosed] = useState(false);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/admissions/registration-status/')
+    fetch('https://sla.pythonanywhere.com/api/admissions/registration-status/')
       .then(res => res.json())
       .then(data => {
         const status = data.results ? data.results[0] : (Array.isArray(data) ? data[0] : data);
@@ -60,7 +60,7 @@ const RegistrationNursery = () => {
     });
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/admissions/nursery/', {
+      const response = await fetch('https://sla.pythonanywhere.com/api/admissions/nursery/', {
         method: 'POST',
         body: submitData
       });

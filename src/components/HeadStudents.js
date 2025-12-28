@@ -17,11 +17,11 @@ const HeadStudents = () => {
 
   const getMediaUrl = (url) => {
     if (!url) return '';
-    return url.startsWith('http') ? url : `http://127.0.0.1:8000${url}`;
+    return url.startsWith('http') ? url : `https://sla.pythonanywhere.com${url}`;
   };
 
   React.useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/leadership/')
+    fetch('https://sla.pythonanywhere.com/api/leadership/')
       .then(res => res.json())
       .then(data => {
         const groupedByYear = {};

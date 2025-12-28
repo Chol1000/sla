@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
@@ -30,8 +30,18 @@ def serve_react(request):
         return HttpResponse('<h1>St. Lawrence Academy</h1><p>React app not built yet. Please build the React app first.</p>')
 
 urlpatterns = [
-    path('', serve_react, name='home'),
     path('admin/', admin.site.urls),
+    path('api/blog/', include('blog.urls')),
+    path('api/campus/', include('campus.urls')),
+    path('api/hero/', include('hero.urls')),
+    path('api/staff/', include('staff.urls')),
+    path('api/alumni/', include('alumni.urls')),
+    path('api/leadership/', include('leadership.urls')),
+    path('api/admissions/', include('admissions.urls')),
+    path('api/contact/', include('contact.urls')),
+    # Catch all other routes and serve React app
+    re_path(r'^.*$', serve_react, name='react_app'),
+]
     path('api/blog/', include('blog.urls')),
     path('api/campus/', include('campus.urls')),
     path('api/hero/', include('hero.urls')),
