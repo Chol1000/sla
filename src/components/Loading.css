@@ -1,0 +1,89 @@
+.loading-overlay {
+  min-height: calc(100vh - 80px);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+.loading-overlay ~ .header {
+  background-color: var(--primary-white);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.loading-overlay ~ .header .school-name {
+  color: var(--primary-red);
+}
+
+.loading-overlay ~ .header .nav-link {
+  color: var(--primary-black);
+}
+
+.loading-overlay ~ .header .search-btn,
+.loading-overlay ~ .header .theme-toggle {
+  color: var(--primary-red);
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f0f0f0;
+  border-top: 4px solid var(--primary-red);
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-content p {
+  color: var(--primary-red);
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+body.dark-theme .loading-overlay {
+  background: #2d3748;
+}
+
+body.dark-theme .loading-logo {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+body.dark-theme .loading-content p {
+  color: #ffffff;
+}
+
+body.dark-theme .loading-spinner {
+  border-color: #4a5568;
+  border-top-color: var(--primary-red);
+}

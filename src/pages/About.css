@@ -1,0 +1,242 @@
+/* About Hero Section */
+.about-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: var(--primary-white);
+}
+
+.about-hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.about-hero-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(126, 26, 25, 0.1) 0%, rgba(44, 10, 10, 0.1) 100%);
+  z-index: 2;
+}
+
+.about-hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 1000px;
+  padding: 0 1rem;
+}
+
+.about-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.about-hero-badge i {
+  margin-right: 0.5rem;
+}
+
+.about-hero-content h1 {
+  font-size: 5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -2px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.about-hero-content p {
+  font-size: 1.5rem;
+  opacity: 0.95;
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .about-hero {
+    min-height: 70vh;
+    padding-top: 80px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 3rem;
+  }
+
+  .about-hero-content p {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero {
+    min-height: 60vh;
+  }
+
+  .about-hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-hero-content p {
+    font-size: 1.05rem;
+  }
+}
+
+/* Responsive styles for About page content */
+@media (max-width: 768px) {
+
+
+
+  /* All grid sections - stack vertically */
+  .foundation-grid,
+  .mission-grid,
+  .vision-grid,
+  .facility-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* History detail - full width text on mobile */
+  .history-detail {
+    padding: 2rem 1rem !important;
+  }
+
+  .history-text {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .history-text p {
+    padding: 0 !important;
+  }
+
+  /* Vision section - text first, then image */
+  .vision-text {
+    order: 0 !important;
+  }
+
+  .vision-image {
+    order: 1 !important;
+  }
+
+  /* Stats section - smaller on mobile */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  .stats-grid > div {
+    padding: 1rem 0.5rem !important;
+  }
+
+  .stats-grid > div > div:first-child {
+    font-size: 1.8rem !important;
+  }
+
+  .stats-grid > div > div:last-child {
+    font-size: 0.75rem !important;
+  }
+
+  /* Sports Facilities and Auditorium - text first, then image on mobile */
+  .facility-text-right {
+    order: 0 !important;
+  }
+
+  .facility-image-right {
+    order: 1 !important;
+  }
+
+  /* Motivational quote - smaller font on mobile */
+  .motivational-quote {
+    font-size: 1.3rem !important;
+    padding: 0 1rem;
+  }
+
+  /* Organizational Hierarchy - responsive */
+  .org-hierarchy h3 {
+    font-size: 1.5rem !important;
+  }
+
+  /* Hide connection lines on mobile */
+  .org-hierarchy [style*="position: 'absolute'"] {
+    display: none !important;
+  }
+
+  /* Section heads - stack vertically */
+  .section-heads {
+    flex-direction: column !important;
+    gap: 2rem !important;
+    align-items: center !important;
+  }
+
+  .section-heads > div {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Department staff - single column */
+  .department-staff {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    margin-top: 2rem !important;
+  }
+
+  /* PTA heading - left align on mobile */
+  .pta-heading {
+    text-align: left !important;
+    font-size: 1.4rem !important;
+  }
+
+  /* Staff cards - add white border on mobile */
+  .section [style*="background: 'var(--primary-white')"] {
+    border: 1px solid white !important;
+  }
+
+  /* Support page - stack grids on mobile */
+  .support-grid,
+  .donation-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Ticker - faster on mobile */
+  .ticker-scroll {
+    animation: scroll 15s linear infinite !important;
+  }
+
+  /* Blog detail - full width on mobile */
+  .blog-detail-image,
+  .blog-detail-content {
+    width: 100% !important;
+  }
+
+  .blog-detail-title {
+    font-size: 1.8rem !important;
+  }
+}

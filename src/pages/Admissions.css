@@ -1,0 +1,130 @@
+/* Admissions Hero Section */
+.admissions-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: var(--primary-white);
+}
+
+.admissions-hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.admissions-hero-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admissions-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(126, 26, 25, 0.1) 0%, rgba(44, 10, 10, 0.1) 100%);
+  z-index: 2;
+}
+
+.admissions-hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 1000px;
+  padding: 0 1rem;
+}
+
+.admissions-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.admissions-hero-badge i {
+  margin-right: 0.5rem;
+}
+
+.admissions-hero-content h1 {
+  font-size: 5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -2px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.admissions-hero-content p {
+  font-size: 1.5rem;
+  opacity: 0.95;
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .admissions-hero {
+    min-height: 70vh;
+    padding-top: 80px;
+  }
+
+  .admissions-hero-content h1 {
+    font-size: 3rem;
+  }
+
+  .admissions-hero-content p {
+    font-size: 1.2rem;
+  }
+
+
+}
+
+@media (max-width: 900px) {
+  .admissions-page section[style*="padding: 100px 0"] > div > div > div[style*="grid-template-columns: 1fr 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .admissions-page section[style*="padding: 100px 0"] > div > div > div > div[style*="order"] {
+    order: 0 !important;
+  }
+
+  .school-images-mobile {
+    display: block !important;
+  }
+
+  .admissions-page section[style*="padding: 100px 0"] > div > div > div > div[style*="position: relative"]:not(.school-content) {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .admissions-hero {
+    min-height: 60vh;
+  }
+
+  .admissions-hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .admissions-hero-content p {
+    font-size: 1.05rem;
+  }
+}

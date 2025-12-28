@@ -1,0 +1,25 @@
+@media (max-width: 900px) {
+  /* Make year buttons smaller on mobile */
+  .year-button {
+    padding: 8px 15px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Ensure pagination arrows stay circular */
+  .pagination-arrow {
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  /* Keep student leadership images at fixed size */
+  #student-government img {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  /* Keep carousel images at proper size on mobile */
+  #student-government img[style*="height: 500px"] {
+    width: 100% !important;
+    height: 400px !important;
+  }
+}
