@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Apply Python 3.14 compatibility patch
 import school_backend.patch
@@ -86,8 +87,6 @@ WSGI_APPLICATION = 'school_backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-import os
 
 if 'PYTHONANYWHERE_DOMAIN' in os.environ:
     # Production settings for PythonAnywhere
