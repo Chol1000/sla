@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './StudentLife.css';
 import HeadStudents from '../components/HeadStudents';
 import AlumniSection from '../components/AlumniSection';
@@ -925,13 +925,13 @@ const StudentCouncilCarousel = () => {
     'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800'
   ];
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % images.length);
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  const nextSlide = useCallback(() => setCurrentIndex((prev) => (prev + 1) % images.length), [images.length]);
+  const prevSlide = useCallback(() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length), [images.length]);
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [nextSlide]);
 
   return (
     <div style={{marginBottom: '6rem'}}>
@@ -976,13 +976,13 @@ const PrefectSystemCarousel = () => {
     'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800'
   ];
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % images.length);
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  const nextSlide = useCallback(() => setCurrentIndex((prev) => (prev + 1) % images.length), [images.length]);
+  const prevSlide = useCallback(() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length), [images.length]);
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [nextSlide]);
 
   return (
     <div>

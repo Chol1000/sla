@@ -323,7 +323,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 
   const handleResultClick = (url) => {
     if (url.includes('#')) {
-      const [path, hash] = url.split('#');
+      const [, hash] = url.split('#');
       window.location.href = url;
       setTimeout(() => {
         const element = document.getElementById(hash);
