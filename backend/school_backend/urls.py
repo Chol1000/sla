@@ -18,8 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import render
+from django.http import HttpResponse
+import os
+
+def serve_react(request):
+    try:
+        with open(os.path.join(settings.BASE_DIR, 'build', 'index.html')) as f:
+            return HttpResponse(f.read())
+    except FileNotFoundError:
+        return HttpResponse('<h1>St. Lawrence Academy</h1><p>React app not built yet. Please build the React app first.</p>')
 
 urlpatterns = [
+    path('', serve_react, name='home'),
     path('admin/', admin.site.urls),
     path('api/blog/', include('blog.urls')),
     path('api/campus/', include('campus.urls')),
