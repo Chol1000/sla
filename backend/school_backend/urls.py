@@ -26,11 +26,18 @@ from django.views.static import serve
 import os
 
 def serve_react(request):
-    try:
-        with open(os.path.join(settings.BASE_DIR, 'build', 'index.html')) as f:
-            return HttpResponse(f.read())
-    except FileNotFoundError:
-        return HttpResponse('<h1>St. Lawrence Academy</h1><p>React app not built yet. Please build the React app first.</p>')
+    # build/ sits one level above backend/ in the repo root
+    possible_paths = [
+        os.path.join(settings.BASE_DIR, 'build', 'index.html'),           # backend/build/
+        os.path.join(settings.BASE_DIR, '..', 'build', 'index.html'),     # repo_root/build/
+    ]
+    for path in possible_paths:
+        try:
+            with open(path) as f:
+                return HttpResponse(f.read())
+        except FileNotFoundError:
+            continue
+    return HttpResponse('<h1>St. Lawrence Academy</h1><p>React app not built yet.</p>')
 
 ADMIN_URL = getattr(django_settings, 'ADMIN_URL', 'sla-management/')
 
