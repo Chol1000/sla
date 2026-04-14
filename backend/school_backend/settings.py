@@ -112,23 +112,20 @@ WSGI_APPLICATION = 'school_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if os.environ.get('DB_PASSWORD'):
-    # MySQL — paid PythonAnywhere plan
-    _db_name = os.environ.get('DB_NAME', 'stlawrenceacademy$default')
-    _db_user = os.environ.get('DB_USER', 'stlawrenceacademy')
-    _db_host = os.environ.get('DB_HOST', f"{_db_user}.mysql.pythonanywhere-services.com")
+if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+    # Production — MySQL on PythonAnywhere paid plan
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': _db_name,
-            'USER': _db_user,
+            'NAME': os.environ.get('DB_NAME', 'sla$default'),
+            'USER': os.environ.get('DB_USER', 'sla'),
             'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': _db_host,
+            'HOST': os.environ.get('DB_HOST', 'sla.mysql.pythonanywhere-services.com'),
             'PORT': '3306',
         }
     }
 else:
-    # SQLite — local dev or free PythonAnywhere
+    # Local development — SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
