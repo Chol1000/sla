@@ -20,13 +20,14 @@ backend/media/
 *.log
 
 # Environment
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+backend/.env
 
-# Build
-build/
+# Build — build/ is committed so PythonAnywhere can serve it directly
 dist/
 
 # IDE
@@ -43,3 +44,6 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.zip
+backend/backend_env/
+backend_env/

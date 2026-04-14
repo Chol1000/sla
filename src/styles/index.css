@@ -7,164 +7,6 @@
   --dark-gray: #343a40;
 }
 
-/* Dark Theme Variables */
-body.dark-theme {
-  --primary-white: #2d3748;
-  --primary-black: #ffffff;
-  --medium-gray: #ffffff;
-  --light-gray: #4a5568;
-  --dark-gray: #ffffff;
-  background-color: #2d3748;
-  color: #ffffff;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body.dark-theme * {
-  color: #ffffff !important;
-}
-
-body.dark-theme .theme-toggle,
-body.dark-theme .search-btn {
-  color: #ffffff !important;
-}
-
-body.dark-theme .theme-toggle:hover,
-body.dark-theme .search-btn:hover {
-  color: #ffffff !important;
-}
-
-body.dark-theme .menu-toggle span {
-  background-color: #ffffff !important;
-}
-
-body.dark-theme .mobile-search {
-  color: #ffffff !important;
-}
-
-body.dark-theme .typing-text {
-  color: #ffffff !important;
-}
-
-body.dark-theme .typing-text::before {
-  color: #ffffff !important;
-}
-
-body.dark-theme .header {
-  background-color: rgba(45, 55, 72, 0.95);
-}
-
-body.dark-theme .header-scrolled {
-  background-color: #2d3748;
-  box-shadow: 0 2px 20px rgba(255, 255, 255, 0.1);
-}
-
-body.dark-theme .school-name {
-  color: #ffffff !important;
-}
-
-body.dark-theme .header-scrolled .school-name {
-  color: #ffffff !important;
-}
-
-body.dark-theme .header-scrolled .search-btn,
-body.dark-theme .header-scrolled .theme-toggle {
-  color: #ffffff !important;
-}
-
-body.dark-theme .header-scrolled .search-btn:hover,
-body.dark-theme .header-scrolled .theme-toggle:hover {
-  color: #ffffff !important;
-}
-
-body.dark-theme .nav {
-  background: #2d3748 !important;
-}
-
-body.dark-theme .dropdown-menu {
-  background: rgba(74, 85, 104, 0.98) !important;
-  border: 1px solid rgba(113, 128, 150, 0.3) !important;
-  backdrop-filter: blur(20px) !important;
-}
-
-body.dark-theme .header .dropdown-menu {
-  background: rgba(74, 85, 104, 0.95) !important;
-}
-
-body.dark-theme .dropdown-item {
-  color: #ffffff !important;
-}
-
-body.dark-theme .dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-  border-left-color: #ffffff !important;
-}
-
-body.dark-theme .nav-dropdown .dropdown-menu {
-  background: #4a5568 !important;
-}
-
-body.dark-theme .nav-dropdown .dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.08) !important;
-}
-
-body.dark-theme .footer {
-  background: #2d3748 !important;
-  color: #ffffff !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-body.dark-theme .footer-description,
-body.dark-theme .footer-section ul li a,
-body.dark-theme .contact-item,
-body.dark-theme .footer-bottom p,
-body.dark-theme .footer-links a,
-body.dark-theme .designer-credit {
-  color: rgba(255, 255, 255, 0.85) !important;
-}
-
-body.dark-theme .footer-section h4 {
-  color: #ffffff !important;
-}
-
-body.dark-theme .footer-bottom {
-  background: #2d3748 !important;
-  border-top-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-body.dark-theme .social-icons a {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-}
-
-body.dark-theme .social-icons a:hover {
-  background: var(--primary-red) !important;
-  color: #ffffff !important;
-}
-
-body.dark-theme .search-modal {
-  background: #4a5568;
-  color: #ffffff;
-}
-
-body.dark-theme .search-input-container input {
-  background: #2d3748;
-  color: #ffffff;
-  border-color: #718096;
-}
-
-body.dark-theme .search-result-item:hover {
-  background-color: #718096;
-}
-
-body.dark-theme .no-results {
-  color: #cbd5e0;
-}
-
-body.dark-theme .results-header {
-  background: #2d3748;
-  color: #ffffff;
-}
 
 * {
   margin: 0;
@@ -178,10 +20,17 @@ body {
   color: var(--primary-black);
   background-color: var(--primary-white);
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
 }
 
 main {
   min-height: 100vh;
+  animation: pageFadeIn 0.28s ease both;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -191,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -253,6 +102,18 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 8px 25px rgba(126, 26, 25, 0.3);
 }
 
+.btn-outline-white {
+  background-color: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.btn-outline-white:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: white;
+  transform: translateY(-3px);
+}
+
 .btn-large {
   padding: 18px 36px;
   font-size: 18px;
@@ -277,4 +138,122 @@ h1, h2, h3, h4, h5, h6 {
 
 .mb-6 {
   margin-bottom: 3rem;
+}
+
+/* ═══════════════════════════════════════════
+   GRAPHIC BACKGROUND UTILITIES
+   Using school colors: red #7e1a19 / navy #1e3a8a
+   ═══════════════════════════════════════════ */
+
+/* Dot grid pattern — subtle red dots on white */
+.bg-dots-red {
+  background-color: #fff;
+  background-image: radial-gradient(circle, rgba(126, 26, 25, 0.12) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+
+/* Dot grid pattern — subtle navy dots on white */
+.bg-dots-navy {
+  background-color: #fff;
+  background-image: radial-gradient(circle, rgba(30, 58, 138, 0.1) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+
+/* Diagonal stripe — very faint red on light gray */
+.bg-stripes-red {
+  background-color: #f8f9fa;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(126, 26, 25, 0.04) 0px,
+    rgba(126, 26, 25, 0.04) 2px,
+    transparent 2px,
+    transparent 18px
+  );
+}
+
+/* Diagonal stripe — faint navy on white */
+.bg-stripes-navy {
+  background-color: #ffffff;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(30, 58, 138, 0.04) 0px,
+    rgba(30, 58, 138, 0.04) 2px,
+    transparent 2px,
+    transparent 18px
+  );
+}
+
+/* Cross/plus grid — on white */
+.bg-cross-red {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(rgba(126, 26, 25, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 26, 25, 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Deep red solid with dot overlay — for dark CTA sections */
+.bg-red-pattern {
+  background-color: #7e1a19;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Deep navy solid with dot overlay — for dark sections */
+.bg-navy-pattern {
+  background-color: #1e3a8a;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Light red tint with noise-like cross pattern */
+.bg-light-red {
+  background-color: #fdf5f5;
+  background-image:
+    linear-gradient(rgba(126, 26, 25, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 26, 25, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Shared photo placeholder (Faculty, PTA, Alumni, Leadership) ── */
+.ph-initials {
+  font-size: 2rem;
+  font-weight: 900;
+  font-family: Georgia, serif;
+  color: rgba(126,26,25,0.35);
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.ph-initials--lg {
+  font-size: 3.5rem;
+}
+
+.ph-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(126,26,25,0.28);
+  line-height: 1;
+  margin-top: 0.3rem;
+}
+
+/* ── Scroll reveal utility ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Light navy tint */
+.bg-light-navy {
+  background-color: #f0f4ff;
+  background-image: radial-gradient(circle, rgba(30, 58, 138, 0.08) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
 }

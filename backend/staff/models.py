@@ -2,7 +2,8 @@ from django.db import models
 
 class Staff(models.Model):
     SECTION_CHOICES = [
-        ('all', 'All Sections'),
+        ('director', 'Leadership'),
+        ('admin', 'Admin'),
         ('nursery', 'Nursery School'),
         ('primary', 'Primary School'),
         ('secondary', 'Secondary School'),

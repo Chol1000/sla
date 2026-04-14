@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './HeadStudents.css';
+import API_URL from '../utils/api';
 
 const HeadStudents = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -17,11 +18,11 @@ const HeadStudents = () => {
 
   const getMediaUrl = (url) => {
     if (!url) return '';
-    return url.startsWith('http') ? url : `https://sla.pythonanywhere.com${url}`;
+    return url.startsWith('http') ? url : `${API_URL}${url}`;
   };
 
   React.useEffect(() => {
-    fetch('https://sla.pythonanywhere.com/api/leadership/')
+    fetch(`${API_URL}/api/leadership/`)
       .then(res => res.json())
       .then(data => {
         const groupedByYear = {};

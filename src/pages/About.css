@@ -1,242 +1,554 @@
-/* About Hero Section */
-.about-hero {
+/* ===== ABOUT PAGE ===== */
+
+.about-page {
+  background: #f9f5f0;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+/* ── Hero ── */
+.about-hero {
   position: relative;
+  height: 65vh;
+  min-height: 480px;
+  max-height: 700px;
+  display: flex;
+  align-items: flex-end;
   overflow: hidden;
-  color: var(--primary-white);
 }
 
-.about-hero-video {
+.about-hero-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  overflow: hidden;
+  inset: 0;
 }
 
-.about-hero-video video {
+.about-hero-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 35%;
+  display: block;
 }
 
 .about-hero-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(126, 26, 25, 0.1) 0%, rgba(44, 10, 10, 0.1) 100%);
-  z-index: 2;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.5) 35%,
+    rgba(0,0,0,0.2) 65%,
+    rgba(0,0,0,0.08) 100%
+  );
 }
 
 .about-hero-content {
   position: relative;
-  z-index: 3;
-  text-align: center;
-  max-width: 1000px;
-  padding: 0 1rem;
+  z-index: 2;
+  padding: 0 0 5rem;
+  width: 100%;
 }
 
-.about-hero-badge {
-  display: inline-flex;
+.about-hero-inner {
+  max-width: 760px;
+}
+
+.about-hero-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c8a96e;
+  margin-bottom: 1rem;
+}
+
+.about-hero-title {
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin: 0 0 1.2rem;
+}
+
+.about-hero-title span {
+  color: #c8a96e;
+}
+
+.about-hero-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.75;
+  max-width: 580px;
+  margin: 0;
+}
+
+/* ── Mobile Band ── */
+.about-mobile-band {
+  display: none;
+  background: #7e1a19;
+  padding: 1.1rem 0;
+  text-align: center;
+}
+
+.about-mobile-band-heading {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: white;
+  margin: 0;
+}
+
+/* ── Intro ── */
+.about-intro {
+  background: white;
+  border-bottom: 3px solid #c8a96e;
+  padding: 4.5rem 0;
+}
+
+.about-intro-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-section-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c8a96e;
+  margin-bottom: 0.85rem;
+}
+
+.about-section-heading {
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  font-weight: 800;
+  color: #111;
+  line-height: 1.2;
+  margin: 0 0 1.2rem;
+}
+
+.about-section-sub {
+  font-size: 0.98rem;
+  color: #555;
+  line-height: 1.85;
+  margin: 0;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ── Slogan Band ── */
+.about-slogan-band {
+  background: #7e1a19;
+  padding: 3.5rem 0;
+  text-align: center;
+}
+
+.about-slogan-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(200,169,110,0.85);
+  margin-bottom: 0.85rem;
+}
+
+.about-slogan-text {
+  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+  font-weight: 800;
+  color: white;
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* ── Mission / Vision ── */
+.about-mv {
+  padding: 5rem 0;
+  background: #f9f5f0;
+}
+
+.about-mv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.about-mv-card {
+  background: white;
+  border: 1px solid #e8e2d9;
+  border-top: 4px solid #c8a96e;
+  padding: 2.8rem 2.5rem;
+}
+
+.about-mv-card-eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c8a96e;
+  margin-bottom: 0.75rem;
+}
+
+.about-mv-card h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 1.2rem;
+}
+
+.about-mv-card p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.85;
+  margin: 0;
+}
+
+/* ── Values ── */
+.about-values {
+  background: #f9f5f0;
+  padding: 5rem 0;
+  border-top: 1px solid #e8e2d9;
+}
+
+.about-values-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.about-value-card {
+  background: white;
+  border: 1px solid #e8e2d9;
+  border-top: 4px solid #c8a96e;
+  padding: 2.2rem 2rem;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.about-value-card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+}
+
+.about-value-initial {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #c8a96e;
+  display: flex;
   align-items: center;
-  padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #c8a96e;
+  margin-bottom: 1.2rem;
+}
+
+.about-value-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 0.6rem;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(10px);
 }
 
-.about-hero-badge i {
-  margin-right: 0.5rem;
+.about-value-card p {
+  font-size: 0.87rem;
+  color: #555;
+  line-height: 1.75;
+  margin: 0;
 }
 
-.about-hero-content h1 {
-  font-size: 5rem;
+/* ── Motto ── */
+.about-motto {
+  background: white;
+  border-bottom: 1px solid #e8e2d9;
+  padding: 4.5rem 0;
+}
+
+.about-motto-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-motto-quote {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
   font-weight: 800;
-  margin-bottom: 1.5rem;
-  letter-spacing: -2px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: #7e1a19;
+  line-height: 1.3;
+  margin: 0 0 1.5rem;
+  padding: 0 0 1.5rem;
+  border-bottom: 2px solid #f0ece6;
 }
 
-.about-hero-content p {
-  font-size: 1.5rem;
-  opacity: 0.95;
-  line-height: 1.8;
-  font-weight: 300;
+.about-motto-desc {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.85;
+  margin: 0;
+}
+
+
+/* ── Anthem ── */
+.about-anthem {
+  padding: 5rem 0;
+  background: white;
+  border-bottom: 1px solid #e8e2d9;
+}
+
+.about-anthem-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-anthem-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.about-anthem-video-wrap {
+  background: #111;
+  border-top: 3px solid #c8a96e;
+}
+
+.about-anthem-video-wrap video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+/* ── History ── */
+.about-history {
+  padding: 5rem 0;
+  background: #f9f5f0;
+}
+
+.about-history-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.about-history-text-card {
+  background: white;
+  border: 1px solid #e8e2d9;
+  border-left: 4px solid #c8a96e;
+  padding: 2.8rem 2.5rem;
+}
+
+.about-history-year {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #7e1a19;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.about-history-text-card h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 1rem;
+}
+
+.about-history-text-card p {
+  font-size: 0.93rem;
+  color: #555;
+  line-height: 1.85;
+  margin: 0;
+}
+
+.about-history-img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #e8e2d9;
+}
+
+.about-history-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.about-history-body-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #e8e2d9;
+}
+
+.about-history-body-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about-history-body-text p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.85;
+  margin: 0;
+}
+
+/* ── Stats Band ── */
+.about-stats-band {
+  background: #2c2c2c;
+  padding: 3rem 0;
+  border-top: 3px solid #c8a96e;
+  border-bottom: 3px solid #c8a96e;
+}
+
+.about-stats-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 3rem;
+  text-align: center;
+}
+
+.about-stat-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #c8a96e;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.about-stat-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.about-stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.15);
+}
+
+/* ── Campus ── */
+.about-campus {
+  padding: 5rem 0;
+  background: white;
+  border-top: 1px solid #e8e2d9;
+}
+
+.about-campus-section {
+  margin-bottom: 4rem;
+}
+
+.about-campus-section:last-child {
   margin-bottom: 0;
 }
 
+.about-campus-section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-campus-section-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(200,169,110,0.5), transparent);
+}
+
+.about-campus-section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #7e1a19;
+  white-space: nowrap;
+}
+
+.about-campus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.about-campus-img-wrap {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f0e8dc;
+}
+
+.about-campus-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+
+.about-campus-img-wrap:hover img {
+  transform: scale(1.04);
+}
+
+/* ── Responsive ── */
 @media (max-width: 900px) {
+  .about-mv-grid { grid-template-columns: 1fr; }
+  .about-values-grid { grid-template-columns: 1fr 1fr; }
+  .about-history-split { grid-template-columns: 1fr; }
+  .about-history-body { grid-template-columns: 1fr; }
+  .about-history-img { height: 260px; }
+  .about-campus-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
   .about-hero {
-    min-height: 70vh;
-    padding-top: 80px;
+    height: 72vh;
+    min-height: 460px;
   }
 
-  .about-hero-content h1 {
-    font-size: 3rem;
-  }
+  .about-hero-content { padding-bottom: 2.5rem; }
+  .about-hero-title { display: none; }
+  .about-mobile-band { display: block; }
 
-  .about-hero-content p {
-    font-size: 1.2rem;
-  }
+  .about-values-grid { grid-template-columns: 1fr; }
+  .about-mv-card { padding: 2rem 1.5rem; }
+  .about-anthem-inner { max-width: 100%; }
+  .about-history-img { height: 220px; }
+  .about-campus-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
-  .about-hero {
-    min-height: 60vh;
+  .about-stats-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
-
-  .about-hero-content h1 {
-    font-size: 2.2rem;
-  }
-
-  .about-hero-content p {
-    font-size: 1.05rem;
-  }
-}
-
-/* Responsive styles for About page content */
-@media (max-width: 768px) {
-
-
-
-  /* All grid sections - stack vertically */
-  .foundation-grid,
-  .mission-grid,
-  .vision-grid,
-  .facility-grid {
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
-  }
-
-  /* History detail - full width text on mobile */
-  .history-detail {
-    padding: 2rem 1rem !important;
-  }
-
-  .history-text {
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-
-  .history-text p {
-    padding: 0 !important;
-  }
-
-  /* Vision section - text first, then image */
-  .vision-text {
-    order: 0 !important;
-  }
-
-  .vision-image {
-    order: 1 !important;
-  }
-
-  /* Stats section - smaller on mobile */
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 1rem !important;
-  }
-
-  .stats-grid > div {
-    padding: 1rem 0.5rem !important;
-  }
-
-  .stats-grid > div > div:first-child {
-    font-size: 1.8rem !important;
-  }
-
-  .stats-grid > div > div:last-child {
-    font-size: 0.75rem !important;
-  }
-
-  /* Sports Facilities and Auditorium - text first, then image on mobile */
-  .facility-text-right {
-    order: 0 !important;
-  }
-
-  .facility-image-right {
-    order: 1 !important;
-  }
-
-  /* Motivational quote - smaller font on mobile */
-  .motivational-quote {
-    font-size: 1.3rem !important;
-    padding: 0 1rem;
-  }
-
-  /* Organizational Hierarchy - responsive */
-  .org-hierarchy h3 {
-    font-size: 1.5rem !important;
-  }
-
-  /* Hide connection lines on mobile */
-  .org-hierarchy [style*="position: 'absolute'"] {
-    display: none !important;
-  }
-
-  /* Section heads - stack vertically */
-  .section-heads {
-    flex-direction: column !important;
-    gap: 2rem !important;
-    align-items: center !important;
-  }
-
-  .section-heads > div {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-  }
-
-  /* Department staff - single column */
-  .department-staff {
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
-    margin-top: 2rem !important;
-  }
-
-  /* PTA heading - left align on mobile */
-  .pta-heading {
-    text-align: left !important;
-    font-size: 1.4rem !important;
-  }
-
-  /* Staff cards - add white border on mobile */
-  .section [style*="background: 'var(--primary-white')"] {
-    border: 1px solid white !important;
-  }
-
-  /* Support page - stack grids on mobile */
-  .support-grid,
-  .donation-grid {
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
-  }
-
-  /* Ticker - faster on mobile */
-  .ticker-scroll {
-    animation: scroll 15s linear infinite !important;
-  }
-
-  /* Blog detail - full width on mobile */
-  .blog-detail-image,
-  .blog-detail-content {
-    width: 100% !important;
-  }
-
-  .blog-detail-title {
-    font-size: 1.8rem !important;
+  .about-stat-divider { display: none; }
+  .about-stat {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 }

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RegistrationStatus, NurseryRegistration, PrimaryRegistration, SecondaryRegistration
+from .models import RegistrationStatus, HiringAnnouncement, CampusVisitRequest
 
 @admin.register(RegistrationStatus)
 class RegistrationStatusAdmin(admin.ModelAdmin):
@@ -20,23 +20,50 @@ class RegistrationStatusAdmin(admin.ModelAdmin):
         }),
     )
 
-@admin.register(NurseryRegistration)
-class NurseryRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['student_name', 'class_level', 'term', 'year', 'parent_name', 'phone', 'created_at']
-    list_filter = ['term', 'year', 'class_level', 'gender', 'created_at']
-    search_fields = ['student_name', 'parent_name', 'phone', 'email']
-    readonly_fields = ['created_at']
+@admin.register(CampusVisitRequest)
+class CampusVisitRequestAdmin(admin.ModelAdmin):
+    list_display = ['name', 'phone', 'preferred_date', 'status', 'created_at']
+    list_filter = ['status', 'preferred_date', 'interested_in']
+    search_fields = ['name', 'phone', 'email', 'notes']
+    list_editable = ['status']
+    ordering = ['-created_at']
+    readonly_fields = ['name', 'phone', 'email', 'preferred_date', 'preferred_time',
+                       'number_of_adults', 'interested_in', 'notes', 'created_at']
 
-@admin.register(PrimaryRegistration)
-class PrimaryRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['student_name', 'class_level', 'term', 'year', 'parent_name', 'phone', 'created_at']
-    list_filter = ['term', 'year', 'class_level', 'gender', 'created_at']
-    search_fields = ['student_name', 'parent_name', 'phone', 'email']
-    readonly_fields = ['created_at']
+    fieldsets = (
+        ('Visitor Details', {
+            'fields': ('name', 'phone', 'email', 'created_at')
+        }),
+        ('Visit Preferences', {
+            'fields': ('preferred_date', 'preferred_time', 'number_of_adults', 'interested_in')
+        }),
+        ('Additional Notes', {
+            'fields': ('notes',)
+        }),
+        ('Admin', {
+            'fields': ('status', 'admin_notes')
+        }),
+    )
 
-@admin.register(SecondaryRegistration)
-class SecondaryRegistrationAdmin(admin.ModelAdmin):
-    list_display = ['student_name', 'class_level', 'track', 'term', 'year', 'parent_name', 'phone', 'created_at']
-    list_filter = ['term', 'year', 'class_level', 'track', 'gender', 'created_at']
-    search_fields = ['student_name', 'parent_name', 'phone', 'email']
-    readonly_fields = ['created_at']
+
+@admin.register(HiringAnnouncement)
+class HiringAnnouncementAdmin(admin.ModelAdmin):
+    list_display = ['title', 'is_active', 'deadline', 'created_at']
+    list_filter = ['is_active', 'deadline']
+    search_fields = ['title', 'positions']
+    list_editable = ['is_active']
+    
+    fieldsets = (
+        ('Status', {
+            'fields': ('is_active',)
+        }),
+        ('Announcement Details', {
+            'fields': ('title', 'description', 'positions', 'deadline')
+        }),
+        ('Requirements & Benefits', {
+            'fields': ('requirements', 'benefits')
+        }),
+        ('Contact Information', {
+            'fields': ('application_email', 'location')
+        }),
+    )

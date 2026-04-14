@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.conf import settings as django_settings
+import school_backend.user_admin  # registers custom User admin with email field + welcome email
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.static import serve
 import os
 
 def serve_react(request):
@@ -29,8 +32,10 @@ def serve_react(request):
     except FileNotFoundError:
         return HttpResponse('<h1>St. Lawrence Academy</h1><p>React app not built yet. Please build the React app first.</p>')
 
+ADMIN_URL = getattr(django_settings, 'ADMIN_URL', 'sla-management/')
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(ADMIN_URL, admin.site.urls),
     path('api/blog/', include('blog.urls')),
     path('api/campus/', include('campus.urls')),
     path('api/hero/', include('hero.urls')),
@@ -39,18 +44,21 @@ urlpatterns = [
     path('api/leadership/', include('leadership.urls')),
     path('api/admissions/', include('admissions.urls')),
     path('api/contact/', include('contact.urls')),
-    # Catch all other routes and serve React app
-    re_path(r'^.*$', serve_react, name='react_app'),
-]
-    path('api/blog/', include('blog.urls')),
-    path('api/campus/', include('campus.urls')),
-    path('api/hero/', include('hero.urls')),
-    path('api/staff/', include('staff.urls')),
-    path('api/alumni/', include('alumni.urls')),
-    path('api/leadership/', include('leadership.urls')),
-    path('api/admissions/', include('admissions.urls')),
-    path('api/contact/', include('contact.urls')),
+    path('api/reviews/', include('reviews.urls')),
 ]
 
+# Add static/media file serving
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    # Serve media files in production
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+        re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+    ]
+
+# Catch all other routes and serve React app (MUST be last)
+# Exclude API, admin, media, and static paths
+urlpatterns += [
+    re_path(r'^(?!api/|admin/|media/|static/).*$', serve_react, name='react_app'),
+]

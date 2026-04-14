@@ -1,12 +1,14 @@
 from django.db import models
 
+
 class Alumni(models.Model):
     name = models.CharField(max_length=200)
     graduation_year = models.CharField(max_length=50)
     title = models.CharField(max_length=200)
-    short_desc = models.TextField()
-    full_desc = models.TextField()
-    image = models.ImageField(upload_to='alumni/')
+    short_desc = models.TextField(blank=True)
+    full_desc = models.TextField(blank=True)
+    image = models.ImageField(upload_to='alumni/', blank=True, null=True)
+    email = models.EmailField(blank=True)
     linkedin = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
     facebook = models.URLField(blank=True)

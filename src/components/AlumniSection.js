@@ -44,8 +44,8 @@ const AlumniSection = ({ alumniData, expandedCard, onToggle }) => {
 
 const AlumniCard = ({ id, image, name, year, title, shortDesc, fullDesc, linkedin, twitter, facebook, isExpanded, onToggle }) => {
   return (
-    <div style={{textAlign: 'center', padding: '1.5rem', background: 'var(--primary-white)', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', borderRadius: '5px', transition: 'all 0.3s', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '420px', maxHeight: isExpanded ? 'none' : '420px', overflow: 'hidden'}}>
-      <img src={image} alt={name} style={{width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.8rem', border: '3px solid var(--primary-red)'}} />
+    <div style={{textAlign: 'center', padding: '1.5rem', background: 'var(--card-background)', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', borderRadius: '5px', transition: 'all 0.3s', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '420px', maxHeight: isExpanded ? 'none' : '420px', overflow: 'hidden', border: '1px solid white'}}>
+      <img src={image} alt={name} style={{width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', marginBottom: '0.8rem', border: '2px solid var(--primary-red)'}} />
       
       <div style={{display: 'flex', gap: '12px', justifyContent: 'center', marginBottom: '0.8rem'}}>
         <a href={linkedin} style={{color: 'var(--primary-red)', fontSize: '1.1rem', transition: 'color 0.3s'}}>

@@ -1,16 +1,18 @@
 from django.contrib import admin
 from .models import Alumni
 
+
 @admin.register(Alumni)
 class AlumniAdmin(admin.ModelAdmin):
-    list_display = ['name', 'graduation_year', 'title', 'order', 'is_active']
+    list_display = ['name', 'graduation_year', 'title', 'is_active', 'order', 'created_at']
     list_filter = ['is_active', 'graduation_year']
-    search_fields = ['name', 'title', 'graduation_year']
+    search_fields = ['name', 'title', 'graduation_year', 'email']
     list_editable = ['order', 'is_active']
-    
+    readonly_fields = ['created_at', 'updated_at']
+
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name', 'graduation_year', 'title', 'image')
+            'fields': ('name', 'graduation_year', 'title', 'email', 'image')
         }),
         ('Description', {
             'fields': ('short_desc', 'full_desc')
@@ -18,7 +20,7 @@ class AlumniAdmin(admin.ModelAdmin):
         ('Social Media', {
             'fields': ('linkedin', 'twitter', 'facebook', 'instagram')
         }),
-        ('Additional Details', {
-            'fields': ('order', 'is_active')
+        ('Settings', {
+            'fields': ('order', 'is_active', 'created_at', 'updated_at')
         }),
     )

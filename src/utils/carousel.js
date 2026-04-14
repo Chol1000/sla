@@ -2,6 +2,10 @@ export const initCarousels = () => {
   const carousels = document.querySelectorAll('.image-carousel');
   
   carousels.forEach(carousel => {
+    if (carousel.carouselInterval) {
+      clearInterval(carousel.carouselInterval);
+    }
+    
     const images = carousel.querySelectorAll('img');
     const prevBtn = carousel.querySelector('.carousel-prev');
     const nextBtn = carousel.querySelector('.carousel-next');
@@ -23,14 +27,30 @@ export const initCarousels = () => {
       showImage(currentIndex);
     };
     
-    // Arrow click handlers
-    nextBtn.addEventListener('click', nextImage);
-    prevBtn.addEventListener('click', prevImage);
+    const startAutoPlay = () => {
+      if (carousel.carouselInterval) {
+        clearInterval(carousel.carouselInterval);
+      }
+      carousel.carouselInterval = setInterval(nextImage, 5000);
+    };
     
-    // Auto-slide every 4 seconds
-    setInterval(nextImage, 4000);
+    if (nextBtn && !nextBtn.hasCarouselListener) {
+      nextBtn.hasCarouselListener = true;
+      nextBtn.addEventListener('click', () => {
+        nextImage();
+        startAutoPlay();
+      });
+    }
     
-    // Initialize first image
+    if (prevBtn && !prevBtn.hasCarouselListener) {
+      prevBtn.hasCarouselListener = true;
+      prevBtn.addEventListener('click', () => {
+        prevImage();
+        startAutoPlay();
+      });
+    }
+    
     showImage(0);
+    startAutoPlay();
   });
 };

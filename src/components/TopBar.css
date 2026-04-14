@@ -1,0 +1,161 @@
+.topbar {
+  background: #7e1a19;
+  color: #fff;
+  width: 100%;
+  z-index: 1100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+body.topbar-hidden .topbar {
+  transform: translateY(-100%);
+}
+
+.topbar-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.topbar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.topbar-item:hover {
+  color: #fff;
+}
+
+.topbar-item i {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topbar-label {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+.topbar-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topbar-socials a {
+  width: 26px;
+  height: 26px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.7rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.topbar-socials a:hover {
+  background: #fff;
+  color: #7e1a19;
+  transform: translateY(-2px);
+}
+
+/* Small screens — keep text visible, shrink font */
+@media (max-width: 768px) {
+  .topbar-container {
+    padding: 0 12px;
+  }
+
+  .topbar-label {
+    display: none;
+  }
+
+  .topbar-item {
+    font-size: 0.7rem;
+    gap: 0.3rem;
+  }
+
+  .topbar-item i {
+    font-size: 0.7rem;
+  }
+
+  .topbar-socials a {
+    width: 22px;
+    height: 22px;
+    font-size: 0.65rem;
+  }
+
+  /* Hide location on mobile to save space */
+  .topbar-location {
+    display: none;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .topbar-container {
+    padding: 0 10px;
+  }
+
+  .topbar-left {
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .topbar-item {
+    font-size: 0.65rem;
+    gap: 0.25rem;
+  }
+
+  .topbar-item span {
+    font-size: 0.65rem;
+  }
+
+  .topbar-item i {
+    font-size: 0.7rem;
+  }
+
+  .topbar-right {
+    gap: 0.5rem;
+  }
+
+  .topbar-socials {
+    gap: 0.35rem;
+  }
+
+  .topbar-socials a {
+    width: 20px;
+    height: 20px;
+    font-size: 0.6rem;
+  }
+}

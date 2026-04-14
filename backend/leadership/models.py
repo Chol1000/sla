@@ -1,10 +1,10 @@
 from django.db import models
 
 class StudentLeader(models.Model):
-    year = models.CharField(max_length=4)
+    year = models.CharField(max_length=20)
     position = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='leadership/')
+    image = models.ImageField(upload_to='leadership/', blank=True, null=True)
     order = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /static/
+Disallow: /media/
+
+Sitemap: https://sla.pythonanywhere.com/sitemap.xml

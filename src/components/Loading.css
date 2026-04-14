@@ -1,89 +1,128 @@
+/* ── Overlay ── */
 .loading-overlay {
-  min-height: calc(100vh - 80px);
-  background: white;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+/* ── Stage: SVG rings + logo stacked ── */
+.loading-stage {
+  position: relative;
+  width: 200px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 80px;
 }
 
-.loading-overlay ~ .header {
-  background-color: var(--primary-white);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+/* ── SVG canvas ── */
+.loading-rings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.loading-overlay ~ .header .school-name {
-  color: var(--primary-red);
+/* ── Shared ring styles ── */
+.ring {
+  fill: none;
+  stroke-linecap: round;
+  transform-origin: 100px 100px;
 }
 
-.loading-overlay ~ .header .nav-link {
-  color: var(--primary-black);
+/* Outer ring — 3 broken arcs, slow CW  (r=68, C≈427) */
+.ring-1 {
+  stroke: #7e1a19;
+  stroke-width: 3;
+  stroke-dasharray: 85 57;
+  animation: spinCW 4s linear infinite;
 }
 
-.loading-overlay ~ .header .search-btn,
-.loading-overlay ~ .header .theme-toggle {
-  color: var(--primary-red);
+/* Mid ring — 4 arcs, medium CCW  (r=57, C≈358) */
+.ring-2 {
+  stroke: #7e1a19;
+  stroke-width: 2.5;
+  stroke-dasharray: 57 32;
+  opacity: 0.55;
+  animation: spinCCW 3s linear infinite;
 }
 
-.loading-content {
-  text-align: center;
+/* Inner ring — 2 arcs, CW  (r=46, C≈289) */
+.ring-3 {
+  stroke: #c04040;
+  stroke-width: 2;
+  stroke-dasharray: 72 72;
+  opacity: 0.4;
+  animation: spinCW 2.2s linear infinite;
+}
+
+@keyframes spinCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spinCCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* ── Logo ── */
+.loading-logo-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loading-logo {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 1.5rem;
-  animation: pulse 2s ease-in-out infinite;
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  animation: logoPulse 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(0.95);
-  }
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1);    opacity: 1;   }
+  50%       { transform: scale(0.94); opacity: 0.85; }
 }
 
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #f0f0f0;
-  border-top: 4px solid var(--primary-red);
+/* ── School name ── */
+.loading-school-name {
+  margin-top: 1.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7e1a19;
+}
+
+/* ── Animated dots ── */
+.loading-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 0.6rem;
+}
+
+.loading-dots span {
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  margin: 0 auto 1rem;
-  animation: spin 1s linear infinite;
+  background: #7e1a19;
+  opacity: 0.25;
+  animation: dotBlink 1.2s ease-in-out infinite;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
 
-.loading-content p {
-  color: var(--primary-red);
-  font-size: 1rem;
-  margin: 0;
-  font-weight: 600;
-}
-
-body.dark-theme .loading-overlay {
-  background: #2d3748;
-}
-
-body.dark-theme .loading-logo {
-  background: white;
-  padding: 1rem;
-  border-radius: 12px;
-}
-
-body.dark-theme .loading-content p {
-  color: #ffffff;
-}
-
-body.dark-theme .loading-spinner {
-  border-color: #4a5568;
-  border-top-color: var(--primary-red);
+@keyframes dotBlink {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+  40%           { opacity: 1;   transform: scale(1.2); }
 }

@@ -1,1274 +1,891 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Home.css';
 import { initScrollAnimations } from '../utils/scrollAnimations';
 import { initDropdowns } from '../utils/dropdownHandler';
 import { initCarousels } from '../utils/carousel';
+import API_URL from '../utils/api';
+import { setPageMeta } from '../utils/pageMeta';
+
+const HERO_SLIDES = [
+  {
+    img: '/sla_school_overview.jpg',
+    tag: 'JUBA, SOUTH SUDAN',
+    line1: 'EXCELLENCE IN',
+    title: 'EDUCATION',
+    line2: 'FOR ALL',
+    desc: 'Empowering students through academic rigour, creativity, and strong values — preparing tomorrow\'s leaders today.',
+  },
+  {
+    img: '/sla_assembly.jpg',
+    tag: 'SCHOOL ASSEMBLY',
+    line1: 'BUILDING',
+    title: 'CHARACTER',
+    line2: 'EVERY DAY',
+    desc: 'Discipline, integrity, and leadership are at the heart of everything we do at St. Lawrence Academy.',
+  },
+  {
+    img: '/sla_students_16.jpg',
+    tag: 'OUR STUDENTS',
+    line1: 'SHAPING',
+    title: 'FUTURES',
+    line2: 'TOGETHER',
+    desc: 'Every student is unique. We personalise learning to help each child discover their full potential.',
+  },
+  {
+    img: '/sla_basketball_1.jpg',
+    tag: 'SPORTS & LIFE SKILLS',
+    line1: 'BEYOND THE',
+    title: 'CLASSROOM',
+    line2: 'WE GROW',
+    desc: 'From athletics to the arts, we develop confident, well-rounded individuals ready for the world.',
+  },
+  {
+    img: '/sla_school_view.jpg',
+    tag: 'OUR CAMPUS',
+    line1: 'A PLACE TO',
+    title: 'BELONG',
+    line2: 'AND THRIVE',
+    desc: 'Our safe, vibrant campus is designed to inspire curiosity and foster a love for learning.',
+  },
+  {
+    img: '/sla_school_gate.jpg',
+    tag: 'WELCOME TO SLA',
+    line1: 'WHERE DREAMS',
+    title: 'BEGIN',
+    line2: 'AND GROW',
+    desc: 'Join thousands of families who trust St. Lawrence Academy to shape their children\'s future.',
+  },
+  {
+    img: '/sla_secondary_school.jpg',
+    tag: 'SECONDARY SCHOOL',
+    line1: 'READY FOR',
+    title: 'TOMORROW',
+    line2: 'START TODAY',
+    desc: 'Our secondary programme prepares students for national exams, higher education, and global opportunities.',
+  },
+];
+
+const HERO_IMAGES = HERO_SLIDES.map(s => s.img);
 
 const Home = () => {
+  const [carouselIdx, setCarouselIdx] = useState(0);
+  const [prevCarouselIdx, setPrevCarouselIdx] = useState(null);
   const [blogPosts, setBlogPosts] = useState([]);
-  const [campusTour, setCampusTour] = useState(null);
-  const [heroSection, setHeroSection] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [registrationStatus, setRegistrationStatus] = useState(null);
+  const [loadingBlogs, setLoadingBlogs] = useState(true);
+  const [featuredReviews, setFeaturedReviews] = useState([]);
+  const heroIntervalRef = useRef(null);
 
   useEffect(() => {
+    setPageMeta(null, 'St. Lawrence Academy — your ideal school in Juba, South Sudan. Quality education from Nursery through Secondary, shaping tomorrow\'s leaders today.');
+    let campusAutoplay = null;
     const timer = setTimeout(() => {
       initScrollAnimations();
       initDropdowns();
       initCarousels();
+
+      // Campus Tour Split Carousel
+      const campusSlides = document.querySelectorAll('.campus-tour-slide');
+      const campusContent = document.querySelectorAll('.campus-content-item');
+      const campusDots = document.querySelectorAll('.campus-nav-dot');
+      const campusDotsMobile = document.querySelectorAll('.campus-nav-dot-mobile');
+      const prevBtn = document.querySelector('.campus-prev');
+      const nextBtn = document.querySelector('.campus-next');
+      const prevBtnMobile = document.querySelector('.campus-prev-mobile');
+      const nextBtnMobile = document.querySelector('.campus-next-mobile');
+      let currentIndex = 0;
+
+      const showCampusSlide = (index) => {
+        campusSlides.forEach(s => s.classList.remove('active'));
+        campusContent.forEach(c => c.classList.remove('active'));
+        campusDots.forEach(d => d.classList.remove('active'));
+        campusDotsMobile.forEach(d => d.classList.remove('active'));
+        campusSlides[index].classList.add('active');
+        campusContent[index].classList.add('active');
+        if (campusDots[index]) campusDots[index].classList.add('active');
+        if (campusDotsMobile[index]) campusDotsMobile[index].classList.add('active');
+        currentIndex = index;
+      };
+
+      // Navigate and reset auto-play timer
+      const goTo = (index) => {
+        showCampusSlide(index);
+        clearInterval(campusAutoplay);
+        campusAutoplay = setInterval(() => showCampusSlide((currentIndex + 1) % campusSlides.length), 5000);
+      };
+
+      // Desktop navigation
+      if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => goTo((currentIndex - 1 + campusSlides.length) % campusSlides.length));
+        nextBtn.addEventListener('click', () => goTo((currentIndex + 1) % campusSlides.length));
+      }
+
+      // Mobile navigation
+      if (prevBtnMobile && nextBtnMobile) {
+        prevBtnMobile.addEventListener('click', () => goTo((currentIndex - 1 + campusSlides.length) % campusSlides.length));
+        nextBtnMobile.addEventListener('click', () => goTo((currentIndex + 1) % campusSlides.length));
+      }
+
+      // Dots (desktop + mobile)
+      campusDots.forEach(dot => dot.addEventListener('click', () => goTo(parseInt(dot.getAttribute('data-index')))));
+      campusDotsMobile.forEach(dot => dot.addEventListener('click', () => goTo(parseInt(dot.getAttribute('data-index')))));
+
+      // Touch swipe support
+      let touchStartX = 0;
+      const imageEl = document.querySelector('.campus-tour-image-side');
+      if (imageEl) {
+        imageEl.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        imageEl.addEventListener('touchend', (e) => {
+          const diff = touchStartX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) {
+            goTo(diff > 0 ? (currentIndex + 1) % campusSlides.length : (currentIndex - 1 + campusSlides.length) % campusSlides.length);
+          }
+        }, { passive: true });
+      }
+
+      // Start auto-play (5s per slide)
+      campusAutoplay = setInterval(() => showCampusSlide((currentIndex + 1) % campusSlides.length), 5000);
     }, 100);
     
-    // Fetch blog posts
-    fetch('https://sla.pythonanywhere.com/api/blog/posts/')
+
+    
+    // Fetch featured reviews
+    fetch(`${API_URL}/api/reviews/?limit=3`)
       .then(res => res.json())
       .then(data => {
-        setBlogPosts(data.results || data);
-        setLoading(false);
+        const reviews = data.results || data;
+        if (Array.isArray(reviews)) setFeaturedReviews(reviews.slice(0, 3));
+      })
+      .catch(() => {});
+
+    // Fetch blog posts (8s timeout fallback so spinner never hangs indefinitely)
+    const blogTimeout = setTimeout(() => setLoadingBlogs(false), 8000);
+    fetch(`${API_URL}/api/blog/posts/?limit=5`)
+      .then(res => res.json())
+      .then(data => {
+        clearTimeout(blogTimeout);
+        const posts = data.results || data;
+        if (Array.isArray(posts)) {
+          setBlogPosts(posts.slice(0, 5));
+        }
+        setLoadingBlogs(false);
       })
       .catch(err => {
+        clearTimeout(blogTimeout);
         console.error('Error fetching blog posts:', err);
-        setLoading(false);
+        setLoadingBlogs(false);
       });
     
-    // Fetch campus tour
-    fetch('https://sla.pythonanywhere.com/api/campus/tours/')
-      .then(res => res.json())
-      .then(data => {
-        const tours = data.results || data;
-        if (tours.length > 0) setCampusTour(tours[0]);
-      })
-      .catch(err => console.error('Error fetching campus tour:', err));
-    
-    // Fetch hero section
-    fetch('https://sla.pythonanywhere.com/api/hero/sections/')
-      .then(res => res.json())
-      .then(data => {
-        const sections = data.results || data;
-        if (sections.length > 0) setHeroSection(sections[0]);
-      })
-      .catch(err => console.error('Error fetching hero section:', err));
-    
-    // Fetch registration status
-    fetch('https://sla.pythonanywhere.com/api/admissions/registration-status/')
-      .then(res => res.json())
-      .then(data => {
-        const status = data.results ? data.results[0] : (Array.isArray(data) ? data[0] : data);
-        if (status) setRegistrationStatus(status);
-      })
-      .catch(err => console.error('Error fetching registration status:', err));
-    
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(blogTimeout);
+      clearInterval(campusAutoplay);
+    };
   }, []);
 
-  useEffect(() => {
-    if (heroSection && heroSection.images && heroSection.images.length > 1) {
-      const interval = setInterval(() => {
-        setCurrentImageIndex(prev => (prev + 1) % heroSection.images.length);
-      }, 10000);
-      return () => clearInterval(interval);
-    }
-  }, [heroSection]);
+  const startHeroAutoplay = () => {
+    clearInterval(heroIntervalRef.current);
+    heroIntervalRef.current = setInterval(() => {
+      setCarouselIdx(prev => {
+        const next = (prev + 1) % HERO_IMAGES.length;
+        setPrevCarouselIdx(prev);
+        setTimeout(() => setPrevCarouselIdx(null), 1200);
+        return next;
+      });
+    }, 15000);
+  };
 
-  const truncateText = (text, maxLength) => {
+  useEffect(() => {
+    startHeroAutoplay();
+    return () => clearInterval(heroIntervalRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const goToSlide = (i) => {
+    if (i === carouselIdx) return;
+    setPrevCarouselIdx(carouselIdx);
+    setCarouselIdx(i);
+    setTimeout(() => setPrevCarouselIdx(null), 1200);
+    startHeroAutoplay();
+  };
+
+
+  const truncateText = (text, wordLimit) => {
     if (!text) return '';
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    return text.length > wordLimit ? text.substring(0, wordLimit) + '...' : text;
   };
 
   const formatDate = (dateString) => {
+    if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
   const getMediaUrl = (post) => {
     if (post.image) {
-      // Check if it's already a full URL
       if (post.image.startsWith('http')) return post.image;
-      return `https://sla.pythonanywhere.com${post.image}`;
+      return `${API_URL}${post.image}`;
     }
     if (post.video) {
       if (post.video.startsWith('http')) return post.video;
-      return `https://sla.pythonanywhere.com${post.video}`;
+      return `${API_URL}${post.video}`;
     }
     if (post.video_url) return post.video_url;
-    return 'https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
+    return '/sla_school_overview.jpg';
   };
 
   const isVideo = (post) => {
     return post.video || post.video_url;
   };
 
+
+
   return (
     <div className="home">
       {/* Hero Section */}
       <section className="hero">
-        {heroSection && (heroSection.video_url || heroSection.video || (heroSection.images && heroSection.images.length > 0)) ? (
-          <div className="hero-video">
-            {heroSection.video_url ? (
-              heroSection.video_url.includes('youtube.com') || heroSection.video_url.includes('youtu.be') ? (
-                <iframe 
-                  src={heroSection.video_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/').split('&')[0] + '?autoplay=1&mute=1&loop=1&controls=0&playlist=' + (heroSection.video_url.split('v=')[1]?.split('&')[0] || heroSection.video_url.split('/').pop())}
-                  style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none'}}
-                  title="Hero Video"
-                  allow="autoplay; encrypted-media"
-                />
-              ) : (
-                <video autoPlay muted loop playsInline>
-                  <source src={heroSection.video_url} type="video/mp4" />
-                </video>
-              )
-            ) : heroSection.video ? (
-              <video autoPlay muted loop playsInline>
-                <source src={heroSection.video.startsWith('http') ? heroSection.video : `https://sla.pythonanywhere.com${heroSection.video}`} type="video/mp4" />
-              </video>
-            ) : heroSection.images && heroSection.images.length > 0 ? (
-              heroSection.images.map((img, index) => (
-                <div 
-                  key={img.id}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: currentImageIndex === index ? 1 : 0,
-                    transition: 'opacity 1s ease-in-out',
-                    backgroundColor: '#7e1a19',
-                    backgroundImage: `url(${img.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat'
-                  }}
-                />
-              ))
-            ) : null}
-          </div>
-        ) : (
-          <div className="hero-video">
-            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80" alt="School campus" style={{width: '100%', height: '100%', objectFit: 'cover', opacity: '0.7'}} />
-          </div>
-        )}
-        <div className="hero-overlay" style={{background: 'rgba(0, 0, 0, 0.6)'}}></div>
-        <div className="container">
-          <div className="hero-layout">
-            <div className="hero-left">
-              <div className="hero-main-text">
-                <h2 className="hero-subtitle">EXCELLENCE IN</h2>
-                <h1 className="hero-title">EDUCATION</h1>
-                <h2 className="hero-subtitle">FOR ALL</h2>
-              </div>
-              <p className="hero-school-name">Saint Lawrence Academy</p>
+        {/* Carousel Background Images */}
+        <div className="hero-carousel-bg">
+          {HERO_IMAGES.map((img, i) => (
+            <div
+              key={i}
+              className={`hero-carousel-slide${carouselIdx === i ? ' active' : prevCarouselIdx === i ? ' prev' : ''}`}
+              style={{ backgroundImage: `url(${img})` }}
+            />
+          ))}
+        </div>
+
+        {/* Left-side dark gradient overlay */}
+        <div className="hero-left-overlay" />
+
+        {/* Hero Content */}
+        <div className="hero-content-wrapper">
+          <div className="hero-content-left" key={carouselIdx}>
+
+            <div className="hero-main-text">
+              <h1 className="hero-title">{HERO_SLIDES[carouselIdx].title}</h1>
             </div>
-            <div className="hero-right">
-              <p className="hero-description hero-description-desktop">Join a community where academic rigor meets innovation, and every student is empowered to reach their full potential through comprehensive education. At Saint Lawrence Academy, we foster critical thinking, creativity, and leadership skills while maintaining strong cultural values and preparing students for success in higher education and beyond.</p>
-              <div className="hero-motto">
-                <span className="typing-text">Education is the key of life</span>
-              </div>
-            </div>
+
+            <p className="hero-description">{HERO_SLIDES[carouselIdx].desc}</p>
+
           </div>
+        </div>
+
+        {/* Side nav arrows */}
+        <button
+          className="hero-arrow hero-arrow-left"
+          onClick={() => goToSlide((carouselIdx - 1 + HERO_IMAGES.length) % HERO_IMAGES.length)}
+          aria-label="Previous slide"
+        >
+          <i className="fas fa-chevron-left" />
+        </button>
+        <button
+          className="hero-arrow hero-arrow-right"
+          onClick={() => goToSlide((carouselIdx + 1) % HERO_IMAGES.length)}
+          aria-label="Next slide"
+        >
+          <i className="fas fa-chevron-right" />
+        </button>
+
+        {/* Dots — bottom right */}
+        <div className="hero-dots">
+          {HERO_IMAGES.map((_, i) => (
+            <button
+              key={i}
+              className={`hero-dot${carouselIdx === i ? ' active' : ''}`}
+              onClick={() => goToSlide(i)}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
         </div>
 
       </section>
 
-      {/* Registration Status Banner */}
-      {registrationStatus && registrationStatus.is_open && !registrationStatus.is_deadline_passed && (
-        <section style={{background: '#28a745', color: 'white', padding: '1.5rem 0', position: 'relative'}}>
-          <div style={{position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.3)'}}></div>
-          <div className="container">
-            <div style={{textAlign: 'center'}}>
-              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem', marginBottom: '0.8rem'}}>
-                <i className="fas fa-bullhorn" style={{fontSize: '1.3rem'}}></i>
-                <div>
-                  <span style={{fontSize: '0.8rem', opacity: '0.9', textTransform: 'uppercase', letterSpacing: '1px', marginRight: '0.5rem'}}>Registration Open</span>
-                  <span style={{fontSize: '1.2rem', fontWeight: '700'}}>{registrationStatus.term}, {registrationStatus.year}</span>
-                </div>
-              </div>
-              <div style={{fontSize: '0.9rem', marginBottom: '0.5rem'}}>
-                <i className="fas fa-calendar-alt" style={{marginRight: '0.5rem'}}></i>
-                Deadline: {new Date(registrationStatus.closing_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-              </div>
-              <div style={{fontSize: '0.9rem', opacity: '0.95'}}>
-                Visit <a href="/admissions" style={{color: 'white', fontWeight: '700', textDecoration: 'underline'}}>Admissions</a> for online application or come to school in person
-              </div>
-            </div>
-          </div>
-          <div style={{position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.3)'}}></div>
-        </section>
-      )}
 
-      {/* Mobile Hero Text Section */}
-      <div className="hero-text-mobile">
-        <p>Join a community where academic rigor meets innovation, and every student is empowered to reach their full potential through comprehensive education. At Saint Lawrence Academy, we foster critical thinking, creativity, and leadership skills while maintaining strong cultural values and preparing students for success in higher education and beyond.</p>
-      </div>
 
       {/* Academic Excellence Section */}
       <section id="academic-excellence" className="academic-excellence scroll-animate">
+
+        {/* Full-bleed title band — presses against the hero */}
+        <div className="prog-title-band">
+          <div className="container">
+            <h2 className="prog-title-band-heading">Welcome to St. Lawrence Academy</h2>
+          </div>
+        </div>
+
         <div className="container">
-          <div className="section-header mobile-section-header">
-            <span className="section-label">Academic Excellence</span>
-            <h2 className="mobile-heading">Nurturing South Sudanese Students for Global Leadership</h2>
+          <div className="prog-cards-grid">
+            <a href="/nursery" className="prog-card">
+              <div className="prog-card-img">
+                <img src="/sla_nursery_1.jpg" alt="Nursery School" />
+              </div>
+              <div className="prog-card-body">
+                <span className="prog-card-tag">Baby – Top</span>
+                <h3>NURSERY SCHOOL</h3>
+                <p>Early childhood development nurturing curiosity, creativity, and essential social skills through play-based learning in a safe and loving environment.</p>
+                <div className="prog-card-footer">
+                  <span>Learn More</span>
+                  <i className="fas fa-arrow-right"></i>
+                </div>
+              </div>
+            </a>
+
+            <a href="/primary" className="prog-card prog-card-featured">
+              <div className="prog-card-img">
+                <img src="/sla_pupils_1.jpg" alt="Primary School" />
+              </div>
+              <div className="prog-card-body">
+                <span className="prog-card-tag">Primary 1 – 8</span>
+                <h3>PRIMARY SCHOOL</h3>
+                <p>Building strong foundations in literacy, numeracy, and moral values — developing well-rounded, disciplined learners ready to excel and lead.</p>
+                <div className="prog-card-footer">
+                  <span>Learn More</span>
+                  <i className="fas fa-arrow-right"></i>
+                </div>
+              </div>
+            </a>
+
+            <a href="/secondary" className="prog-card">
+              <div className="prog-card-img">
+                <img src="/sla_secondary_school.jpg" alt="Secondary School" />
+              </div>
+              <div className="prog-card-body">
+                <span className="prog-card-tag">S1 – S4</span>
+                <h3>SECONDARY SCHOOL</h3>
+                <p>Rigorous academics, critical thinking, and leadership development — preparing students for national exams, higher education, and global careers.</p>
+                <div className="prog-card-footer">
+                  <span>Learn More</span>
+                  <i className="fas fa-arrow-right"></i>
+                </div>
+              </div>
+            </a>
           </div>
-          
-          <div className="program-section" style={{marginTop: '3rem'}}>
-            {/* Nursery School Section */}
-            <div className="program-row" style={{alignItems: 'flex-start', marginBottom: '5rem'}}>
-              <div className="program-image">
-                <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Nursery School" />
-                <div style={{
-                  marginTop: '2rem',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '1rem'
-                }}>
-                  <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Nursery Activities" 
-                       style={{width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
-                  <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Early Learning" 
-                       style={{width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
-                </div>
-              </div>
-              <div className="program-content" style={{marginTop: 0}}>
-                <div className="program-header">
-                  <i className="fas fa-child"></i>
-                  <h3>Nursery School</h3>
-                </div>
-                <p style={{marginBottom: '2rem'}}>Our nursery program provides a nurturing environment where young learners develop foundational skills through play-based learning, creative activities, and social interaction. We focus on holistic development including cognitive, physical, social, and emotional growth.</p>
-                
-                <div style={{
-                  backgroundColor: 'rgba(126, 26, 25, 0.05)',
-                  padding: '1.5rem',
-                  borderRadius: '8px',
-                  marginBottom: '2rem',
-                  borderLeft: '4px solid var(--primary-red)'
-                }}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.1rem'}}>Early Childhood Development</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '0.95rem'}}>
-                    <li>Play-based learning approach</li>
-                    <li>Music, art, and creative activities</li>
-                    <li>Outdoor play and physical development</li>
-                    <li>Social skills and emotional intelligence</li>
-                    <li>Qualified early years teachers</li>
-                  </ul>
-                </div>
-                
-                <div style={{marginTop: '2rem'}}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem', fontWeight: '600'}}>Classes Offered</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '1rem', lineHeight: '1.8'}}>
-                    <li>Baby Class (Ages 2-3)</li>
-                    <li>Middle Class (Ages 3-4)</li>
-                    <li>Top Class (Ages 4-5)</li>
-                  </ul>
-                </div>
-                
-                <div style={{
-                  marginTop: '2rem',
-                  padding: '1rem',
-                  backgroundColor: 'rgba(248, 249, 250, 0.8)',
-                  borderRadius: '8px'
-                }}>
-                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>12:1</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Student-Teacher Ratio</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>100%</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Safe Environment</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>4</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Nursery Teachers</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        </div>
 
-            {/* Primary School Section */}
-            <div className="program-row reverse" style={{alignItems: 'flex-start', marginBottom: '5rem'}}>
-              <div className="program-image">
-                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Primary School" />
-                <div style={{
-                  marginTop: '2rem',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '1rem'
-                }}>
-                  <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Primary Learning" 
-                       style={{width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
-                  <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Primary Students" 
-                       style={{width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
-                </div>
-              </div>
-              <div className="program-content" style={{marginTop: 0}}>
-                <div className="program-header">
-                  <i className="fas fa-book-reader"></i>
-                  <h3>Primary School</h3>
-                </div>
-                <p style={{marginBottom: '2rem'}}>Our primary school builds strong academic foundations with a comprehensive curriculum that develops critical thinking, creativity, and character. Students receive quality education following the South Sudan National Curriculum with international standards.</p>
-                
-                <div style={{
-                  backgroundColor: 'rgba(126, 26, 25, 0.05)',
-                  padding: '1.5rem',
-                  borderRadius: '8px',
-                  marginBottom: '2rem',
-                  borderLeft: '4px solid var(--primary-red)'
-                }}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.1rem'}}>Comprehensive Education</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '0.95rem'}}>
-                    <li>South Sudan National Curriculum</li>
-                    <li>English and Arabic instruction</li>
-                    <li>Mathematics and sciences focus</li>
-                    <li>Computer literacy programs</li>
-                    <li>Sports and physical education</li>
-                  </ul>
-                </div>
-                
-                <div style={{marginTop: '2rem'}}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem', fontWeight: '600'}}>Grade Levels</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '1rem', lineHeight: '1.8'}}>
-                    <li>Primary 1 - Primary 4 (Lower Primary)</li>
-                    <li>Primary 5 - Primary 8 (Upper Primary)</li>
-                  </ul>
-                </div>
-                
-                <div style={{
-                  marginTop: '2rem',
-                  padding: '1rem',
-                  backgroundColor: 'rgba(248, 249, 250, 0.8)',
-                  borderRadius: '8px'
-                }}>
-                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>100%</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Transition Rate</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>15:1</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Student-Teacher Ratio</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>12</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Primary Teachers</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Secondary/University Preparation Section */}
-            <div id="university-preparation" className="program-row" style={{alignItems: 'flex-start'}}>
-              <div className="program-image">
-                <div style={{
-                  marginTop: '3rem',
-                  marginBottom: '2rem'
-                }} className="curriculum-content">
-                  <h3 style={{
-                    color: 'var(--primary-red)',
-                    marginBottom: '1rem',
-                    fontSize: '1.5rem'
-                  }}>Our Curriculum Excellence</h3>
-                  <p style={{
-                    fontSize: '1.1rem',
-                    lineHeight: '1.6',
-                    color: 'var(--primary-black)',
-                    marginBottom: '1rem'
-                  }}>St. Lawrence Academy follows the South Sudanese National Curriculum enhanced with international standards, preparing students to excel locally and compete globally while maintaining strong cultural roots.</p>
-                  <p style={{
-                    fontSize: '1rem',
-                    lineHeight: '1.6',
-                    color: 'var(--medium-gray)'
-                  }}>Our comprehensive educational approach integrates rigorous academic standards with cultural values, ensuring students develop both intellectual excellence and strong moral foundations. Through innovative teaching methodologies and personalized learning experiences, we cultivate critical thinking, creativity, and leadership skills essential for success in the 21st century.</p>
-                  
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginTop: '2rem',
-                    paddingTop: '1.5rem',
-                    borderTop: '1px solid rgba(0,0,0,0.1)'
-                  }}>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)'}}>100%</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>University Acceptance</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)'}}>15:1</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Student-Teacher Ratio</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)'}}>100%</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Graduation Rate</div>
-                    </div>
-                  </div>
-                </div>
-                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="University Preparation" />
-              </div>
-              <div className="program-content" style={{marginTop: 0}}>
-                <div className="program-header">
-                  <h3>Higher Education Pathway</h3>
-                </div>
-                
-                <p className="program-description">Our graduates successfully transition to universities across East Africa, including Makerere University, University of Nairobi, and international institutions, with strong preparation in both English and Arabic curricula.</p>
-                
-                <div style={{
-                  backgroundColor: 'rgba(248, 249, 250, 0.8)',
-                  padding: '1.5rem',
-                  borderRadius: '8px',
-                  marginBottom: '2rem',
-                  borderLeft: '4px solid var(--primary-red)'
-                }}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.1rem'}}>Accredited Excellence</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '0.95rem'}}>
-                    <li>Ministry of Education Certified Curriculum</li>
-                    <li>International Baccalaureate Preparation</li>
-                    <li>Qualified Teachers with Advanced Degrees</li>
-                  </ul>
-                </div>
-                
-                <div className="program-features-list">
-                  <div className="feature-dropdown">
-                    <div className="feature-line">
-                      <span>Advanced Mathematics & Sciences</span>
-                      <i className="fas fa-arrow-right"></i>
-                    </div>
-                    <div className="feature-content">
-                      <p>Comprehensive mathematics including Algebra, Geometry, Calculus, and advanced sciences covering Physics, Chemistry, and Biology with hands-on laboratory experiences.</p>
-                    </div>
-                  </div>
-                  <div className="feature-dropdown">
-                    <div className="feature-line">
-                      <span>English Language & Literature</span>
-                      <i className="fas fa-arrow-right"></i>
-                    </div>
-                    <div className="feature-content">
-                      <p>Advanced English communication skills, literary analysis, creative writing, and critical reading of classical and contemporary works from global authors.</p>
-                    </div>
-                  </div>
-                  <div className="feature-dropdown">
-                    <div className="feature-line">
-                      <span>Arabic Studies & Islamic Education</span>
-                      <i className="fas fa-arrow-right"></i>
-                    </div>
-                    <div className="feature-content">
-                      <p>Classical Arabic language mastery, Islamic history and civilization, Quranic studies, and contemporary Islamic thought and ethics.</p>
-                    </div>
-                  </div>
-                  <div className="feature-dropdown">
-                    <div className="feature-line">
-                      <span>Social Studies & History</span>
-                      <i className="fas fa-arrow-right"></i>
-                    </div>
-                    <div className="feature-content">
-                      <p>South Sudanese history, African civilizations, world history, geography, civics, and contemporary global affairs and international relations.</p>
-                    </div>
-                  </div>
-                  <div className="feature-dropdown">
-                    <div className="feature-line">
-                      <span>Computer Science & Technology</span>
-                      <i className="fas fa-arrow-right"></i>
-                    </div>
-                    <div className="feature-content">
-                      <p>Programming fundamentals, web development, digital literacy, robotics, and emerging technologies preparing students for the digital age.</p>
-                    </div>
-                  </div>
-                  <div className="feature-dropdown">
-                    <div className="feature-line">
-                      <span>Laboratory Sciences & Research</span>
-                      <i className="fas fa-arrow-right"></i>
-                    </div>
-                    <div className="feature-content">
-                      <p>Hands-on scientific research methods, experimental design, data analysis, and independent research projects in state-of-the-art laboratories.</p>
-                    </div>
-                  </div>
-                  <div className="feature-dropdown">
-                    <div className="feature-line">
-                      <span>Critical Thinking & Problem Solving</span>
-                      <i className="fas fa-arrow-right"></i>
-                    </div>
-                    <div className="feature-content">
-                      <p>Analytical reasoning, logical problem-solving strategies, debate and discussion skills, and interdisciplinary project-based learning approaches.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="science-subjects" className="program-row reverse" style={{alignItems: 'flex-start'}}>
-              <div className="program-image">
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Science Laboratory" />
-                <div style={{
-                  marginTop: '2rem',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '1rem'
-                }}>
-                  <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Mathematics Class" 
-                       style={{width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
-                  <img src="https://images.unsplash.com/photo-1628595351029-c2bf17511435?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Agriculture Studies" 
-                       style={{width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
-                </div>
-              </div>
-              <div className="program-content" style={{marginTop: 0}}>
-                <div className="program-header">
-                  <i className="fas fa-microscope"></i>
-                  <h3>Science Subjects</h3>
-                </div>
-                <p style={{marginBottom: '2rem'}}>Our comprehensive science and mathematics program provides students with rigorous theoretical knowledge and extensive hands-on laboratory experience. Students engage in practical experiments, research projects, and real-world problem-solving that prepares them for careers in medicine, engineering, agriculture, and scientific research.</p>
-                
-                <div style={{
-                  backgroundColor: 'rgba(126, 26, 25, 0.05)',
-                  padding: '1.5rem',
-                  borderRadius: '8px',
-                  marginBottom: '2rem',
-                  borderLeft: '4px solid var(--primary-red)'
-                }}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.1rem'}}>Learning Resources & Methods</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '0.95rem'}}>
-                    <li>Comprehensive textbooks and reference materials</li>
-                    <li>Practical demonstrations and experiments</li>
-                    <li>Problem-solving workshops and tutorials</li>
-                    <li>Agricultural field studies and observations</li>
-                    <li>Mathematics resource center with calculators</li>
-                  </ul>
-                </div>
-                
-                <div style={{marginTop: '2rem'}}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem', fontWeight: '600'}}>Core Science Subjects</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '1rem', lineHeight: '1.8'}}>
-                    <li>Chemistry & Biology</li>
-                    <li>Pure & Additional Mathematics</li>
-                    <li>Physics & Applied Sciences</li>
-                    <li>Agriculture & Environmental Science</li>
-                  </ul>
-                </div>
-                
-                <div style={{
-                  marginTop: '2rem',
-                  padding: '1rem',
-                  backgroundColor: 'rgba(248, 249, 250, 0.8)',
-                  borderRadius: '8px'
-                }}>
-                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>100%</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Science Graduates</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>100%</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Pass Rate</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>6</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Science Teachers</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="arts-subjects" className="program-row" style={{alignItems: 'flex-start'}}>
-              <div className="program-image">
-                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80" alt="Library and Reading" />
-                <div style={{
-                  marginTop: '2rem',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '1rem'
-                }}>
-                  <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                       alt="History Class" 
-                       style={{width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
-                  <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Business Studies" 
-                       style={{width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
-                </div>
-              </div>
-              <div className="program-content" style={{marginTop: 0}}>
-                <div className="program-header">
-                  <i className="fas fa-globe-africa"></i>
-                  <h3>Arts Subjects</h3>
-                </div>
-                <p style={{marginBottom: '2rem'}}>Our arts and humanities program develops critical thinking, cultural awareness, and communication skills essential for leadership in South Sudan. Students explore history, literature, languages, and commercial subjects that prepare them for careers in government, business, education, and international relations.</p>
-                
-                <div style={{
-                  backgroundColor: 'rgba(126, 26, 25, 0.05)',
-                  padding: '1.5rem',
-                  borderRadius: '8px',
-                  marginBottom: '2rem',
-                  borderLeft: '4px solid var(--primary-red)'
-                }}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.1rem'}}>Learning Resources & Methods</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '0.95rem'}}>
-                    <li>Comprehensive library with historical and literary collections</li>
-                    <li>Interactive geography and mapping resources</li>
-                    <li>Business simulation software and accounting tools</li>
-                    <li>Debate and discussion forums for critical thinking</li>
-                    <li>Cultural heritage preservation projects</li>
-                  </ul>
-                </div>
-                
-                <div style={{marginTop: '2rem'}}>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem', fontWeight: '600'}}>Core Arts Subjects</h4>
-                  <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '1rem', lineHeight: '1.8'}}>
-                    <li>History & Geography</li>
-                    <li>Commerce & Accounting</li>
-                    <li>Literature & Languages</li>
-                    <li>Civics & Islamic Studies</li>
-                  </ul>
-                </div>
-                
-                <div style={{
-                  marginTop: '2rem',
-                  padding: '1rem',
-                  backgroundColor: 'rgba(248, 249, 250, 0.8)',
-                  borderRadius: '8px'
-                }}>
-                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>100%</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Arts Graduates</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>5000+</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Library Books</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '1.5rem', fontWeight: '700', color: 'var(--primary-red)', display: 'block'}}>8</span>
-                      <div style={{fontSize: '0.8rem', color: 'var(--medium-gray)'}}>Arts Teachers</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* School Library Section */}
-          </div>
-          
-          <div id="library" style={{marginTop: '5rem'}}>
-            <h2 style={{fontSize: '2.2rem', color: 'var(--primary-black)', marginBottom: '3rem', textAlign: 'center'}} className="library-title">School Library & Learning Resources</h2>
-            
-            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'flex-start'}} className="library-grid">
-              <div>
-                <div style={{marginBottom: '2rem'}}>
-                  <h3 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.5rem'}}>Our Library Excellence</h3>
-                  <p style={{fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--primary-black)', marginBottom: '1rem'}}>Our comprehensive library serves as the heart of academic learning at St. Lawrence Academy. With an extensive collection of books, reference materials, and digital resources, students have access to knowledge that supports their curriculum and encourages independent research and lifelong learning habits.</p>
-                  <p style={{fontSize: '1rem', lineHeight: '1.6', color: 'var(--medium-gray)'}}>The library provides a quiet, conducive environment for study and research, equipped with modern facilities and staffed by knowledgeable librarians who assist students in developing information literacy skills essential for academic success.</p>
-                  
-                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1.5rem', borderTop: '2px solid var(--primary-red)', marginTop: '2rem'}}>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '2rem', fontWeight: '900', color: 'var(--primary-red)', display: 'block'}}>8000+</span>
-                      <div style={{fontSize: '0.85rem', color: 'var(--medium-gray)', fontWeight: '600'}}>Books Available</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '2rem', fontWeight: '900', color: 'var(--primary-red)', display: 'block'}}>50</span>
-                      <div style={{fontSize: '0.85rem', color: 'var(--medium-gray)', fontWeight: '600'}}>Study Seats</div>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                      <span style={{fontSize: '2rem', fontWeight: '900', color: 'var(--primary-red)', display: 'block'}}>12hrs</span>
-                      <div style={{fontSize: '0.85rem', color: 'var(--medium-gray)', fontWeight: '600'}}>Daily Access</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem'}} className="library-images">
-                  <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Students in Library" 
-                       style={{width: '100%', height: '300px', objectFit: 'cover'}} />
-                  <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                       alt="Students Studying" 
-                       style={{width: '100%', height: '300px', objectFit: 'cover'}} />
-                </div>
-              </div>
-              
-              <div>
-                <div style={{marginBottom: '2rem'}}>
-                  <h3 style={{color: 'var(--primary-red)', fontSize: '1.5rem', fontWeight: '700', marginBottom: '2rem'}}>Library Resources & Services</h3>
-                  
-                  <div style={{marginBottom: '2rem'}}>
-                    <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem', fontWeight: '600'}}>Collections & Materials</h4>
-                    <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '1rem', lineHeight: '1.8'}}>
-                      <li>Academic textbooks for all subjects</li>
-                      <li>Reference materials and encyclopedias</li>
-                      <li>Newspapers and current affairs magazines</li>
-                      <li>Literature and fiction collections</li>
-                      <li>Research and study guides</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem', fontWeight: '600'}}>Library Services</h4>
-                    <ul style={{margin: 0, paddingLeft: '1.2rem', color: 'var(--medium-gray)', fontSize: '1rem', lineHeight: '1.8'}}>
-                      <li>Book Lending</li>
-                      <li>Research Assistance</li>
-                      <li>Study Groups</li>
-                      <li>Extended Hours</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Academic Support Services */}
-            <div id="academic-support" style={{marginTop: '8rem', paddingTop: '5rem', borderTop: '1px solid rgba(0,0,0,0.1)'}}>
-              <h2 style={{fontSize: '2.2rem', color: 'var(--primary-black)', marginBottom: '3rem', textAlign: 'center'}}>Academic Support & Enrichment</h2>
-              
-              <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem'}}>
-                <div style={{textAlign: 'center'}}>
-                  <i className="fas fa-chalkboard-teacher" style={{fontSize: '3rem', color: 'var(--primary-red)', marginBottom: '1.5rem'}}></i>
-                  <h4 style={{fontSize: '1.3rem', fontWeight: '700', color: 'var(--primary-black)', marginBottom: '1rem'}}>Tutorial Programs</h4>
-                  <p style={{fontSize: '1rem', color: 'var(--medium-gray)', lineHeight: '1.6'}}>Extra support sessions and peer tutoring for students who need additional help in challenging subjects.</p>
-                </div>
-                
-                <div style={{textAlign: 'center'}}>
-                  <i className="fas fa-trophy" style={{fontSize: '3rem', color: 'var(--primary-red)', marginBottom: '1.5rem'}}></i>
-                  <h4 style={{fontSize: '1.3rem', fontWeight: '700', color: 'var(--primary-black)', marginBottom: '1rem'}}>Academic Competitions</h4>
-                  <p style={{fontSize: '1rem', color: 'var(--medium-gray)', lineHeight: '1.6'}}>Science fairs, mathematics olympiads, debate tournaments, and essay competitions to showcase student talents.</p>
-                </div>
-                
-                <div style={{textAlign: 'center'}}>
-                  <i className="fas fa-graduation-cap" style={{fontSize: '3rem', color: 'var(--primary-red)', marginBottom: '1.5rem'}}></i>
-                  <h4 style={{fontSize: '1.3rem', fontWeight: '700', color: 'var(--primary-black)', marginBottom: '1rem'}}>University Guidance</h4>
-                  <p style={{fontSize: '1rem', color: 'var(--medium-gray)', lineHeight: '1.6'}}>Comprehensive counseling for university applications, scholarship opportunities, and career pathway planning.</p>
-                </div>
-                
-                <div style={{textAlign: 'center'}}>
-                  <i className="fas fa-laptop" style={{fontSize: '3rem', color: 'var(--primary-red)', marginBottom: '1.5rem'}}></i>
-                  <h4 style={{fontSize: '1.3rem', fontWeight: '700', color: 'var(--primary-black)', marginBottom: '1rem'}}>Digital Learning</h4>
-                  <p style={{fontSize: '1rem', color: 'var(--medium-gray)', lineHeight: '1.6'}}>Computer literacy, online research skills, and digital tools integration across all subject areas.</p>
-                </div>
-              </div>
-            </div>
-
-
+        <div className="prog-banner">
+          <div className="prog-banner-content">
+            <i className="fas fa-quote-left"></i>
+            <p>Across all levels, St. Lawrence Academy is committed to nurturing South Sudanese generations to become <strong>responsible, confident, and globally minded leaders</strong>.</p>
           </div>
         </div>
       </section>
 
-      {/* Campus Life Section */}
-      <section id="campus-life" className="campus-life scroll-animate">
+      {/* ── Why Choose SLA ── */}
+      <section className="home-why-sla scroll-animate">
         <div className="container">
-          <div className="section-header">
-            <span className="section-label">Campus Life</span>
-            <h2>A Vibrant Community of Learners</h2>
+          <div className="home-why-header">
+            <h2>Why Choose St. Lawrence Academy?</h2>
+            <p>Empowering the next generation of South Sudanese leaders through excellence, innovation, and character development.</p>
           </div>
-          <p style={{fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--medium-gray)', marginBottom: '3rem', textAlign: 'left', maxWidth: 'none'}}>Beyond academics, St Lawrence Academy offers a rich and vibrant campus experience with diverse opportunities for personal growth, leadership development, and lifelong friendships. Our students engage in a wide range of extracurricular activities, from competitive sports and creative arts to community service and cultural celebrations. Through these experiences, students develop essential life skills, discover their passions, build lasting relationships, and create memories that will shape their character for years to come. Our campus community fosters an environment where every student can thrive, explore their interests, and contribute meaningfully to the school's dynamic culture.</p>
-
-          {/* Athletics & Sports */}
-          <div id="athletics" style={{marginTop: '4rem', marginBottom: '5rem'}}>
-            <h3 style={{fontSize: '2.2rem', fontWeight: '700', color: 'var(--primary-black)', margin: 0, marginBottom: '2rem'}}>Athletics & Sports Excellence</h3>
-            
-            <div className="athletics-container">
-              
-              <div className="athletics-content">
-                <div className="athletics-left">
-                  <div className="athletics-description">
-                    <p style={{fontSize: '1.1rem', lineHeight: '1.7', color: 'var(--medium-gray)', marginBottom: '2rem'}}>Our comprehensive athletics program develops physical fitness, teamwork, and leadership skills through competitive sports and recreational activities. Students participate in interscholastic competitions while learning valuable life lessons about dedication, perseverance, and sportsmanship.</p>
-                  </div>
-                  
-                  <div className="athletics-sports">
-                    <div>
-                      <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem'}}>Team Sports</h4>
-                      <ul style={{listStyle: 'none', padding: 0, color: 'var(--medium-gray)'}}>
-                        <li style={{marginBottom: '0.5rem'}}>• Football (Soccer)</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Basketball</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Volleyball</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Netball</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Cricket</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Rugby</li>
-                      </ul>
-                    </div>
-                    <div className="sports-divider"></div>
-                    <div>
-                      <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem'}}>Individual Sports</h4>
-                      <ul style={{listStyle: 'none', padding: 0, color: 'var(--medium-gray)'}}>
-                        <li style={{marginBottom: '0.5rem'}}>• Track & Field</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Swimming</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Tennis</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Table Tennis</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Badminton</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Cross Country</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="athletics-image">
-                  <div className="image-carousel" data-carousel="athletics">
-                    <img src="/students-posing.jpg" alt="Sports" style={{width: '100%', height: '400px', objectFit: 'cover'}} />
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Basketball" style={{width: '100%', height: '400px', objectFit: 'cover'}} />
-                    <img src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Football" style={{width: '100%', height: '400px', objectFit: 'cover'}} />
-                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Swimming" style={{width: '100%', height: '400px', objectFit: 'cover'}} />
-                    <button className="carousel-arrow carousel-prev"><i className="fas fa-chevron-left"></i></button>
-                    <button className="carousel-arrow carousel-next"><i className="fas fa-chevron-right"></i></button>
-                  </div>
-                </div>
-              </div>
+          <div className="home-pillars-grid">
+            <div className="home-pillar">
+              <span className="pillar-num">01</span>
+              <h3>Academic Excellence</h3>
+              <p>Rigorous curriculum following South Sudan National Standards with proven outstanding results and university preparation.</p>
             </div>
-          </div>
-          
-          {/* Arts & Culture */}
-          <div id="arts-culture" style={{marginBottom: '5rem', paddingTop: '5rem', borderTop: '1px solid rgba(0,0,0,0.1)'}}>
-            <h3 style={{fontSize: '2.2rem', fontWeight: '700', color: 'var(--primary-black)', margin: 0, marginBottom: '2rem'}}>Arts & Cultural Programs</h3>
-            
-            <div className="arts-container">
-              <div className="arts-content">
-                <div className="arts-left">
-                  <div className="arts-description">
-                    <p style={{fontSize: '1.1rem', lineHeight: '1.7', color: 'var(--medium-gray)', marginBottom: '2rem'}}>Our vibrant arts program nurtures creativity and cultural expression through music, drama, visual arts, and dance. Students develop artistic skills while exploring their cultural heritage and contemporary artistic movements.</p>
-                  </div>
-                  
-                  <div className="arts-programs">
-                    <div>
-                      <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem'}}>Performing Arts</h4>
-                      <ul style={{listStyle: 'none', padding: 0, color: 'var(--medium-gray)'}}>
-                        <li style={{marginBottom: '0.5rem'}}>• Drama & Theater</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Music & Choir</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Traditional Dance</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Modern Dance</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Poetry & Spoken Word</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Cultural Festivals</li>
-                      </ul>
-                    </div>
-                    <div className="arts-divider"></div>
-                    <div>
-                      <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem'}}>Visual Arts</h4>
-                      <ul style={{listStyle: 'none', padding: 0, color: 'var(--medium-gray)'}}>
-                        <li style={{marginBottom: '0.5rem'}}>• Painting & Drawing</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Sculpture & Crafts</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Photography</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Digital Art</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Traditional Crafts</li>
-                        <li style={{marginBottom: '0.5rem'}}>• Art Exhibitions</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="arts-image">
-                  <div className="image-carousel" data-carousel="arts">
-                    <img src="/students.jpg" alt="Arts" style={{width: '100%', height: '400px', objectFit: 'cover'}} />
-                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Theater" style={{width: '100%', height: '400px', objectFit: 'cover'}} />
-                    <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Music" style={{width: '100%', height: '400px', objectFit: 'cover'}} />
-                    <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Visual Arts" style={{width: '100%', height: '400px', objectFit: 'cover'}} />
-                    <button className="carousel-arrow carousel-prev"><i className="fas fa-chevron-left"></i></button>
-                    <button className="carousel-arrow carousel-next"><i className="fas fa-chevron-right"></i></button>
-                  </div>
-                </div>
-              </div>
+            <div className="home-pillar">
+              <span className="pillar-num">02</span>
+              <h3>Innovation &amp; Technology</h3>
+              <p>Modern teaching methods, digital learning tools, and technology integration preparing students for the future.</p>
             </div>
-          </div>
-          
-          {/* Student Organizations & Leadership */}
-          <div id="student-organizations" style={{marginBottom: '5rem', paddingTop: '5rem', borderTop: '1px solid rgba(0,0,0,0.1)'}}>
-            <h3 style={{fontSize: '2.2rem', fontWeight: '700', color: 'var(--primary-black)', margin: 0, marginBottom: '2rem'}}>Student Organizations & Leadership</h3>
-            
-            <p style={{fontSize: '1.1rem', lineHeight: '1.7', color: 'var(--medium-gray)', marginBottom: '2rem'}}>Students develop leadership skills and pursue their interests through various clubs, societies, and student government opportunities. These organizations foster teamwork, responsibility, and community engagement.</p>
-            
-            <div className="organizations-layout">
-              <div className="org-column">
-                <div className="org-section">
-                  <div className="org-circle"></div>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem'}}>Student Government</h4>
-                  <ul style={{listStyle: 'none', padding: 0, color: 'var(--medium-gray)'}}>
-                    <li style={{marginBottom: '0.5rem'}}>• Student Council</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Class Representatives</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Prefect System</li>
-                    <li style={{marginBottom: '0.5rem'}}>• House Captains</li>
-                  </ul>
-                </div>
-                
-                <div className="org-section">
-                  <div className="org-circle"></div>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem'}}>Special Interest Groups</h4>
-                  <ul style={{listStyle: 'none', padding: 0, color: 'var(--medium-gray)'}}>
-                    <li style={{marginBottom: '0.5rem'}}>• Environmental Club</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Community Service</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Cultural Society</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Technology Club</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Entrepreneurship Club</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="org-divider"></div>
-              
-              <div className="org-column">
-                <div className="org-section">
-                  <div className="org-circle"></div>
-                  <h4 style={{color: 'var(--primary-red)', marginBottom: '1rem', fontSize: '1.2rem'}}>Academic Clubs</h4>
-                  <ul style={{listStyle: 'none', padding: 0, color: 'var(--medium-gray)'}}>
-                    <li style={{marginBottom: '0.5rem'}}>• Debate Society</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Science Club</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Mathematics Society</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Literary Club</li>
-                    <li style={{marginBottom: '0.5rem'}}>• Model UN</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="home-pillar">
+              <span className="pillar-num">03</span>
+              <h3>Safe Environment</h3>
+              <p>Secure campus with caring staff where every student feels valued, supported, and empowered to grow confidently.</p>
             </div>
-          </div>
-          
-          {/* Campus Facilities & Services */}
-          <div id="facilities" style={{marginBottom: '5rem', paddingTop: '5rem', borderTop: '1px solid rgba(0,0,0,0.1)'}}>
-            <h3 style={{fontSize: '2.2rem', fontWeight: '700', color: 'var(--primary-black)', margin: 0, marginBottom: '2rem'}}>Campus Facilities & Services</h3>
-            
-            <p style={{fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--medium-gray)', marginBottom: '4rem', textAlign: 'left', maxWidth: 'none'}}>Our modern campus provides state-of-the-art facilities designed to support learning, recreation, and personal development in a safe and nurturing environment. From cutting-edge science laboratories and technology centers to comprehensive sports facilities and comfortable student services, every aspect of our campus is thoughtfully designed to enhance the educational experience. Our facilities create an inspiring atmosphere where students can excel academically, grow personally, and build lasting friendships while preparing for their future careers and higher education opportunities.</p>
-            
-            <div className="facilities-zigzag">
-              <div className="facility-card left-up scroll-animate">
-                <div className="connection-circle"></div>
-                <h4>Learning Spaces</h4>
-                <ul>
-                  <li>Modern Classrooms</li>
-                  <li>Science Laboratories</li>
-                  <li>Computer Labs</li>
-                  <li>Library & Study Areas</li>
-                  <li>Art Studios</li>
-                </ul>
-              </div>
-              
-              <div className="facility-card right-down scroll-animate">
-                <div className="connection-circle"></div>
-                <h4>Recreation & Sports</h4>
-                <ul>
-                  <li>Sports Fields</li>
-                  <li>Basketball Courts</li>
-                  <li>Gymnasium</li>
-                  <li>Swimming Pool</li>
-                  <li>Fitness Center</li>
-                </ul>
-              </div>
-              
-              <div className="facility-card left-up scroll-animate">
-                <div className="connection-circle"></div>
-                <h4>Student Services</h4>
-                <ul>
-                  <li>Cafeteria & Dining</li>
-                  <li>Health Center</li>
-                  <li>Counseling Services</li>
-                  <li>Transportation</li>
-                  <li>Boarding Facilities</li>
-                </ul>
-              </div>
-              
-              <div className="facility-card right-down scroll-animate">
-                <div className="connection-circle"></div>
-                <h4>Technology & Innovation</h4>
-                <ul>
-                  <li>High-Speed Internet</li>
-                  <li>Smart Classrooms</li>
-                  <li>Digital Learning Tools</li>
-                  <li>Innovation Labs</li>
-                  <li>Audio-Visual Equipment</li>
-                </ul>
-              </div>
+            <div className="home-pillar">
+              <span className="pillar-num">04</span>
+              <h3>Character Building</h3>
+              <p>Strong moral values, leadership development, discipline, and integrity shaping responsible future citizens.</p>
+            </div>
+            <div className="home-pillar">
+              <span className="pillar-num">05</span>
+              <h3>Cultural Pride</h3>
+              <p>Celebrating South Sudanese heritage while preparing students for global opportunities and international success.</p>
+            </div>
+            <div className="home-pillar">
+              <span className="pillar-num">06</span>
+              <h3>Sports &amp; Arts</h3>
+              <p>Comprehensive athletics programs, music, drama, and creative arts developing well-rounded talented individuals.</p>
+            </div>
+            <div className="home-pillar">
+              <span className="pillar-num">07</span>
+              <h3>Community Service</h3>
+              <p>Active engagement in community projects teaching compassion, responsibility, and social awareness to students.</p>
+            </div>
+            <div className="home-pillar">
+              <span className="pillar-num">08</span>
+              <h3>Career Guidance</h3>
+              <p>Professional counseling, university placement support, and career planning ensuring bright futures for graduates.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* News & Events */}
+      {/* ── Stats Strip ── */}
+      <section className="home-stats-strip">
+        <div className="container">
+          <div className="home-stats-grid">
+            <div className="home-stat">
+              <span className="home-stat-number" data-target="1500">1500+</span>
+              <span className="home-stat-label">Students Enrolled</span>
+            </div>
+            <div className="home-stat">
+              <span className="home-stat-number" data-target="100">100+</span>
+              <span className="home-stat-label">Support Staff</span>
+            </div>
+            <div className="home-stat">
+              <span className="home-stat-number" data-target="3">3</span>
+              <span className="home-stat-label">Academic Levels</span>
+            </div>
+            <div className="home-stat">
+              <span className="home-stat-number" data-target="6">6+</span>
+              <span className="home-stat-label">Years of Excellence</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Campus Tour - Split Layout ── */}
+      <section className="campus-tour-section scroll-animate">
+        <div className="campus-tour-header">
+          <div className="container">
+            <div className="campus-header-content">
+              <div className="campus-header-text">
+                <span className="campus-header-eyebrow">Virtual Tour</span>
+                <h2>Explore Our Campus</h2>
+                <p>Take a tour of our facilities and learning spaces</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="campus-tour-split">
+          <div className="campus-tour-image-side">
+            <div className="campus-tour-slide active" style={{backgroundImage: 'url(/sla_pupils_1.jpg)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/sla_school_view.jpg)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/sla_basketball_1.jpg)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/sla_assembly.jpg)'}}></div>
+          </div>
+          <div className="campus-navigation-mobile">
+            <button className="campus-nav-btn campus-prev-mobile" aria-label="Previous"><i className="fas fa-chevron-left"></i></button>
+            <div className="campus-nav-dots-mobile">
+              <button className="campus-nav-dot-mobile active" data-index="0"></button>
+              <button className="campus-nav-dot-mobile" data-index="1"></button>
+              <button className="campus-nav-dot-mobile" data-index="2"></button>
+              <button className="campus-nav-dot-mobile" data-index="3"></button>
+            </div>
+            <button className="campus-nav-btn campus-next-mobile" aria-label="Next"><i className="fas fa-chevron-right"></i></button>
+          </div>
+          <div className="campus-tour-content-side">
+            <div className="campus-content-item active">
+              <span className="campus-badge">Learning Spaces</span>
+              <h3>Modern Classrooms</h3>
+              <p>Our state-of-the-art classrooms are equipped with modern teaching aids and comfortable seating arrangements designed to foster interactive learning and student engagement.</p>
+              <ul className="campus-features">
+                <li><i className="fas fa-check-circle"></i>Smart boards and projectors</li>
+                <li><i className="fas fa-check-circle"></i>Comfortable seating for 30+ students</li>
+                <li><i className="fas fa-check-circle"></i>Natural lighting and ventilation</li>
+                <li><i className="fas fa-check-circle"></i>Interactive learning tools</li>
+              </ul>
+            </div>
+            <div className="campus-content-item">
+              <span className="campus-badge">Our Campus</span>
+              <h3>School Compound</h3>
+              <p>Our expansive school compound provides a safe and secure environment for learning and growth with well-maintained grounds, green spaces, and modern infrastructure.</p>
+              <ul className="campus-features">
+                <li><i className="fas fa-check-circle"></i>24/7 security surveillance</li>
+                <li><i className="fas fa-check-circle"></i>Spacious outdoor areas</li>
+                <li><i className="fas fa-check-circle"></i>Well-maintained facilities</li>
+                <li><i className="fas fa-check-circle"></i>Accessible pathways</li>
+              </ul>
+            </div>
+            <div className="campus-content-item">
+              <span className="campus-badge">Athletics</span>
+              <h3>Sports Facilities</h3>
+              <p>Our comprehensive sports facilities include basketball courts, football fields, and athletic tracks developing well-rounded students through physical education and competitive sports.</p>
+              <ul className="campus-features">
+                <li><i className="fas fa-check-circle"></i>Full-size basketball court</li>
+                <li><i className="fas fa-check-circle"></i>Football and volleyball fields</li>
+                <li><i className="fas fa-check-circle"></i>Athletic track and field</li>
+                <li><i className="fas fa-check-circle"></i>Professional coaching staff</li>
+              </ul>
+            </div>
+            <div className="campus-content-item">
+              <span className="campus-badge">Community</span>
+              <h3>Assembly Ground</h3>
+              <p>Our large assembly ground serves as the heart of our school community, hosting morning assemblies, cultural events, sports days, and special celebrations.</p>
+              <ul className="campus-features">
+                <li><i className="fas fa-check-circle"></i>Capacity for 1,500+ students</li>
+                <li><i className="fas fa-check-circle"></i>Covered stage area</li>
+                <li><i className="fas fa-check-circle"></i>Sound system and lighting</li>
+                <li><i className="fas fa-check-circle"></i>Multi-purpose event space</li>
+              </ul>
+            </div>
+            <div className="campus-navigation-desktop">
+              <button className="campus-nav-btn campus-prev" aria-label="Previous"><i className="fas fa-chevron-left"></i></button>
+              <div className="campus-nav-dots">
+                <button className="campus-nav-dot active" data-index="0"></button>
+                <button className="campus-nav-dot" data-index="1"></button>
+                <button className="campus-nav-dot" data-index="2"></button>
+                <button className="campus-nav-dot" data-index="3"></button>
+              </div>
+              <button className="campus-nav-btn campus-next" aria-label="Next"><i className="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Student Life Section ── */}
+      <section className="student-life-section scroll-animate">
+        <div className="student-life-header">
+          <div className="container">
+            <div className="student-life-header-inner">
+              <div className="student-life-header-text">
+                <p className="student-life-eyebrow">BEYOND THE CLASSROOM</p>
+                <h2>Student Life at SLA</h2>
+              </div>
+              <p className="student-life-header-desc">Discover the vibrant community and enriching experiences that make St. Lawrence Academy special</p>
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="life-highlights-grid">
+            <a href="/student-life/sports" className="life-highlight-card">
+              <div className="life-highlight-image">
+                <img src="/sla_basketball_1.jpg" alt="Sports & Athletics" />
+              </div>
+              <div className="life-highlight-content">
+                <h3>Sports &amp; Athletics</h3>
+                <p>Competitive sports programs including basketball, football, volleyball, and athletics developing teamwork and physical fitness.</p>
+              </div>
+            </a>
+            <a href="/student-life/leadership" className="life-highlight-card">
+              <div className="life-highlight-image">
+                <img src="/sla_assembly.jpg" alt="Leadership Development" />
+              </div>
+              <div className="life-highlight-content">
+                <h3>Leadership Development</h3>
+                <p>Student council, prefect system, and leadership training programs building confident future leaders.</p>
+              </div>
+            </a>
+            <a href="/student-life/arts" className="life-highlight-card">
+              <div className="life-highlight-image">
+                <img src="/sla_cultural_dance.jpg" alt="Cultural Activities" />
+              </div>
+              <div className="life-highlight-content">
+                <h3>Cultural Activities</h3>
+                <p>Music, drama, dance, and cultural celebrations fostering creativity and appreciation for diverse traditions.</p>
+              </div>
+            </a>
+            <a href="/student-life/clubs" className="life-highlight-card">
+              <div className="life-highlight-image">
+                <img src="/sla_pupils_1.jpg" alt="Academic Clubs" />
+              </div>
+              <div className="life-highlight-content">
+                <h3>Academic Clubs</h3>
+                <p>Debate club, science club, math club, and more fostering intellectual curiosity and academic excellence.</p>
+              </div>
+            </a>
+            <a href="/student-life/community-service" className="life-highlight-card">
+              <div className="life-highlight-image">
+                <img src="/sla_school_view.jpg" alt="Community Service" />
+              </div>
+              <div className="life-highlight-content">
+                <h3>Community Service</h3>
+                <p>Volunteer programs and outreach initiatives teaching compassion, responsibility, and social awareness.</p>
+              </div>
+            </a>
+            <a href="/student-life/counseling" className="life-highlight-card">
+              <div className="life-highlight-image">
+                <img src="/sla_secondary_school.jpg" alt="Career Preparation" />
+              </div>
+              <div className="life-highlight-content">
+                <h3>Career Preparation</h3>
+                <p>Career guidance, mentorship programs, and university preparation supporting students' future success.</p>
+              </div>
+            </a>
+          </div>
+          <div className="life-cta">
+            <a href="/student-life/events" className="life-cta-link">
+              Explore Student Life
+              <i className="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Admissions Process ── */}
+      <section className="home-admissions-process scroll-animate">
+        <div className="container">
+
+          <div className="home-admissions-header">
+            <span className="admissions-eyebrow">Admissions</span>
+            <h2>How to Apply</h2>
+            <p>Simple steps to join the St. Lawrence Academy family</p>
+          </div>
+
+          <div className="home-admissions-steps">
+
+            <div className="admissions-step">
+              <span className="step-num">01</span>
+              <div className="step-divider"></div>
+              <div className="step-content">
+                <h3>Visit &amp; Inquire</h3>
+                <p>Schedule a campus tour, meet our staff, and learn about our programmes and admission requirements.</p>
+              </div>
+            </div>
+
+            <div className="admissions-step">
+              <span className="step-num">02</span>
+              <div className="step-divider"></div>
+              <div className="step-content">
+                <h3>Complete Application</h3>
+                <p>Fill out the application form with student information, academic history, and parent/guardian details.</p>
+              </div>
+            </div>
+
+            <div className="admissions-step">
+              <span className="step-num">03</span>
+              <div className="step-divider"></div>
+              <div className="step-content">
+                <h3>Assessment &amp; Interview</h3>
+                <p>Student takes a placement test and attends an interview to determine the appropriate grade level.</p>
+              </div>
+            </div>
+
+            <div className="admissions-step">
+              <span className="step-num">04</span>
+              <div className="step-divider"></div>
+              <div className="step-content">
+                <h3>Enrol &amp; Join</h3>
+                <p>Receive your acceptance letter, submit required documents, pay fees, and complete registration.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="admissions-cta">
+            <a href="/admissions/apply" className="admissions-cta-btn">
+              Start Your Application
+              <i className="fas fa-arrow-right"></i>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── Latest News & Events ── */}
       <section className="news-events scroll-animate">
         <div className="container">
-          <div className="section-header">
-            <span className="section-label">Latest News</span>
-            <h2>Stay Connected with Our Community</h2>
-            <p style={{fontSize: '1.2rem', lineHeight: '1.7', color: 'var(--medium-gray)', marginBottom: '3rem', textAlign: 'left', maxWidth: 'none'}}>Discover the latest achievements, events, and milestones from our vibrant school community. Stay informed about academic successes, sports victories, cultural celebrations, and important announcements that showcase the dynamic spirit and excellence of Saint Lawrence Academy.</p>
+          <div className="news-section-header">
+            <div className="news-header-content">
+              <span className="news-section-badge">Latest Updates</span>
+              <h2>News & Events</h2>
+              <p>Stay informed about the latest happenings at St. Lawrence Academy</p>
+            </div>
+            <a href="/blog" className="news-header-link">
+              View All News
+              <i className="fas fa-arrow-right"></i>
+            </a>
           </div>
           
-          <div style={{display: 'flex', justifyContent: 'flex-end', marginBottom: '2rem'}}>
-            <a href="/blog" className="view-all-btn">View All News <i className="fas fa-arrow-right"></i></a>
-          </div>
-          
-          <div className="news-main">
-            {loading ? (
-              <div style={{textAlign: 'center', padding: '3rem', color: 'var(--medium-gray)'}}>Loading...</div>
-            ) : blogPosts.length === 0 ? (
-              <div style={{textAlign: 'center', padding: '5rem 2rem', gridColumn: '1 / -1'}}>
-                <i className="fas fa-newspaper" style={{fontSize: '4rem', color: 'var(--primary-red)', marginBottom: '1.5rem'}}></i>
-                <h3 style={{fontSize: '1.5rem', color: 'var(--primary-black)', marginBottom: '1rem'}}>No Blog Posts Available</h3>
-                <p style={{fontSize: '1rem', color: 'var(--medium-gray)'}}>Check back soon for updates and news from our community.</p>
-              </div>
-            ) : blogPosts.length >= 2 ? (
-              <>
-                <a href={`/blog/${blogPosts[0].id}`} style={{textDecoration: 'none', color: 'inherit'}}>
-                  <div className="featured-article">
-                    <div className="article-image" style={{height: '350px'}}>
-                      {isVideo(blogPosts[0]) ? (
-                        blogPosts[0].video_url ? (
-                          <iframe title={blogPosts[0].title} 
-                            src={blogPosts[0].video_url.replace('watch?v=', 'embed/')} 
-                            style={{width: '100%', height: '100%', border: 'none'}}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
+          {loadingBlogs ? (
+            <div style={{textAlign: 'center', padding: '4rem 0'}}>
+              <i className="fas fa-spinner fa-spin" style={{fontSize: '3rem', color: 'var(--primary-red)'}}></i>
+              <p style={{marginTop: '1rem', color: 'var(--medium-gray)'}}>Loading news...</p>
+            </div>
+          ) : blogPosts.length > 0 ? (
+            <div className="news-main-layout">
+              <a href={`/blog/${blogPosts[0].id}/${blogPosts[0].title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`} className="news-featured-main">
+                <div className="news-featured-image-large">
+                  {isVideo(blogPosts[0]) ? (
+                    blogPosts[0].video_url ? (
+                      <div style={{position: 'relative', width: '100%', height: '100%'}}>
+                        <iframe 
+                          src={blogPosts[0].video_url.includes('youtube.com') || blogPosts[0].video_url.includes('youtu.be') 
+                            ? blogPosts[0].video_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/').split('&')[0]
+                            : blogPosts[0].video_url
+                          } 
+                          style={{width: '100%', height: '100%', border: 'none'}}
+                          title={blogPosts[0].title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        />
+                      </div>
+                    ) : (
+                      <video src={getMediaUrl(blogPosts[0])} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                    )
+                  ) : (
+                    <img src={getMediaUrl(blogPosts[0])} alt={blogPosts[0].title} />
+                  )}
+                  {blogPosts[0].is_featured && <span className="news-featured-badge">Featured</span>}
+                </div>
+                <div className="news-featured-content-large">
+                  <div className="news-featured-meta">
+                    <span><i className="far fa-calendar"></i> {formatDate(blogPosts[0].created_at)}</span>
+                    <span><i className="far fa-user"></i> {blogPosts[0].author || 'SLA Communications'}</span>
+                  </div>
+                  <h3>{blogPosts[0].title}</h3>
+                  <p>{truncateText(blogPosts[0].excerpt || blogPosts[0].content, 200)}</p>
+                  <div className="news-featured-author">
+                    <div className="news-featured-avatar"></div>
+                    <span>{blogPosts[0].author || 'SLA Communications'}</span>
+                  </div>
+                </div>
+              </a>
+              
+              <div className="news-side-cards">
+                {blogPosts.slice(1, 6).map((post) => (
+                  <a key={post.id} href={`/blog/${post.id}/${post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`} className="news-side-card">
+                    <div className="news-side-image">
+                      {isVideo(post) ? (
+                        post.video_url ? (
+                          <div style={{position: 'relative', width: '100%', height: '100%'}}>
+                            <iframe 
+                              src={post.video_url.includes('youtube.com') || post.video_url.includes('youtu.be') 
+                                ? post.video_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/').split('&')[0]
+                                : post.video_url
+                              } 
+                              style={{width: '100%', height: '100%', border: 'none'}}
+                              title={post.title}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            />
+                          </div>
                         ) : (
-                          <video controls style={{width: '100%', height: '100%', objectFit: 'cover'}}>
-                            <source src={getMediaUrl(blogPosts[0])} />
-                          </video>
+                          <video src={getMediaUrl(post)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
                         )
                       ) : (
-                        <img src={getMediaUrl(blogPosts[0])} alt={blogPosts[0].title} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                        <img src={getMediaUrl(post)} alt={post.title} />
                       )}
-                      <div className="article-overlay">
-                        <span className="article-category">{blogPosts[0].category}</span>
-                      </div>
                     </div>
-                    <div className="article-content">
-                      <div className="article-meta">
-                        <span className="article-date">{formatDate(blogPosts[0].created_at)}</span>
-                        <span className="read-time">{blogPosts[0].read_time} min read</span>
-                      </div>
-                      <h3 style={{height: '60px', overflow: 'hidden'}}>{truncateText(blogPosts[0].title, 80)}</h3>
-                      <p style={{height: '48px', overflow: 'hidden'}}>{truncateText(blogPosts[0].excerpt, 120)}</p>
-                      <div className="article-footer">
-                        <div className="author-info">
-                          <div className="author-avatar"></div>
-                          <span>{blogPosts[0].author}</span>
-                        </div>
-                        <span className="read-article">Read Article <i className="fas fa-arrow-right"></i></span>
-                      </div>
+                    <div className="news-side-content">
+                      <span className="news-side-date">{formatDate(post.created_at)}</span>
+                      <h4>{truncateText(post.title, 60)}</h4>
+                      <p>{truncateText(post.excerpt || post.content, 100)}</p>
                     </div>
-                  </div>
-                </a>
-                
-                <a href={`/blog/${blogPosts[1].id}`} style={{textDecoration: 'none', color: 'inherit'}}>
-                  <div className="featured-article">
-                    <div className="article-image" style={{height: '350px'}}>
-                      {isVideo(blogPosts[1]) ? (
-                        blogPosts[1].video_url ? (
-                          <iframe title={blogPosts[0].title} 
-                            src={blogPosts[1].video_url.replace('watch?v=', 'embed/')} 
-                            style={{width: '100%', height: '100%', border: 'none'}}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        ) : (
-                          <video controls style={{width: '100%', height: '100%', objectFit: 'cover'}}>
-                            <source src={getMediaUrl(blogPosts[1])} />
-                          </video>
-                        )
-                      ) : (
-                        <img src={getMediaUrl(blogPosts[1])} alt={blogPosts[1].title} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-                      )}
-                      <div className="article-overlay">
-                        <span className="article-category">{blogPosts[1].category}</span>
-                      </div>
-                    </div>
-                    <div className="article-content">
-                      <div className="article-meta">
-                        <span className="article-date">{formatDate(blogPosts[1].created_at)}</span>
-                        <span className="read-time">{blogPosts[1].read_time} min read</span>
-                      </div>
-                      <h3 style={{height: '60px', overflow: 'hidden'}}>{truncateText(blogPosts[1].title, 80)}</h3>
-                      <p style={{height: '48px', overflow: 'hidden'}}>{truncateText(blogPosts[1].excerpt, 120)}</p>
-                      <div className="article-footer">
-                        <div className="author-info">
-                          <div className="author-avatar"></div>
-                          <span>{blogPosts[1].author}</span>
-                        </div>
-                        <span className="read-article">Read Article <i className="fas fa-arrow-right"></i></span>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </>
-            ) : null}
-          </div>
-          
-          <div className="news-grid">
-            {!loading && blogPosts.slice(2, 5).map((post) => (
-              <a key={post.id} href={`/blog/${post.id}`} style={{textDecoration: 'none', color: 'inherit'}}>
-                <article className="news-article">
-                  <div className="news-image" style={{height: '200px'}}>
-                    {isVideo(post) ? (
-                      post.video_url ? (
-                        <iframe title={blogPosts[0].title} 
-                          src={post.video_url.replace('watch?v=', 'embed/')} 
-                          style={{width: '100%', height: '100%', border: 'none'}}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      ) : (
-                        <video controls style={{width: '100%', height: '100%', objectFit: 'cover'}}>
-                          <source src={getMediaUrl(post)} />
-                        </video>
-                      )
-                    ) : (
-                      <img src={getMediaUrl(post)} alt={post.title} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-                    )}
-                  </div>
-                  <div className="news-content">
-                    <span className="news-date">{formatDate(post.created_at)}</span>
-                    <h4 style={{height: '48px', overflow: 'hidden'}}>{truncateText(post.title, 60)}</h4>
-                    <p style={{height: '60px', overflow: 'hidden'}}>{truncateText(post.excerpt, 100)}</p>
-                  </div>
-                </article>
-              </a>
-            ))}
-          </div>
-            
-          <div className="news-grid" style={{gridTemplateColumns: 'repeat(3, 1fr)', marginTop: '2rem'}}>
-            {!loading && blogPosts.slice(5, 8).map((post) => (
-              <a key={post.id} href={`/blog/${post.id}`} style={{textDecoration: 'none', color: 'inherit'}}>
-                <article className="news-article">
-                  <div className="news-image" style={{height: '200px'}}>
-                    {isVideo(post) ? (
-                      post.video_url ? (
-                        <iframe title={blogPosts[0].title} 
-                          src={post.video_url.replace('watch?v=', 'embed/')} 
-                          style={{width: '100%', height: '100%', border: 'none'}}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      ) : (
-                        <video controls style={{width: '100%', height: '100%', objectFit: 'cover'}}>
-                          <source src={getMediaUrl(post)} />
-                        </video>
-                      )
-                    ) : (
-                      <img src={getMediaUrl(post)} alt={post.title} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-                    )}
-                  </div>
-                  <div className="news-content">
-                    <span className="news-date">{formatDate(post.created_at)}</span>
-                    <h4 style={{height: '48px', overflow: 'hidden'}}>{truncateText(post.title, 60)}</h4>
-                    <p style={{height: '60px', overflow: 'hidden'}}>{truncateText(post.excerpt, 100)}</p>
-                  </div>
-                </article>
-              </a>
-            ))}
-          </div>
-          
-          <div style={{display: 'flex', justifyContent: 'center', marginTop: '3rem'}}>
-            <a href="/blog" className="view-all-btn">View More News <i className="fas fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="faq-section scroll-animate">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Campus Tour</span>
-            <h2>{campusTour ? campusTour.title : 'Experience Saint Lawrence Academy'}</h2>
-            <p style={{fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--medium-gray)', marginBottom: '3rem', textAlign: 'left', maxWidth: 'none'}}>
-              {campusTour ? campusTour.description : 'Take a virtual tour of our beautiful campus and discover the facilities, classrooms, and spaces where our students learn, grow, and thrive. See firsthand what makes Saint Lawrence Academy a premier educational institution.'}
-            </p>
-          </div>
-          
-          {campusTour && (campusTour.video_url || campusTour.video) && (
-            <div style={{marginBottom: '4rem', maxWidth: '1200px', margin: '0 auto 4rem'}}>
-              <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', background: '#000'}}>
-                {campusTour.video_url ? (
-                  <iframe 
-                    style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none'}} 
-                    src={campusTour.video_url.replace('watch?v=', 'embed/')} 
-                    title={campusTour.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                ) : (
-                  <video controls style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}>
-                    <source src={`https://sla.pythonanywhere.com${campusTour.video}`} />
-                  </video>
-                )}
+                  </a>
+                ))}
               </div>
+            </div>
+          ) : (
+            <div style={{textAlign: 'center', padding: '4rem 0'}}>
+              <i className="fas fa-newspaper" style={{fontSize: '3rem', color: 'var(--medium-gray)', opacity: 0.5}}></i>
+              <p style={{marginTop: '1rem', color: 'var(--medium-gray)'}}>No news available at the moment.</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="faq-section scroll-animate">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Frequently Asked Questions</span>
-            <h2>Everything You Need to Know</h2>
-            <p style={{fontSize: '1.1rem', lineHeight: '1.6', color: 'var(--medium-gray)', marginBottom: '3rem', textAlign: 'left', maxWidth: 'none'}}>Find answers to common questions about admissions, academics, and student life at Saint Lawrence Academy. Whether you're interested in our enrollment process, curriculum offerings, extracurricular activities, or campus facilities, we've compiled comprehensive information to help you make informed decisions about your educational journey with us.</p>
+      {/* ── Reviews Teaser ── */}
+      {featuredReviews.length > 0 && (
+        <section className="home-reviews-teaser scroll-animate">
+          <div className="container">
+            <div className="home-reviews-header">
+              <span className="home-reviews-eyebrow">Community Voices</span>
+              <h2>What Our Families Say</h2>
+              <p>Honest experiences from parents, students, and alumni</p>
+            </div>
+            <div className="home-reviews-grid">
+              {featuredReviews.map(r => (
+                <div key={r.id} className="home-review-card">
+                  <div className="home-review-stars">
+                    {[1,2,3,4,5].map(n => (
+                      <span key={n} style={{color: n <= r.rating ? '#e8a020' : '#ddd', fontSize: '1rem'}}>&#9733;</span>
+                    ))}
+                  </div>
+                  <p className="home-review-text">"{r.text.length > 160 ? r.text.slice(0, 160).trimEnd() + '…' : r.text}"</p>
+                  <div className="home-review-author">
+                    <div className="home-review-avatar">
+                      {r.name.trim().split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase()}
+                    </div>
+                    <div>
+                      <span className="home-review-name">{r.name}</span>
+                      <span className="home-review-role">{r.role || r.reviewer_type}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="home-reviews-cta">
+              <a href="/reviews" className="home-reviews-link">
+                Read All Reviews <i className="fas fa-arrow-right"></i>
+              </a>
+            </div>
           </div>
-          
-          <div className="program-features-list">
-            <div className="feature-dropdown">
-              <div className="feature-line">
-                <span>What is the admission process?</span>
-                <i className="fas fa-arrow-right"></i>
-              </div>
-              <div className="feature-content">
-                <p>Our admission process includes an application, academic transcripts, entrance exam, and interview. We review applications holistically to find students who will thrive in our community.</p>
-              </div>
+        </section>
+      )}
+
+      {/* ── Quick Facts ── */}
+      <section className="home-quick-facts scroll-animate">
+        <div className="container">
+          <div className="quick-facts-inner">
+            <div className="quick-facts-header">
+              <span className="quick-facts-eyebrow">At a Glance</span>
+              <h2>School at a Glance</h2>
+              <p>Essential information about St. Lawrence Academy</p>
             </div>
-            <div className="feature-dropdown">
-              <div className="feature-line">
-                <span>What extracurricular activities are available?</span>
-                <i className="fas fa-arrow-right"></i>
+            <div className="quick-facts-body">
+              <div className="quick-facts-col">
+                <div className="qf-row">
+                  <span className="qf-label">Founded</span>
+                  <span className="qf-value">2020</span>
+                </div>
+                <div className="qf-row">
+                  <span className="qf-label">Location</span>
+                  <span className="qf-value">Juba, South Sudan</span>
+                </div>
+                <div className="qf-row">
+                  <span className="qf-label">Curriculum</span>
+                  <span className="qf-value">South Sudan National</span>
+                </div>
+                <div className="qf-row">
+                  <span className="qf-label">Language</span>
+                  <span className="qf-value">English</span>
+                </div>
               </div>
-              <div className="feature-content">
-                <p>We offer over 35 clubs and organizations, 15 varsity sports teams, performing arts programs, and numerous leadership opportunities for students to explore their interests.</p>
-              </div>
-            </div>
-            <div className="feature-dropdown">
-              <div className="feature-line">
-                <span>What is the student-teacher ratio?</span>
-                <i className="fas fa-arrow-right"></i>
-              </div>
-              <div className="feature-content">
-                <p>We maintain a 15:1 student-teacher ratio to ensure personalized attention and support for every student's academic and personal growth.</p>
-              </div>
-            </div>
-            <div className="feature-dropdown">
-              <div className="feature-line">
-                <span>Do you offer financial aid?</span>
-                <i className="fas fa-arrow-right"></i>
-              </div>
-              <div className="feature-content">
-                <p>Yes, we offer need-based financial aid and merit scholarships. Our financial aid office works with families to make quality education accessible.</p>
-              </div>
-            </div>
-            <div className="feature-dropdown">
-              <div className="feature-line">
-                <span>What are the school hours and schedule?</span>
-                <i className="fas fa-arrow-right"></i>
-              </div>
-              <div className="feature-content">
-                <p>Classes run from 7:30 AM to 3:30 PM, Monday through Friday. We also offer extended study hours and after-school programs until 6:00 PM for additional academic support and extracurricular activities.</p>
-              </div>
-            </div>
-            <div className="feature-dropdown">
-              <div className="feature-line">
-                <span>What transportation options are available?</span>
-                <i className="fas fa-arrow-right"></i>
-              </div>
-              <div className="feature-content">
-                <p>We provide comprehensive bus transportation covering major areas of the city. Additionally, we have secure parking facilities for students who drive and designated drop-off zones for parents.</p>
-              </div>
-            </div>
-            <div className="feature-dropdown">
-              <div className="feature-line">
-                <span>What meals and dining options do you offer?</span>
-                <i className="fas fa-arrow-right"></i>
-              </div>
-              <div className="feature-content">
-                <p>Our cafeteria serves nutritious breakfast, lunch, and snacks daily. We accommodate dietary restrictions and offer both local and international cuisine options to meet diverse student needs.</p>
-              </div>
-            </div>
-            <div className="feature-dropdown">
-              <div className="feature-line">
-                <span>How do you support students with different learning needs?</span>
-                <i className="fas fa-arrow-right"></i>
-              </div>
-              <div className="feature-content">
-                <p>We provide individualized learning support, tutoring programs, counseling services, and specialized resources to ensure every student can succeed regardless of their learning style or challenges.</p>
+              <div className="quick-facts-col">
+                <div className="qf-row">
+                  <span className="qf-label">Class Size</span>
+                  <span className="qf-value">Avg. 30 Students</span>
+                </div>
+                <div className="qf-row">
+                  <span className="qf-label">School Hours</span>
+                  <span className="qf-value">7:00 AM – 5:00 PM</span>
+                </div>
+                <div className="qf-row">
+                  <span className="qf-label">Facilities</span>
+                  <span className="qf-value">Library, Labs, Sports Fields</span>
+                </div>
+                <div className="qf-row">
+                  <span className="qf-label">Transportation</span>
+                  <span className="qf-value">School Bus Available</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* ── CTA Band ── */}
+      <section className="home-cta-band">
+        <div className="home-cta-band-bg"></div>
+        <div className="container">
+          <div className="home-cta-band-inner">
+            <div className="home-cta-band-text">
+              <span className="home-cta-band-eyebrow">Join Our Community</span>
+              <h2>Begin Your Journey at St. Lawrence Academy</h2>
+              <p>Give your child the foundation they deserve — quality education, strong values, and a community that cares.</p>
+            </div>
+            <div className="home-cta-band-actions">
+              <a href="/admissions/apply" className="home-cta-band-btn home-cta-band-btn--primary">
+                Apply Now <i className="fas fa-arrow-right"></i>
+              </a>
+              <a href="/admissions/visit" className="home-cta-band-btn home-cta-band-btn--ghost">
+                Schedule a Visit
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };

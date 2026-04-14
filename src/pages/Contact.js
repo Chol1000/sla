@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Contact.css';
+import { initScrollAnimations } from '../utils/scrollAnimations';
+import { secureFetch, isValidEmail, isValidPhone, sanitizeInput } from '../utils/api';
+import { setPageMeta } from '../utils/pageMeta';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState({ type: '', text: '' });
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterMessage, setNewsletterMessage] = useState({ type: '', text: '' });
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setPageMeta('Contact Us', 'Get in touch with St. Lawrence Academy. Visit us in Hai Referendum, Juba, South Sudan, or send us a message — our team is ready to help.');
+    const timer = setTimeout(() => initScrollAnimations(), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -25,23 +27,37 @@ const Contact = () => {
     setSubmitting(true);
     setSubmitMessage({ type: '', text: '' });
 
-    try {
-      const response = await fetch('http://localhost:8000/api/contact/messages/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
+    if (!isValidEmail(formData.email)) {
+      setSubmitMessage({ type: 'error', text: 'Please enter a valid email address.' });
+      setSubmitting(false);
+      return;
+    }
 
-      if (response.ok) {
-        setSubmitMessage({ type: 'success', text: 'Thank you for your message! We will get back to you soon.' });
-        setFormData({ name: '', email: '', phone: '', message: '' });
-      } else {
-        setSubmitMessage({ type: 'error', text: 'Failed to send message. Please try again.' });
-      }
+    if (formData.phone && !isValidPhone(formData.phone)) {
+      setSubmitMessage({ type: 'error', text: 'Please enter a valid phone number.' });
+      setSubmitting(false);
+      return;
+    }
+
+    const sanitizedData = {
+      name: sanitizeInput(formData.name),
+      email: sanitizeInput(formData.email),
+      phone: sanitizeInput(formData.phone),
+      message: sanitizeInput(formData.message)
+    };
+
+    try {
+      await secureFetch('/api/contact/messages/', {
+        method: 'POST',
+        body: JSON.stringify(sanitizedData)
+      });
+      setSubmitMessage({ type: 'success', text: 'Thank you! Your message has been received. We will be in touch shortly.' });
+      setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (error) {
-      setSubmitMessage({ type: 'error', text: 'Network error. Please try again.' });
+      setSubmitMessage({ type: 'error', text: error.message || 'Failed to send message. Please try again.' });
     } finally {
       setSubmitting(false);
+      setTimeout(() => setSubmitMessage({ type: '', text: '' }), 12000);
     }
   };
 
@@ -50,276 +66,291 @@ const Contact = () => {
     setNewsletterSubmitting(true);
     setNewsletterMessage({ type: '', text: '' });
 
-    const formData = new FormData(e.target);
-    const data = {
-      name: formData.get('name'),
-      email: formData.get('email')
-    };
+    const fd = new FormData(e.target);
+    const email = fd.get('email');
+    const name = fd.get('name');
+
+    if (!isValidEmail(email)) {
+      setNewsletterMessage({ type: 'error', text: 'Please enter a valid email address.' });
+      setNewsletterSubmitting(false);
+      return;
+    }
 
     try {
-      const response = await fetch('http://localhost:8000/api/contact/newsletter/', {
+      await secureFetch('/api/contact/newsletter/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ name: sanitizeInput(name), email: sanitizeInput(email) })
       });
-
-      if (response.ok) {
-        setNewsletterMessage({ type: 'success', text: 'Thank you for subscribing to our newsletter!' });
-        e.target.reset();
-      } else {
-        const error = await response.json();
-        setNewsletterMessage({ type: 'error', text: error.error || 'Failed to subscribe. Please try again.' });
-      }
+      setNewsletterMessage({ type: 'success', text: 'Thank you for subscribing!' });
+      e.target.reset();
     } catch (error) {
-      setNewsletterMessage({ type: 'error', text: 'Network error. Please try again.' });
+      setNewsletterMessage({ type: 'error', text: error.message || 'Failed to subscribe. Please try again.' });
     } finally {
       setNewsletterSubmitting(false);
+      setTimeout(() => setNewsletterMessage({ type: '', text: '' }), 12000);
     }
   };
 
   return (
     <div className="contact-page">
-      {/* Hero Section */}
+
+      {/* ── Hero ── */}
       <section className="contact-hero">
-        <div className="contact-hero-background">
-          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920" alt="Contact Us" style={{opacity: '0.7'}} />
+        <div className="contact-hero-bg">
+          <img src="/sla_school_view_4.jpg" alt="St. Lawrence Academy" />
         </div>
-        <div className="contact-hero-overlay" style={{background: 'rgba(0, 0, 0, 0.6)'}}></div>
+        <div className="contact-hero-overlay"></div>
         <div className="contact-hero-content">
-          <div className="contact-hero-badge">
-            <i className="fas fa-envelope"></i>
-            Get In Touch
-          </div>
-          <h1>Contact Us</h1>
-          <p>We're here to answer your questions and help you discover how St. Lawrence Academy can shape your child's future. Our dedicated team is ready to assist you with admissions, academics, and everything in between.</p>
-          <div className="hero-response-time">
-            <i className="fas fa-clock"></i>
-            Send us a message and get a reply within 2 business days (48 hours)
+          <div className="container">
+            <div className="contact-hero-inner">
+              <span className="contact-hero-label">St. Lawrence Academy</span>
+              <h1 className="contact-hero-title">Get in <span>Touch</span></h1>
+              <p className="contact-hero-sub">
+                We are here to answer your questions. Reach out and our
+                team will guide you every step of the way.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Intro - Mobile Only */}
-      <section className="contact-intro">
+      {/* ── Mobile Band ── */}
+      <div className="contact-mobile-band">
         <div className="container">
-          <p>
-            We're here to answer your questions and help you discover how St. Lawrence Academy can shape your child's future. Our dedicated team is ready to assist you with admissions, academics, and everything in between.
-          </p>
+          <h2 className="contact-mobile-band-heading">Contact Us</h2>
         </div>
-      </section>
+      </div>
 
-      {/* Contact Content */}
-      <section className="contact-content">
+      {/* ── Quick Info Band ── */}
+      <div className="contact-quick-band">
         <div className="container">
-          <div className="contact-grid">
-            {/* Contact Information */}
-            <div className="contact-info-section">
-              <h2>Contact Information</h2>
-              
-              <div className="contact-info-item">
-                <h3>
-                  <i className="fas fa-map-marker-alt"></i>
-                  Campus Address
-                </h3>
-                <p>
-                  123 Education Street<br />
-                  Juba<br />
-                  South Sudan
-                </p>
+          <div className="contact-quick-grid">
+            <div className="contact-quick-item">
+              <i className="fas fa-map-marker-alt"></i>
+              <div>
+                <span className="contact-quick-label">Location</span>
+                <span className="contact-quick-value">Hai Referendum, Juba, South Sudan</span>
               </div>
-
-              <div className="contact-info-item">
-                <h3>
-                  <i className="fas fa-phone"></i>
-                  Phone Numbers
-                </h3>
-                <p>
-                  Main Office: +211 9 12 345 678<br />
-                  Admissions Office: +211 9 12 345 679<br />
-                  Student Services: +211 9 12 345 680<br />
-                  Athletics Department: +211 9 12 345 681
-                </p>
+            </div>
+            <div className="contact-quick-item">
+              <i className="fas fa-phone"></i>
+              <div>
+                <span className="contact-quick-label">Main Office</span>
+                <span className="contact-quick-value">+211 9 12 345 678</span>
               </div>
-
-              <div className="contact-info-item">
-                <h3>
-                  <i className="fas fa-envelope"></i>
-                  Email Addresses
-                </h3>
-                <p>
-                  General Inquiries: info@stlawrenceacademy.edu<br />
-                  Admissions: admissions@stlawrenceacademy.edu<br />
-                  Academics: academics@stlawrenceacademy.edu<br />
-                  Support: support@stlawrenceacademy.edu
-                </p>
+            </div>
+            <div className="contact-quick-item">
+              <i className="fas fa-envelope"></i>
+              <div>
+                <span className="contact-quick-label">Email</span>
+                <span className="contact-quick-value">info@stlawrenceacademy.edu</span>
               </div>
-
-              <div className="contact-info-item">
-                <h3>
-                  <i className="fas fa-clock"></i>
-                  Office Hours
-                </h3>
-                <p>
-                  Monday - Friday: 8:00 AM - 5:00 PM<br />
-                  Saturday: 9:00 AM - 2:00 PM<br />
-                  Sunday: Closed<br />
-                  <strong style={{color: 'var(--primary-red)', marginTop: '0.5rem', display: 'block'}}>Summer Hours (June-August):</strong>
-                  Monday - Thursday: 8:00 AM - 4:00 PM
-                </p>
+            </div>
+            <div className="contact-quick-item">
+              <i className="fas fa-clock"></i>
+              <div>
+                <span className="contact-quick-label">Office Hours</span>
+                <span className="contact-quick-value">Mon – Fri: 8:00 AM – 5:00 PM</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-              <div className="contact-info-item">
-                <h3>
-                  <i className="fas fa-directions"></i>
-                  Directions
-                </h3>
-                <p>
-                  From Downtown: Take Highway 101 North, exit at Education Blvd<br />
-                  From Airport: Follow signs to Academic District<br />
-                  Parking: Visitor parking available in Lot A<br />
-                  Public Transit: Bus routes 12, 45, and 67
-                </p>
-              </div>
+      {/* ── Main Content ── */}
+      <section className="contact-main">
+        <div className="container">
+          <div className="contact-main-grid">
 
-              <div className="contact-info-item">
-                <h3>
-                  <i className="fas fa-calendar-check"></i>
-                  Schedule a Visit
-                </h3>
-                <p>
-                  Campus Tours: Monday - Friday at 10:00 AM and 2:00 PM<br />
-                  Shadow Days: Available for prospective students<br />
-                  Parent Information Sessions: First Saturday of each month<br />
-                  Please call ahead to reserve your spot
-                </p>
+            {/* Left: Info */}
+            <div className="contact-info-col reveal">
+              <span className="contact-eyebrow">Reach Us</span>
+              <h2 className="contact-info-heading">We'd Love to Hear from You</h2>
+              <p className="contact-info-intro">
+                Whether you have a question about admissions, academics, school
+                life, or simply want to learn more about St. Lawrence Academy,
+                our team is always ready to help.
+              </p>
+
+              <div className="contact-detail-cards">
+
+                <div className="contact-detail-card">
+                  <div className="contact-detail-icon">
+                    <i className="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div className="contact-detail-body">
+                    <span className="contact-detail-label">Campus Address</span>
+                    <p>Hai Referendum, Juba, South Sudan</p>
+                  </div>
+                </div>
+
+                <div className="contact-detail-card">
+                  <div className="contact-detail-icon">
+                    <i className="fas fa-phone"></i>
+                  </div>
+                  <div className="contact-detail-body">
+                    <span className="contact-detail-label">Phone Numbers</span>
+                    <p>
+                      Main Office: +211 9 12 345 678<br />
+                      Admissions: +211 9 12 345 679
+                    </p>
+                  </div>
+                </div>
+
+                <div className="contact-detail-card">
+                  <div className="contact-detail-icon">
+                    <i className="fas fa-envelope"></i>
+                  </div>
+                  <div className="contact-detail-body">
+                    <span className="contact-detail-label">Email Addresses</span>
+                    <p>
+                      General: info@stlawrenceacademy.edu<br />
+                      Admissions: admissions@stlawrenceacademy.edu
+                    </p>
+                  </div>
+                </div>
+
+                <div className="contact-detail-card">
+                  <div className="contact-detail-icon">
+                    <i className="fas fa-clock"></i>
+                  </div>
+                  <div className="contact-detail-body">
+                    <span className="contact-detail-label">Office Hours</span>
+                    <p>
+                      Monday – Friday: 8:00 AM – 5:00 PM<br />
+                      Saturday: 9:00 AM – 2:00 PM<br />
+                      Sunday: Closed
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            <div className="contact-form-wrapper">
-              {/* Contact Form */}
-              <div className="contact-form-section">
-                <h2>Send Us a Message</h2>
+            {/* Right: Form */}
+            <div className="contact-form-col reveal">
+              <div className="contact-form-card">
+                <span className="contact-eyebrow">Send a Message</span>
+                <h2 className="contact-form-heading">Write to Us</h2>
+
                 {submitMessage.text && (
-                  <div style={{padding: '1rem', marginBottom: '1rem', background: submitMessage.type === 'success' ? '#d4edda' : '#f8d7da', color: submitMessage.type === 'success' ? '#155724' : '#721c24', borderRadius: '5px'}}>
+                  <div className={`contact-alert contact-alert--${submitMessage.type}`}>
+                    <i className={`fas ${submitMessage.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
                     {submitMessage.text}
                   </div>
                 )}
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Full Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Enter your full name"
-                  />
-                </div>
 
-                <div className="form-group">
-                  <label>Email Address *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+211 9 12 345 678"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Message *</label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    placeholder="Tell us how we can help you..."
-                  />
-                </div>
-
-                <button type="submit" className="submit-btn" disabled={submitting}>
-                  {submitting ? 'Sending...' : 'Send Message'}
-                </button>
-              </form>
+                <form onSubmit={handleSubmit} className="contact-form">
+                  <div className="contact-form-row">
+                    <div className="contact-field">
+                      <label>Full Name <span>*</span></label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        placeholder="Your full name"
+                      />
+                    </div>
+                    <div className="contact-field">
+                      <label>Phone Number</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="+211 9 12 345 678"
+                      />
+                    </div>
+                  </div>
+                  <div className="contact-field">
+                    <label>Email Address <span>*</span></label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                  <div className="contact-field">
+                    <label>Message <span>*</span></label>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      placeholder="Tell us how we can help you..."
+                    />
+                  </div>
+                  <button type="submit" className="contact-submit-btn" disabled={submitting}>
+                    {submitting ? (
+                      <><i className="fas fa-spinner fa-spin"></i> Sending…</>
+                    ) : (
+                      <><i className="fas fa-paper-plane"></i> Send Message</>
+                    )}
+                  </button>
+                </form>
               </div>
+            </div>
 
-              {/* Newsletter Subscription */}
-              <div className="newsletter-section" style={{marginTop: '3rem'}}>
-              <h2 style={{color: 'var(--primary-red)', fontSize: '2rem', fontWeight: '700', marginBottom: '2rem'}}>Subscribe to Newsletter</h2>
-              <p style={{fontSize: '1rem', color: 'var(--medium-gray)', marginBottom: '2rem', lineHeight: '1.7'}}>
-                Stay updated with the latest news, events, and announcements from St. Lawrence Academy.
+          </div>
+        </div>
+      </section>
+
+      {/* ── Newsletter ── */}
+      <section className="contact-newsletter">
+        <div className="container">
+          <div className="contact-newsletter-inner">
+            <div className="contact-newsletter-text">
+              <span className="contact-eyebrow contact-eyebrow--light">Stay Connected</span>
+              <h2 className="contact-newsletter-heading">Subscribe to Our Newsletter</h2>
+              <p>
+                Receive the latest news, events, and announcements from
+                St. Lawrence Academy directly in your inbox.
               </p>
+            </div>
+            <div className="contact-newsletter-form-wrap">
               {newsletterMessage.text && (
-                <div style={{padding: '1rem', marginBottom: '1rem', background: newsletterMessage.type === 'success' ? '#d4edda' : '#f8d7da', color: newsletterMessage.type === 'success' ? '#155724' : '#721c24', borderRadius: '5px'}}>
+                <div className={`contact-alert contact-alert--${newsletterMessage.type} contact-alert--light`}>
+                  <i className={`fas ${newsletterMessage.type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`}></i>
                   {newsletterMessage.text}
                 </div>
               )}
-              <form onSubmit={handleNewsletterSubmit}>
-                <div className="form-group">
-                  <label>Full Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Enter your full name"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Email Address *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-
-                <button type="submit" className="submit-btn" disabled={newsletterSubmitting}>
-                  {newsletterSubmitting ? 'Subscribing...' : 'Subscribe'}
+              <form onSubmit={handleNewsletterSubmit} className="contact-newsletter-form">
+                <input type="text" name="name" required placeholder="Your name" />
+                <input type="email" name="email" required placeholder="Your email address" />
+                <button type="submit" disabled={newsletterSubmitting}>
+                  {newsletterSubmitting ? 'Subscribing…' : 'Subscribe'}
                 </button>
               </form>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="map-section" id="map">
+      {/* ── Find Us ── */}
+      <section className="contact-findus">
         <div className="container">
-          <div className="map-header">
-            <h2>Find Us on Campus</h2>
-            <p>Visit our beautiful campus and experience St. Lawrence Academy firsthand</p>
-          </div>
-          <div className="map-container">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63492.64193087641!2d31.551889!3d4.859363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1735c5d6b8b3b3b3%3A0x3b3b3b3b3b3b3b3b!2sJuba%2C%20South%20Sudan!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
-              width="100%"
-              height="450"
-              style={{border: 0, borderRadius: '12px'}}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="St. Lawrence Academy Location - Juba, South Sudan"
-            ></iframe>
+          <div className="contact-findus-inner">
+            <div className="contact-findus-text">
+              <span className="contact-eyebrow">Find Us</span>
+              <h2 className="contact-findus-heading">Visit Our Campus</h2>
+              <p>
+                Come and see St. Lawrence Academy for yourself — our doors are
+                open to prospective families and visitors. Walk through our classrooms,
+                meet our teachers, and get a real sense of life at SLA.
+              </p>
+            </div>
+            <a href="/admissions/visit" className="contact-findus-btn">
+              <i className="fas fa-walking"></i> Schedule a Campus Visit
+            </a>
           </div>
         </div>
       </section>
+
     </div>
   );
 };

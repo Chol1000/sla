@@ -3,6 +3,23 @@ from django.utils.text import slugify
 import math
 
 class BlogPost(models.Model):
+    CATEGORY_CHOICES = [
+        ('Academics',           'Academics'),
+        ('Sports',              'Sports'),
+        ('Events',              'Events'),
+        ('Announcements',       'Announcements'),
+        ('Achievements',        'Achievements'),
+        ('Arts & Culture',      'Arts & Culture'),
+        ('Health & Wellness',   'Health & Wellness'),
+        ('Community',           'Community'),
+        ('Alumni',              'Alumni'),
+        ('Education & Training','Education & Training'),
+        ('Life Skills',         'Life Skills'),
+        ('Opportunities',       'Opportunities'),
+        ('General',             'General'),
+        ('Other',               'Other'),
+    ]
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     author = models.CharField(max_length=100)
@@ -11,7 +28,7 @@ class BlogPost(models.Model):
     image = models.ImageField(upload_to='blog/images/', blank=True, null=True)
     video = models.FileField(upload_to='blog/videos/', blank=True, null=True)
     video_url = models.URLField(max_length=500, blank=True, null=True)
-    category = models.CharField(max_length=50)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='General')
     read_time = models.IntegerField(default=5, help_text='Estimated reading time in minutes')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

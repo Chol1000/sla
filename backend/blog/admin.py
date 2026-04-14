@@ -4,7 +4,7 @@ from .models import BlogPost
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ['title', 'author', 'category', 'read_time', 'created_at', 'is_published']
-    list_filter = ['category', 'is_published', 'created_at']
+    list_filter = ['category', 'is_published']
     search_fields = ['title', 'author', 'content']
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'created_at'

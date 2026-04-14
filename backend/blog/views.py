@@ -1,12 +1,20 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.throttling import AnonRateThrottle
 from .models import BlogPost
 from .serializers import BlogPostSerializer
 
-class BlogPostViewSet(viewsets.ModelViewSet):
+
+class BlogReadThrottle(AnonRateThrottle):
+    scope = 'anon'
+
+
+class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
+    """Read-only public API — blog content is admin-managed, not user-created."""
     queryset = BlogPost.objects.filter(is_published=True)
     serializer_class = BlogPostSerializer
+    throttle_classes = [BlogReadThrottle]
 
     @action(detail=False, methods=['get'])
     def recent(self, request):

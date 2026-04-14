@@ -13,6 +13,16 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+# Load .env file for local development
+_env_file = Path(__file__).resolve().parent.parent / '.env'
+if _env_file.exists():
+    with open(_env_file) as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith('#') and '=' in _line:
+                _key, _val = _line.split('=', 1)
+                os.environ.setdefault(_key.strip(), _val.strip())
+
 # Apply Python 3.14 compatibility patch
 import school_backend.patch
 
@@ -24,12 +34,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-avhk56(fp_9m6e#0k@5#@^i21w3v%ry-d7wf=c*4l6(bkn5ugs'
+_secret_key = os.environ.get('SECRET_KEY')
+if not _secret_key:
+    if os.environ.get('PYTHONANYWHERE_DOMAIN'):
+        raise ValueError("SECRET_KEY environment variable must be set in production.")
+    _secret_key = 'django-insecure-dev-only-do-not-use-in-production'
+SECRET_KEY = _secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*'] if DEBUG else ['sla.pythonanywhere.com']
+ALLOWED_HOSTS = ['*'] if DEBUG else ['sla.pythonanywhere.com', 'www.stlawrenceacademy.edu']
 
 
 # Application definition
@@ -41,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'axes',
     'rest_framework',
     'corsheaders',
     'blog',
@@ -51,15 +67,18 @@ INSTALLED_APPS = [
     'leadership',
     'admissions',
     'contact',
+    'reviews',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'school_backend.middleware.SecurityHeadersMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'axes.middleware.AxesMiddleware',                        # brute-force protection
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -155,11 +174,89 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# File Upload Settings
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024   # 5MB max file upload
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024   # 5MB max POST body
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 100              # prevent field flooding attacks
+
 # CORS Settings
-CORS_ALLOW_ALL_ORIGINS = True
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOWED_ORIGINS = [
+        'https://sla.pythonanywhere.com',
+        'https://www.stlawrenceacademy.edu',
+    ]
+    CORS_ALLOW_CREDENTIALS = True
 
 # REST Framework Settings
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon':         '200/hour',   # general API reads
+        'contact':      '10/hour',    # contact form submissions
+        'review':       '5/hour',     # review submissions
+        'alumni':       '3/hour',     # alumni profile submissions
+        'visit':        '5/hour',     # campus visit requests
+        'newsletter':   '10/hour',    # newsletter sign-ups
+    },
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    # Return 400 for malformed requests instead of 500
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
 }
+
+# Security Settings
+SESSION_COOKIE_HTTPONLY = True       # JS cannot read session cookie
+CSRF_COOKIE_HTTPONLY    = False      # React needs to read CSRF token
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE    = 'Lax'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True   # session dies when browser closes
+SESSION_COOKIE_AGE = 60 * 60 * 1         # 1-hour hard timeout even if browser stays open
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+# Admin URL — change from default /admin/ to reduce automated scan attacks
+ADMIN_URL = os.environ.get('ADMIN_URL', 'sla-management/')
+
+# Brute-force login protection (django-axes)
+AXES_FAILURE_LIMIT        = 5           # lock after 5 failed attempts
+AXES_COOLOFF_TIME         = 1           # lock for 1 hour
+AXES_LOCKOUT_CALLABLE     = None        # use default lockout response
+AXES_RESET_ON_SUCCESS     = True        # reset counter on successful login
+AXES_ONLY_ADMIN_SITE      = True        # protect only the admin login
+AXES_IPWARE_PROXY_COUNT   = 0
+AUTHENTICATION_BACKENDS   = [
+    'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Email Settings
+# Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD in your environment / PythonAnywhere config.
+# Supports Gmail SMTP by default — create an App Password in your Google account settings.
+EMAIL_BACKEND     = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST        = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT        = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS     = True
+EMAIL_HOST_USER   = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+# Comma-separated list of admin emails e.g. "admin1@gmail.com,admin2@gmail.com"
+ADMIN_EMAILS = [e.strip() for e in os.environ.get('ADMIN_EMAIL', EMAIL_HOST_USER).split(',') if e.strip()]

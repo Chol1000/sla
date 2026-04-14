@@ -1,0 +1,589 @@
+/* ===== STUDENT LEADERSHIP PAGE ===== */
+
+.leadership-page {
+  background: #f9f5f0;
+  min-height: 100vh;
+}
+
+/* ── Hero ── */
+.leadership-hero {
+  position: relative;
+  height: 60vh;
+  min-height: 420px;
+  max-height: 650px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+.leadership-hero-bg { position: absolute; inset: 0; }
+
+.leadership-hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+}
+
+.leadership-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.leadership-hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0 1.5rem 3.5rem;
+  width: 100%;
+}
+
+.leadership-hero-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #c8a96e;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.lh-line {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background: #c8a96e;
+  opacity: 0.7;
+}
+
+.leadership-hero-title {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  color: white;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.leadership-hero-sub {
+  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  color: rgba(255,255,255,0.7);
+  max-width: 520px;
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ── Mobile Band ── */
+.leadership-mobile-band {
+  display: none;
+  background: #7e1a19;
+  padding: 1.1rem 0;
+  text-align: center;
+}
+
+.leadership-mobile-band-heading {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: white;
+  margin: 0;
+}
+
+/* ── Intro ── */
+.leadership-intro {
+  background: white;
+  border-bottom: 3px solid #c8a96e;
+  padding: 4rem 0;
+}
+
+.leadership-intro-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.leadership-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #c8a96e;
+  margin-bottom: 0.85rem;
+}
+
+.leadership-intro-heading {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 800;
+  color: #111;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+.leadership-intro-text {
+  font-size: 0.97rem;
+  color: #555;
+  line-height: 1.9;
+  margin: 0;
+}
+
+/* ── Directory ── */
+.leadership-directory {
+  padding: 5rem 0 6rem;
+}
+
+/* ── Filters wrap ── */
+.leadership-filters-wrap {
+  margin-bottom: 4rem;
+}
+
+/* Desktop pill buttons */
+.leadership-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.leadership-filter-btn {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  border: 1.5px solid rgba(126,26,25,0.2);
+  background: white;
+  color: #777;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.leadership-filter-btn:hover { border-color: #7e1a19; color: #7e1a19; }
+.leadership-filter-btn.active { background: #7e1a19; border-color: #7e1a19; color: white; }
+
+/* Mobile dropdown — hidden on desktop */
+.leadership-filter-dropdown {
+  display: none;
+  position: relative;
+  z-index: 50;
+}
+
+.leadership-filter-select-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.2rem;
+  background: white;
+  border: 1px solid #e8e2d9;
+  border-left: 3px solid #c8a96e;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.leadership-filter-select-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.leadership-filter-select-left i {
+  font-size: 0.7rem;
+  color: #c8a96e;
+}
+
+.leadership-filter-arrow {
+  font-size: 0.65rem;
+  color: #c8a96e;
+  transition: transform 0.25s;
+}
+
+.leadership-filter-arrow.open { transform: rotate(180deg); }
+
+.leadership-filter-menu {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e8e2d9;
+  border-top: 2px solid #c8a96e;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  animation: filterMenuIn 0.2s ease;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+@keyframes filterMenuIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.leadership-filter-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1.2rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #f5f0ea;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #444;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.leadership-filter-menu-item:last-child { border-bottom: none; }
+.leadership-filter-menu-item:hover { background: #fdf8f2; color: #7e1a19; }
+.leadership-filter-menu-item.active { background: #fdf8f2; color: #7e1a19; font-weight: 700; }
+
+.leadership-filter-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c8a96e;
+  flex-shrink: 0;
+}
+
+/* ── Year section ── */
+.leadership-year-block {
+  margin-bottom: 4.5rem;
+}
+
+.leadership-year-block:last-child { margin-bottom: 0; }
+
+.leadership-year-heading {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.leadership-year-heading > span:first-child {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 900;
+  color: #111;
+  white-space: nowrap;
+}
+
+.leadership-year-heading-line {
+  flex: 1;
+  height: 1px;
+  background: #e8e2d9;
+}
+
+.leadership-year-badge {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #7e1a19;
+  background: rgba(126,26,25,0.08);
+  padding: 0.25rem 0.65rem;
+  white-space: nowrap;
+}
+
+/* ── Cards grid ── */
+.leadership-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+/* ── Card ── */
+.leadership-card {
+  background: white;
+  border: 1px solid #e8e2d9;
+  border-top: 3px solid #c8a96e;
+  padding: 2rem 1.25rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.9rem;
+}
+
+/* Circular avatar */
+.leadership-card-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #e8e2d9;
+  flex-shrink: 0;
+  background: #f0e8dc;
+  position: relative;
+}
+
+.leadership-card-avatar--clickable {
+  cursor: pointer;
+}
+
+.leadership-card-avatar--clickable:hover .leadership-card-avatar-zoom {
+  opacity: 1;
+}
+
+.leadership-card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Zoom overlay on hover */
+.leadership-card-avatar-zoom {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: white;
+  font-size: 0.9rem;
+}
+
+/* Placeholder — initials + label */
+.leadership-card-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  background: linear-gradient(135deg, #e8e2d9 0%, #ddd7ce 100%);
+}
+
+.leadership-card-avatar-initials {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: rgba(126,26,25,0.45);
+  font-family: Georgia, serif;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.leadership-card-avatar-label {
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(126,26,25,0.35);
+  line-height: 1;
+}
+
+.leadership-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.leadership-card-info h3 {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.leadership-card-position {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #7e1a19;
+  line-height: 1.4;
+}
+
+/* ── Skeleton ── */
+.leadership-skeleton-wrap {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.lsk-card {
+  background: white;
+  border: 1px solid #e8e2d9;
+  border-top: 3px solid #e8e2d9;
+  padding: 2rem 1.25rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.lsk-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0ece6 25%, #e8e2d9 50%, #f0ece6 75%);
+  background-size: 200% 100%;
+  animation: lsk-shimmer 1.4s infinite;
+}
+
+.lsk-line {
+  border-radius: 3px;
+  background: linear-gradient(90deg, #f0ece6 25%, #e8e2d9 50%, #f0ece6 75%);
+  background-size: 200% 100%;
+  animation: lsk-shimmer 1.4s infinite;
+}
+
+.lsk-name { height: 13px; width: 70%; }
+.lsk-pos  { height: 11px; width: 50%; }
+
+@keyframes lsk-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Empty ── */
+.leadership-empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  color: #999;
+}
+
+.leadership-empty i  { font-size: 3rem; margin-bottom: 1.25rem; display: block; }
+.leadership-empty h3 { font-size: 1.1rem; font-weight: 700; color: #555; margin: 0 0 0.5rem; }
+.leadership-empty p  { font-size: 0.9rem; margin: 0; }
+
+/* ── Lightbox ── */
+.leadership-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(4px);
+  animation: lb-in 0.2s ease;
+}
+
+@keyframes lb-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.leadership-lightbox-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  border-radius: 50%;
+}
+
+.leadership-lightbox-close:hover { background: rgba(200,169,110,0.5); }
+
+.leadership-lightbox-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 440px;
+  width: 100%;
+  animation: lb-scale 0.2s ease;
+}
+
+@keyframes lb-scale {
+  from { transform: scale(0.93); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.leadership-lightbox-inner img {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border: 3px solid #c8a96e;
+  display: block;
+}
+
+.leadership-lightbox-caption {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.leadership-lightbox-caption strong {
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+}
+
+.leadership-lightbox-caption span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #c8a96e;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .leadership-cards-grid,
+  .leadership-skeleton-wrap { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 960px) {
+  .leadership-cards-grid,
+  .leadership-skeleton-wrap { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .leadership-hero-title { display: none; }
+  .leadership-mobile-band { display: block; }
+
+  /* Hide pill buttons, show dropdown */
+  .leadership-filters { display: none; }
+  .leadership-filter-dropdown { display: block; }
+
+  .leadership-cards-grid,
+  .leadership-skeleton-wrap { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  .leadership-card { padding: 1.5rem 0.75rem 1.25rem; }
+  .leadership-card-avatar { width: 72px; height: 72px; }
+  .leadership-card-info h3 { font-size: 0.8rem; }
+  .leadership-card-position { font-size: 0.7rem; }
+
+  .leadership-year-heading { margin-bottom: 1.5rem; }
+  .leadership-directory { padding: 3.5rem 0 4.5rem; }
+  .leadership-intro { padding: 3rem 0; }
+}
+
+@media (max-width: 420px) {
+  .leadership-cards-grid,
+  .leadership-skeleton-wrap { grid-template-columns: repeat(2, 1fr); }
+}
