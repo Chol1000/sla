@@ -93,7 +93,7 @@ const Primary = () => {
       </section>
 
       {/* ── Classes P1–P8 ── */}
-      <section className="primary-classes">
+      <section className="primary-classes" id="classes">
         <div className="container">
           <div className="primary-classes-header">
             <span className="primary-eyebrow">School Years</span>
@@ -138,7 +138,7 @@ const Primary = () => {
       </section>
 
       {/* ── Subjects ── */}
-      <section className="primary-subjects">
+      <section className="primary-subjects" id="subjects">
         <div className="container">
           <div className="primary-subjects-header">
             <span className="primary-eyebrow">What We Teach</span>

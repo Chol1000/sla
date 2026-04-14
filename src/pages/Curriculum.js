@@ -58,7 +58,7 @@ const Curriculum = () => {
       </section>
 
       {/* ── Three Levels ── */}
-      <section className="curriculum-levels">
+      <section className="curriculum-levels" id="levels">
         <div className="container">
           <div className="curriculum-levels-header">
             <span className="curriculum-eyebrow">School Levels</span>

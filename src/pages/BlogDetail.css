@@ -1,7 +1,7 @@
 /* ===== BLOG DETAIL PAGE ===== */
 
 .bd-page {
-  background: #f9f5f0;
+  background: #ffffff;
   min-height: 100vh;
   padding-top: 125px;
   transition: padding-top 0.35s ease;
@@ -311,7 +311,7 @@ body.topbar-hidden .bd-back-bar {
   height: 52px;
   flex-shrink: 0;
   overflow: hidden;
-  background: #f0e8dc;
+  background: #ffffff;
 }
 
 .bd-related-img img {

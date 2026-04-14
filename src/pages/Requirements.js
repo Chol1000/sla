@@ -111,7 +111,7 @@ const Requirements = () => {
       </section>
 
       {/* ── Document Requirements ── */}
-      <section className="req-docs">
+      <section className="req-docs" id="documents">
         <div className="container">
           <div className="req-section-header">
             <span className="req-eyebrow">Documents</span>

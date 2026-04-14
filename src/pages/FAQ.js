@@ -244,7 +244,7 @@ const FAQ = () => {
       </section>
 
       {/* ── FAQ body ── */}
-      <section className="faq-body">
+      <section className="faq-body" id="questions">
         <div className="container">
           <div className="faq-body-inner">
 

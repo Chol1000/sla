@@ -1,7 +1,7 @@
 /* ===== SUPPORT US PAGE ===== */
 
 .support-page {
-  background: #f9f5f0;
+  background: #ffffff;
   min-height: 100vh;
 }
 
@@ -34,9 +34,9 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.82) 0%,
-    rgba(0,0,0,0.5) 35%,
-    rgba(0,0,0,0.15) 65%,
+    rgba(0,0,0,0.65) 0%,
+    rgba(0,0,0,0.41) 35%,
+    rgba(0,0,0,0.10) 65%,
     rgba(0,0,0,0.0) 100%
   );
 }
@@ -66,7 +66,7 @@
 }
 
 .support-hero-title {
-  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-size: 2.8rem;
   font-weight: 900;
   color: white;
   line-height: 1.1;
@@ -209,7 +209,7 @@
 /* ── Impact Section ── */
 .support-impact {
   padding: 5rem 0;
-  background: #f9f5f0;
+  background: #ffffff;
 }
 
 .support-section-header {
@@ -298,7 +298,7 @@
 
 /* ── Ways to Give ── */
 .support-give {
-  background: #f9f5f0;
+  background: #ffffff;
   padding: 5rem 0;
   border-top: 1px solid #e8e2d9;
 }
@@ -583,7 +583,7 @@
   .support-hero-overlay {
     background: linear-gradient(
       to top,
-      rgba(0,0,0,0.82) 0%,
+      rgba(0,0,0,0.65) 0%,
       rgba(0,0,0,0.45) 35%,
       rgba(0,0,0,0.15) 60%,
       rgba(0,0,0,0.0) 100%

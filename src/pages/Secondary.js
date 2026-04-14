@@ -93,7 +93,7 @@ const Secondary = () => {
       </section>
 
       {/* ── Streams ── */}
-      <section className="secondary-streams">
+      <section className="secondary-streams" id="streams">
         <div className="container">
           <div className="secondary-streams-header">
             <span className="secondary-eyebrow">Academic Streams</span>

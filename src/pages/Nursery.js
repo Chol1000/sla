@@ -90,7 +90,7 @@ const Nursery = () => {
       </section>
 
       {/* ── Three Classes ── */}
-      <section className="nursery-classes">
+      <section className="nursery-classes" id="classes">
         <div className="container">
           <div className="nursery-classes-header">
             <span className="nursery-eyebrow">Our Classes</span>
@@ -143,7 +143,7 @@ const Nursery = () => {
       </section>
 
       {/* ── Developmental Domains ── */}
-      <section className="nursery-domains">
+      <section className="nursery-domains" id="learning">
         <div className="container">
           <div className="nursery-domains-header">
             <span className="nursery-eyebrow">What Children Learn</span>

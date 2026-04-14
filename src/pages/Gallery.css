@@ -1,7 +1,7 @@
 /* ===== GALLERY PAGE ===== */
 
 .gallery-page {
-  background: #f4f1ed;
+  background: #ffffff;
   min-height: 100vh;
 }
 
@@ -31,8 +31,8 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.5) 45%,
+    rgba(0,0,0,0.72) 0%,
+    rgba(0,0,0,0.41) 45%,
     rgba(0,0,0,0.05) 80%,
     transparent 100%
   );
@@ -326,7 +326,7 @@
 
 @media (max-width: 640px) {
   .gallery-hero { height: 70vh; min-height: 420px; max-height: none; }
-  .gallery-hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 45%, transparent 75%); }
+  .gallery-hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 45%, transparent 75%); }
   .gallery-hero-content { padding-bottom: 2.5rem; }
   .gallery-hero-title { display: none; }
   .gallery-mobile-band { display: block; }

@@ -1,7 +1,7 @@
 /* ===== CLUBS & SOCIETIES PAGE ===== */
 
 .clubs-page {
-  background: #f9f5f0;
+  background: #ffffff;
   min-height: 100vh;
 }
 
@@ -31,9 +31,9 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.55) 45%,
-    rgba(0,0,0,0.08) 75%,
+    rgba(0,0,0,0.72) 0%,
+    rgba(0,0,0,0.41) 45%,
+    rgba(0,0,0,0.06) 75%,
     rgba(0,0,0,0.0) 100%
   );
 }
@@ -133,7 +133,7 @@
 /* ── Main clubs ── */
 .clubs-main {
   padding: 6rem 0;
-  background: #f9f5f0;
+  background: #ffffff;
 }
 
 .clubs-section-header {
@@ -277,7 +277,7 @@
 
 /* ── Benefits ── */
 .clubs-benefits {
-  background: #f9f5f0;
+  background: #ffffff;
   border-top: 1px solid #e8e2d9;
   padding: 5.5rem 0;
 }
@@ -382,8 +382,8 @@
   .clubs-hero-overlay {
     background: linear-gradient(
       to top,
-      rgba(0,0,0,0.88) 0%,
-      rgba(0,0,0,0.5) 45%,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,0.41) 45%,
       rgba(0,0,0,0.0) 75%
     );
   }

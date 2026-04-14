@@ -1,7 +1,7 @@
 /* ===== COUNSELING PAGE ===== */
 
 .cns-page {
-  background: #f9f5f0;
+  background: #ffffff;
   min-height: 100vh;
 }
 
@@ -31,9 +31,9 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.55) 45%,
-    rgba(0,0,0,0.08) 75%,
+    rgba(0,0,0,0.72) 0%,
+    rgba(0,0,0,0.41) 45%,
+    rgba(0,0,0,0.06) 75%,
     rgba(0,0,0,0.0) 100%
   );
 }
@@ -175,7 +175,7 @@
 .cns-feature-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 55%);
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
   display: flex;
   align-items: flex-end;
   padding: 2.5rem;
@@ -232,7 +232,7 @@
 /* ── Support Areas ── */
 .cns-areas {
   padding: 6rem 0;
-  background: #f9f5f0;
+  background: #ffffff;
 }
 
 .cns-areas-grid {
@@ -322,7 +322,7 @@
 }
 
 .cns-principle-card {
-  background: #f9f5f0;
+  background: #ffffff;
   border: 1px solid #e8e2d9;
   overflow: hidden;
 }
@@ -355,7 +355,7 @@
 
 /* ── Closing ── */
 .cns-closing {
-  background: #f9f5f0;
+  background: #ffffff;
   border-top: 1px solid #e8e2d9;
   padding: 5rem 0;
 }
@@ -410,7 +410,7 @@
 
 @media (max-width: 640px) {
   .cns-hero { height: 72vh; min-height: 460px; max-height: none; }
-  .cns-hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.5) 45%, rgba(0,0,0,0.0) 75%); }
+  .cns-hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.41) 45%, rgba(0,0,0,0.0) 75%); }
   .cns-hero-content { padding-bottom: 2.5rem; }
   .cns-hero-title { display: none; }
   .cns-mobile-band { display: block; }

@@ -305,7 +305,10 @@ const Contact = () => {
         <div className="container">
           <div className="contact-newsletter-inner">
             <div className="contact-newsletter-text">
-              <span className="contact-eyebrow contact-eyebrow--light">Stay Connected</span>
+              <div className="contact-newsletter-icon">
+                <i className="fas fa-envelope-open-text"></i>
+              </div>
+              <span className="contact-newsletter-label">Stay Connected</span>
               <h2 className="contact-newsletter-heading">Subscribe to Our Newsletter</h2>
               <p>
                 Receive the latest news, events, and announcements from

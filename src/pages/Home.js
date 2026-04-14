@@ -9,63 +9,81 @@ import { setPageMeta } from '../utils/pageMeta';
 const HERO_SLIDES = [
   {
     img: '/sla_school_overview.jpg',
-    tag: 'JUBA, SOUTH SUDAN',
-    line1: 'EXCELLENCE IN',
-    title: 'EDUCATION',
-    line2: 'FOR ALL',
-    desc: 'Empowering students through academic rigour, creativity, and strong values — preparing tomorrow\'s leaders today.',
+    title: 'Excellence in Education',
+    desc: 'St. Lawrence Academy — a leading school in Juba offering quality Nursery, Primary, and Secondary education built on academic rigour, strong values, and genuine care for every child.',
   },
   {
     img: '/sla_assembly.jpg',
-    tag: 'SCHOOL ASSEMBLY',
-    line1: 'BUILDING',
-    title: 'CHARACTER',
-    line2: 'EVERY DAY',
-    desc: 'Discipline, integrity, and leadership are at the heart of everything we do at St. Lawrence Academy.',
+    title: 'Building Character Daily',
+    desc: 'Discipline, integrity, and leadership form the foundation of every school day at St. Lawrence Academy — shaping responsible, principled citizens for South Sudan and beyond.',
   },
   {
     img: '/sla_students_16.jpg',
-    tag: 'OUR STUDENTS',
-    line1: 'SHAPING',
-    title: 'FUTURES',
-    line2: 'TOGETHER',
-    desc: 'Every student is unique. We personalise learning to help each child discover their full potential.',
+    title: 'Shaping Futures Together',
+    desc: 'Every student at SLA is known by name, supported individually, and guided step by step toward discovering their true potential and purpose.',
   },
   {
-    img: '/sla_basketball_1.jpg',
-    tag: 'SPORTS & LIFE SKILLS',
-    line1: 'BEYOND THE',
-    title: 'CLASSROOM',
-    line2: 'WE GROW',
-    desc: 'From athletics to the arts, we develop confident, well-rounded individuals ready for the world.',
+    img: '/sla_cultural_dance.jpg',
+    bgPos: 'center 20%',
+    title: 'Beyond the Classroom',
+    desc: 'From athletics and music to cultural celebrations and community service — SLA nurtures well-rounded, confident individuals who are proud of who they are.',
   },
   {
     img: '/sla_school_view.jpg',
-    tag: 'OUR CAMPUS',
-    line1: 'A PLACE TO',
-    title: 'BELONG',
-    line2: 'AND THRIVE',
-    desc: 'Our safe, vibrant campus is designed to inspire curiosity and foster a love for learning.',
+    title: 'A Place to Belong',
+    desc: 'Our safe, welcoming campus in Hai Referendum, Juba is designed to inspire curiosity, nurture every talent, and make every child feel truly at home.',
   },
   {
     img: '/sla_school_gate.jpg',
-    tag: 'WELCOME TO SLA',
-    line1: 'WHERE DREAMS',
-    title: 'BEGIN',
-    line2: 'AND GROW',
-    desc: 'Join thousands of families who trust St. Lawrence Academy to shape their children\'s future.',
+    title: 'Where Dreams Begin',
+    desc: 'Join the St. Lawrence Academy family — trusted by parents across Juba since 2020 for education that genuinely prepares children for life, university, and the world.',
   },
   {
     img: '/sla_secondary_school.jpg',
-    tag: 'SECONDARY SCHOOL',
-    line1: 'READY FOR',
-    title: 'TOMORROW',
-    line2: 'START TODAY',
-    desc: 'Our secondary programme prepares students for national exams, higher education, and global opportunities.',
+    title: 'Prepared for Tomorrow',
+    desc: 'Our S1–S4 programme prepares students for national examinations, higher education, and the global opportunities that await beyond school.',
   },
 ];
 
 const HERO_IMAGES = HERO_SLIDES.map(s => s.img);
+
+const PREVIEW_CHARS = 220;
+
+const HomeReviewCard = ({ r }) => {
+  const [expanded, setExpanded] = useState(false);
+  const needsExpand = r.text.length > PREVIEW_CHARS;
+  const displayText = needsExpand && !expanded
+    ? r.text.slice(0, PREVIEW_CHARS).trimEnd() + '…'
+    : r.text;
+  return (
+    <div className="home-review-card">
+      <div className="home-review-card-top">
+        <div className="home-review-avatar">
+          {r.name.trim().split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase()}
+        </div>
+        <div>
+          <span className="home-review-name">{r.name}</span>
+          <span className="home-review-role">{r.role || r.reviewer_type}</span>
+        </div>
+      </div>
+      <div className="home-review-stars">
+        {[1,2,3,4,5].map(n => (
+          <span key={n} style={{color: n <= r.rating ? '#e8a020' : '#ddd', fontSize: '1rem'}}>&#9733;</span>
+        ))}
+      </div>
+      <div className="home-review-text-wrap">
+        <p className="home-review-text">"{displayText}"</p>
+        {needsExpand && (
+          <button className="home-review-expand-btn" onClick={() => setExpanded(e => !e)}>
+            {expanded
+              ? <><i className="fas fa-chevron-up"></i> Show less</>
+              : <><i className="fas fa-chevron-down"></i> Read more</>}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const Home = () => {
   const [carouselIdx, setCarouselIdx] = useState(0);
@@ -245,11 +263,11 @@ const Home = () => {
       <section className="hero">
         {/* Carousel Background Images */}
         <div className="hero-carousel-bg">
-          {HERO_IMAGES.map((img, i) => (
+          {HERO_SLIDES.map((slide, i) => (
             <div
               key={i}
               className={`hero-carousel-slide${carouselIdx === i ? ' active' : prevCarouselIdx === i ? ' prev' : ''}`}
-              style={{ backgroundImage: `url(${img})` }}
+              style={{ backgroundImage: `url(${slide.img})`, backgroundPosition: slide.bgPos || 'center center' }}
             />
           ))}
         </div>
@@ -785,23 +803,7 @@ const Home = () => {
             </div>
             <div className="home-reviews-grid">
               {featuredReviews.map(r => (
-                <div key={r.id} className="home-review-card">
-                  <div className="home-review-stars">
-                    {[1,2,3,4,5].map(n => (
-                      <span key={n} style={{color: n <= r.rating ? '#e8a020' : '#ddd', fontSize: '1rem'}}>&#9733;</span>
-                    ))}
-                  </div>
-                  <p className="home-review-text">"{r.text.length > 160 ? r.text.slice(0, 160).trimEnd() + '…' : r.text}"</p>
-                  <div className="home-review-author">
-                    <div className="home-review-avatar">
-                      {r.name.trim().split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase()}
-                    </div>
-                    <div>
-                      <span className="home-review-name">{r.name}</span>
-                      <span className="home-review-role">{r.role || r.reviewer_type}</span>
-                    </div>
-                  </div>
-                </div>
+                <HomeReviewCard key={r.id} r={r} />
               ))}
             </div>
             <div className="home-reviews-cta">
@@ -885,6 +887,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
 
     </div>
   );

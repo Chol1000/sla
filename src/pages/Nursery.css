@@ -1,7 +1,7 @@
 /* ===== NURSERY PAGE ===== */
 
 .nursery-page {
-  background: #f9f5f0;
+  background: #ffffff;
   min-height: 100vh;
 }
 
@@ -34,9 +34,9 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.82) 0%,
-    rgba(0,0,0,0.5) 35%,
-    rgba(0,0,0,0.12) 65%,
+    rgba(0,0,0,0.65) 0%,
+    rgba(0,0,0,0.41) 35%,
+    rgba(0,0,0,0.10) 65%,
     rgba(0,0,0,0.0) 100%
   );
 }
@@ -141,7 +141,7 @@
 /* ── About ── */
 .nursery-about {
   padding: 5.5rem 0;
-  background: #f9f5f0;
+  background: #ffffff;
 }
 
 .nursery-about-inner {
@@ -237,7 +237,7 @@
 }
 
 .nursery-class-card {
-  background: #f9f5f0;
+  background: #ffffff;
   border: 1px solid #e8e2d9;
   border-top: 4px solid #c8a96e;
   padding: 2.2rem 2rem;
@@ -302,7 +302,7 @@
 /* ── Developmental Domains ── */
 .nursery-domains {
   padding: 5.5rem 0;
-  background: #f9f5f0;
+  background: #ffffff;
 }
 
 .nursery-domains-header {
@@ -525,7 +525,7 @@
 /* ── Gallery ── */
 .nursery-gallery {
   padding: 5.5rem 0;
-  background: #f9f5f0;
+  background: #ffffff;
   border-top: 1px solid #e8e2d9;
 }
 
@@ -568,7 +568,7 @@
 
 /* ── Closing ── */
 .nursery-closing {
-  background: #f9f5f0;
+  background: #ffffff;
   border-top: 1px solid #e8e2d9;
   padding: 5rem 0;
 }
@@ -668,8 +668,8 @@
   .nursery-hero-overlay {
     background: linear-gradient(
       to top,
-      rgba(0,0,0,0.82) 0%,
-      rgba(0,0,0,0.45) 40%,
+      rgba(0,0,0,0.65) 0%,
+      rgba(0,0,0,0.38) 40%,
       rgba(0,0,0,0.0) 75%
     );
   }

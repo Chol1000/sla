@@ -123,9 +123,6 @@ const ApplicationProcess = () => {
                 A clear, step-by-step guide to joining St. Lawrence Academy —
                 from your first enquiry to your child's first day of school.
               </p>
-              <a href="/admissions/contact" className="apply-hero-cta">
-                <i className="fas fa-phone"></i> Contact Admissions
-              </a>
             </div>
           </div>
         </div>
@@ -156,7 +153,7 @@ const ApplicationProcess = () => {
       </section>
 
       {/* ── Steps ── */}
-      <section className="apply-steps">
+      <section className="apply-steps" id="steps">
         <div className="container">
           <div className="apply-steps-header">
             <span className="apply-eyebrow">The Process</span>

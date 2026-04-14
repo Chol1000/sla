@@ -97,7 +97,7 @@ const About = () => {
       </section>
 
       {/* ── Values ── */}
-      <section className="about-values">
+      <section className="about-values" id="values">
         <div className="container">
           <div className="about-values-header">
             <span className="about-section-eyebrow">Guiding Principles</span>

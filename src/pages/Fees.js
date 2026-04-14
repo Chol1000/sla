@@ -129,7 +129,7 @@ const Fees = () => {
       </section>
 
       {/* ── Fee Tables ── */}
-      <section className="fees-tables">
+      <section className="fees-tables" id="fees-breakdown">
         <div className="container">
           <div className="fees-section-header">
             <span className="fees-eyebrow">Fee Structure</span>

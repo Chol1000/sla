@@ -2,7 +2,7 @@
    REGISTRATION STATUS PAGE
    ═══════════════════════════════════ */
 
-.rs-page { background: #f4f5f7; min-height: 100vh; }
+.rs-page { background: #ffffff; min-height: 100vh; }
 
 /* ── Top bar ── */
 .rs-topbar {
@@ -330,11 +330,11 @@
 .rs-btn--primary { background: #7e1a19; color: #fff; }
 .rs-btn--primary:hover { background: #6b1716; }
 
-.rs-btn--secondary { background: #f4f5f7; color: #333; border: 1px solid #ddd; }
+.rs-btn--secondary { background: #ffffff; color: #333; border: 1px solid #ddd; }
 .rs-btn--secondary:hover { background: #eaecf0; }
 
 .rs-btn--ghost { background: transparent; color: #555; border: 1px solid #ddd; }
-.rs-btn--ghost:hover { background: #f4f5f7; }
+.rs-btn--ghost:hover { background: #ffffff; }
 
 .rs-btn--outline { background: transparent; color: #7e1a19; border: 1px solid rgba(126,26,25,0.25); }
 .rs-btn--outline:hover { background: rgba(126,26,25,0.05); }
@@ -474,13 +474,13 @@
 
 .rs-info-divider {
   width: 1px;
-  background: #f0f0f0;
+  background: #ffffff;
   margin: 1.5rem 0;
 }
 
 /* ── Contact band ── */
 .rs-contact-band {
-  background: #f9f5f0;
+  background: #ffffff;
   padding: 2.5rem 0;
   border-top: 1px solid #ede9e2;
 }

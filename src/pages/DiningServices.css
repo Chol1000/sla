@@ -1,7 +1,7 @@
 /* ===== DINING SERVICES PAGE ===== */
 
 .ds-page {
-  background: #f9f5f0;
+  background: #ffffff;
   min-height: 100vh;
 }
 
@@ -31,9 +31,9 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.55) 45%,
-    rgba(0,0,0,0.08) 75%,
+    rgba(0,0,0,0.72) 0%,
+    rgba(0,0,0,0.41) 45%,
+    rgba(0,0,0,0.06) 75%,
     rgba(0,0,0,0.0) 100%
   );
 }
@@ -154,7 +154,7 @@
 /* ── Meals ── */
 .ds-meals {
   padding: 6rem 0;
-  background: #f9f5f0;
+  background: #ffffff;
 }
 
 .ds-meals-grid {
@@ -240,7 +240,7 @@
 }
 
 .ds-standard-card {
-  background: #f9f5f0;
+  background: #ffffff;
   border: 1px solid #e8e2d9;
   overflow: hidden;
 }
@@ -273,7 +273,7 @@
 
 /* ── Feature ── */
 .ds-feature {
-  background: #f9f5f0;
+  background: #ffffff;
   border-top: 1px solid #e8e2d9;
   padding: 5.5rem 0;
 }
@@ -404,7 +404,7 @@
 
 @media (max-width: 640px) {
   .ds-hero { height: 72vh; min-height: 460px; max-height: none; }
-  .ds-hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.5) 45%, rgba(0,0,0,0.0) 75%); }
+  .ds-hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.41) 45%, rgba(0,0,0,0.0) 75%); }
   .ds-hero-content { padding-bottom: 2.5rem; }
   .ds-hero-title { display: none; }
   .ds-mobile-band { display: block; }

@@ -1,7 +1,7 @@
 /* ===== ANTHEM PAGE ===== */
 
 .anthem-page {
-  background: #f9f5f0;
+  background: #ffffff;
   min-height: 100vh;
 }
 
@@ -34,9 +34,9 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.82) 0%,
-    rgba(0,0,0,0.5) 35%,
-    rgba(0,0,0,0.15) 65%,
+    rgba(0,0,0,0.65) 0%,
+    rgba(0,0,0,0.41) 35%,
+    rgba(0,0,0,0.10) 65%,
     rgba(0,0,0,0.0) 100%
   );
 }
@@ -284,13 +284,13 @@
 }
 
 .anthem-play-btn--pause {
-  background: #f9f5f0;
+  background: #ffffff;
   color: #7e1a19;
   border: 1px solid #e8e2d9;
 }
 
 .anthem-play-btn--pause:hover {
-  background: #f0ece6;
+  background: #ffffff;
   transform: translateY(-1px);
 }
 
@@ -357,7 +357,7 @@
 
 /* ── Quote band ── */
 .anthem-quote-band {
-  background: #f9f5f0;
+  background: #ffffff;
   padding: 4.5rem 0;
   border-top: 3px solid #c8a96e;
   border-bottom: 1px solid #e8e2d9;
@@ -425,8 +425,8 @@
   .anthem-hero-overlay {
     background: linear-gradient(
       to top,
-      rgba(0,0,0,0.82) 0%,
-      rgba(0,0,0,0.45) 40%,
+      rgba(0,0,0,0.65) 0%,
+      rgba(0,0,0,0.38) 40%,
       rgba(0,0,0,0.0) 75%
     );
   }
