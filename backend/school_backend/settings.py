@@ -44,7 +44,12 @@ SECRET_KEY = _secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*'] if DEBUG else ['sla.pythonanywhere.com', 'www.stlawrenceacademy.edu']
+ALLOWED_HOSTS = ['*'] if DEBUG else [
+    'stlawrenceacademy.pythonanywhere.com',
+    'sla.pythonanywhere.com',
+    'www.stlawrenceacademy.edu',
+    'stlawrenceacademy.edu',
+]
 
 
 # Application definition
@@ -187,8 +192,10 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     CORS_ALLOWED_ORIGINS = [
+        'https://stlawrenceacademy.pythonanywhere.com',
         'https://sla.pythonanywhere.com',
         'https://www.stlawrenceacademy.edu',
+        'https://stlawrenceacademy.edu',
     ]
     CORS_ALLOW_CREDENTIALS = True
 
