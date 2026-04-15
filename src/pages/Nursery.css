@@ -695,6 +695,8 @@
     grid-template-columns: 1fr;
   }
 
+  .nursery-why-num { display: none; }
+
   .nursery-gallery-row {
     grid-template-columns: 1fr 1fr;
   }
