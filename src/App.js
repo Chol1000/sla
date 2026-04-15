@@ -73,6 +73,8 @@ function AppContent() {
     // After page renders, highlight the search term if one was passed via state
     const term = location.state?.highlight;
     if (term) {
+      // Strip the highlight from history state immediately so refresh doesn't re-trigger it
+      window.history.replaceState({}, '', window.location.href);
       setTimeout(() => highlightSearchTerm(term), 600);
     }
 
