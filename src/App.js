@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { highlightSearchTerm, clearHighlights } from './utils/highlightSearch';
 import Header from './components/Header';
 import TopBar from './components/TopBar';
 import Footer from './components/Footer';
@@ -55,7 +56,25 @@ function AppContent() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Clear any lingering highlights from previous search
+    clearHighlights();
+
+    if (location.hash) {
+      window.scrollTo(0, 0);
+      const id = location.hash.slice(1);
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 500);
+    } else {
+      window.scrollTo(0, 0);
+    }
+
+    // After page renders, highlight the search term if one was passed via state
+    const term = location.state?.highlight;
+    if (term) {
+      setTimeout(() => highlightSearchTerm(term), 600);
+    }
 
     if (document.readyState === 'complete') {
       setLoading(false);
@@ -70,7 +89,7 @@ function AppContent() {
     return () => {
       window.removeEventListener('load', handleLoad);
     };
-  }, [location.pathname]);
+  }, [location.pathname, location.hash, location.state]);
 
   return (
     <div className="App">

@@ -34,9 +34,6 @@ const Support = () => {
                 transform lives in South Sudan. Every contribution — large
                 or small — makes a lasting difference.
               </p>
-              <a href="#ways-to-give" className="support-hero-cta">
-                <i className="fas fa-heart"></i> Ways to Give
-              </a>
             </div>
           </div>
         </div>

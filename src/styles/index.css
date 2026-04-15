@@ -8,6 +8,20 @@
 }
 
 
+/* Search highlight marks — applied by highlightSearch.js */
+.sla-search-highlight {
+  background: #fef08a;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+.sla-search-highlight--active {
+  background: #facc15;
+  outline: 2px solid #eab308;
+  outline-offset: 1px;
+  border-radius: 3px;
+}
+
 * {
   margin: 0;
   padding: 0;

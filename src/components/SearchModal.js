@@ -1,193 +1,205 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
+import SEARCH_INDEX from '../utils/searchIndex.json';
 import './SearchModal.css';
 
-const API = process.env.REACT_APP_API_URL || '';
+const POPULAR = ['fees', 'admissions', 'nursery', 'secondary', 'Achier John', 'sports', 'contact', 'why choose'];
+
+const categoryLabel = (file) => {
+  const map = {
+    'Home': 'Home', 'About': 'About', 'Founder': 'About', 'History': 'About',
+    'Faculty': 'About', 'Anthem': 'About', 'PTA': 'About',
+    'Nursery': 'Academics', 'Primary': 'Academics', 'Secondary': 'Academics',
+    'Curriculum': 'Academics', 'Subjects': 'Academics', 'Examinations': 'Academics',
+    'Library': 'Academics', 'ScienceLab': 'Academics', 'Technology': 'Academics',
+    'Campus': 'Campus', 'DiningServices': 'Campus', 'HealthWellness': 'Campus',
+    'Sports': 'Student Life', 'Arts': 'Student Life', 'Clubs': 'Student Life',
+    'StudentLeadership': 'Student Life', 'CommunityService': 'Student Life',
+    'EventsActivities': 'Student Life', 'Counseling': 'Student Life',
+    'ApplicationProcess': 'Admissions', 'Requirements': 'Admissions',
+    'Fees': 'Admissions', 'AdmissionsContact': 'Admissions',
+    'AdmissionsVisit': 'Admissions', 'ImportantDates': 'Admissions',
+    'RegistrationStatus': 'Admissions',
+    'Blog': 'News', 'Gallery': 'Gallery', 'Reviews': 'Reviews',
+    'Alumni': 'Alumni', 'FAQ': 'Help', 'Careers': 'Careers', 'Contact': 'Contact',
+    'Support': 'Support',
+  };
+  return map[file] || file;
+};
+
+const categoryIcon = (cat) => ({
+  'Home': 'fa-home', 'About': 'fa-info-circle', 'Academics': 'fa-graduation-cap',
+  'Campus': 'fa-building', 'Student Life': 'fa-users', 'Admissions': 'fa-door-open',
+  'Careers': 'fa-briefcase', 'Help': 'fa-question-circle', 'News': 'fa-newspaper',
+  'Gallery': 'fa-images', 'Reviews': 'fa-star', 'Alumni': 'fa-user-graduate',
+  'Contact': 'fa-phone', 'Support': 'fa-heart',
+}[cat] || 'fa-file-alt');
+
+const Hl = ({ text, query }) => {
+  if (!query) return <>{text}</>;
+  const idx = text.toLowerCase().indexOf(query.toLowerCase());
+  if (idx === -1) return <>{text}</>;
+  return (
+    <>
+      {text.slice(0, idx)}
+      <mark>{text.slice(idx, idx + query.length)}</mark>
+      {text.slice(idx + query.length)}
+    </>
+  );
+};
 
 const SearchModal = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-
-  const searchableContent = [
-    // Main pages
-    { title: 'Home',             url: '/',               category: 'Page',       content: 'home st lawrence academy sla juba south sudan excellence education overview welcome' },
-    { title: 'About Us',         url: '/about',          category: 'Page',       content: 'about st lawrence academy history mission vision values slogan your ideal school where quality matters' },
-    { title: 'Contact Us',       url: '/contact',        category: 'Page',       content: 'contact phone email address location juba south sudan get in touch' },
-    { title: 'Support Us',       url: '/support',        category: 'Page',       content: 'support donate donation contribute financial scholarship fund infrastructure development' },
-    { title: 'Blog',             url: '/blog',           category: 'Page',       content: 'blog news articles stories updates announcements events school life achievements' },
-    { title: 'Gallery',          url: '/gallery',        category: 'Page',       content: 'gallery photos pictures school events students activities' },
-    { title: 'Reviews',          url: '/reviews',        category: 'Page',       content: 'reviews testimonials ratings feedback parents students alumni staff' },
-    { title: 'Alumni',           url: '/alumni',         category: 'Page',       content: 'alumni graduates former students profiles community network' },
-    { title: 'FAQ',              url: '/faq',            category: 'Page',       content: 'frequently asked questions faq answers help information' },
-    // About section
-    { title: 'Our History',      url: '/history',        category: 'About',      content: 'history founding 2020 establishment juba south sudan milestones achievements legacy tradition' },
-    { title: 'Our Founder',      url: '/founder',        category: 'About',      content: 'founder director leadership establishment vision management' },
-    { title: 'Faculty & Staff',  url: '/faculty',        category: 'About',      content: 'faculty staff teachers educators administrators principal vice principal qualified experienced team' },
-    { title: 'School Anthem',    url: '/anthem',         category: 'About',      content: 'anthem song hymn school song music words lyrics' },
-    { title: 'PTA',              url: '/pta',            category: 'About',      content: 'pta parent teacher association meetings community involvement parents representatives' },
-    // Academics
-    { title: 'Nursery School',   url: '/nursery',        category: 'Academics',  content: 'nursery school baby class middle class top class ages 3 4 5 early childhood play-based learning foundational skills' },
-    { title: 'Primary School',   url: '/primary',        category: 'Academics',  content: 'primary school p1 p2 p3 p4 p5 p6 p7 p8 lower upper literacy numeracy science english mathematics south sudan curriculum' },
-    { title: 'Secondary School', url: '/secondary',      category: 'Academics',  content: 'secondary school senior 1 2 3 4 science stream arts stream biology physics chemistry mathematics history geography university preparation' },
-    { title: 'Curriculum',       url: '/curriculum',     category: 'Academics',  content: 'curriculum syllabus south sudan national curriculum subjects programs academic structure' },
-    { title: 'Subjects',         url: '/subjects',       category: 'Academics',  content: 'subjects english mathematics science christian religious education social studies geography history biology physics chemistry agriculture commerce accounting literature computer' },
-    { title: 'Examinations',     url: '/examinations',   category: 'Academics',  content: 'examinations exams tests assessments grading results term end of year certificates' },
-    { title: 'School Library',   url: '/library',        category: 'Academics',  content: 'library books resources reading research reference materials study' },
-    { title: 'Science Labs',     url: '/science-labs',   category: 'Academics',  content: 'science laboratory labs biology chemistry physics experiments equipment practical' },
-    { title: 'Technology',       url: '/technology',     category: 'Academics',  content: 'technology computer lab ict digital learning software internet wifi smart boards' },
-    // Campus
-    { title: 'Campus',           url: '/campus',         category: 'Campus',     content: 'campus tour facilities buildings classrooms grounds infrastructure sports field' },
-    { title: 'Dining Services',  url: '/student-life/dining',    category: 'Campus',     content: 'dining cafeteria food meals lunch snacks canteen nutrition' },
-    { title: 'Health & Wellness',url: '/student-life/health',    category: 'Campus',     content: 'health wellness clinic nurse medical first aid student wellbeing counseling' },
-    // Student Life
-    { title: 'Sports',           url: '/student-life/sports',          category: 'Student Life', content: 'sports athletics football basketball volleyball netball cricket track field competitions tournaments physical fitness teamwork' },
-    { title: 'Arts & Culture',   url: '/student-life/arts',            category: 'Student Life', content: 'arts culture music drama dance theater choir visual arts painting cultural festivals performances' },
-    { title: 'Clubs',            url: '/student-life/clubs',           category: 'Student Life', content: 'clubs societies debate science math environmental technology literary scouts red cross organizations' },
-    { title: 'Student Leadership',url: '/student-life/leadership',     category: 'Student Life', content: 'student leadership prefects council head boy girl representatives government' },
-    { title: 'Community Service',url: '/student-life/community-service', category: 'Student Life', content: 'community service outreach volunteering social responsibility charity giving back' },
-    { title: 'Events & Activities',url: '/student-life/events',        category: 'Student Life', content: 'events activities school calendar sports day cultural day prize giving graduation ceremonies' },
-    { title: 'Counseling',       url: '/student-life/counseling',      category: 'Student Life', content: 'counseling guidance support mental health emotional wellbeing student welfare' },
-    // Admissions
-    { title: 'How to Apply',           url: '/admissions/apply',        category: 'Admissions', content: 'apply application process steps how to enroll join admission requirements procedure' },
-    { title: 'Requirements',           url: '/admissions/requirements', category: 'Admissions', content: 'requirements documents birth certificate report cards school records admission criteria' },
-    { title: 'Fees & Payment',         url: '/admissions/fees',         category: 'Admissions', content: 'fees tuition school fees payment term costs charges financial' },
-    { title: 'Registration Status',    url: '/admissions/status',       category: 'Admissions', content: 'registration status open closed term 1 2 3 deadline enrollment period dates' },
-    { title: 'Important Dates',        url: '/admissions/dates',        category: 'Admissions', content: 'important dates calendar term dates school year schedule deadlines key events' },
-    { title: 'Schedule a Campus Visit',url: '/admissions/visit',        category: 'Admissions', content: 'visit campus tour schedule book appointment see school' },
-    { title: 'Admissions Contact',     url: '/admissions/contact',      category: 'Admissions', content: 'admissions office contact phone email enquiry information' },
-    // Careers
-    { title: 'Careers / Jobs',   url: '/careers',        category: 'Careers',    content: 'careers jobs hiring employment teachers principal administrator vacancies positions apply' },
-
-    // Within-page sections — scroll directly to the section
-    { title: 'Mission & Vision',           url: '/about#mission',                        category: 'About',        content: 'mission vision statement transformation high quality education leading centre academic excellence region' },
-    { title: 'Our Values',                 url: '/about#values',                         category: 'About',        content: 'values core principles integrity discipline excellence respect community character' },
-    { title: 'Science & Arts Streams',     url: '/secondary#streams',                    category: 'Academics',    content: 'science stream arts stream biology physics chemistry agriculture additional mathematics geography accounting commerce history literature senior' },
-    { title: 'Science Stream',             url: '/secondary#streams',                    category: 'Academics',    content: 'science stream biology physics chemistry agriculture additional mathematics laboratory experiments research' },
-    { title: 'Arts Stream',                url: '/secondary#streams',                    category: 'Academics',    content: 'arts stream geography accounting commerce history literature humanities social sciences' },
-    { title: 'Primary Classes (P1–P8)',    url: '/primary#classes',                      category: 'Academics',    content: 'p1 p2 p3 p4 p5 p6 p7 p8 primary classes lower upper grades year levels' },
-    { title: 'Primary Subjects',           url: '/primary#subjects',                     category: 'Academics',    content: 'primary subjects english mathematics science cre social studies physical education art' },
-    { title: 'Nursery Classes',            url: '/nursery#classes',                      category: 'Academics',    content: 'nursery classes baby class middle class top class ages 3 4 5 early years groups' },
-    { title: 'Nursery Learning Areas',     url: '/nursery#learning',                     category: 'Academics',    content: 'nursery learning domains language literacy numeracy creative arts physical social emotional development' },
-    { title: 'Nursery Subjects',           url: '/subjects#nursery',                     category: 'Academics',    content: 'nursery subjects english mathematics science creative arts physical education christian religious education' },
-    { title: 'Primary Subjects List',      url: '/subjects#primary',                     category: 'Academics',    content: 'primary subjects english mathematics science christian religious education social studies physical education art' },
-    { title: 'Secondary Subjects List',    url: '/subjects#secondary',                   category: 'Academics',    content: 'secondary subjects biology physics chemistry geography accounting commerce history literature english mathematics agriculture computer' },
-    { title: 'Curriculum by Level',        url: '/curriculum#levels',                    category: 'Academics',    content: 'curriculum nursery primary secondary levels structure academic program overview' },
-    { title: 'Application Steps',          url: '/admissions/apply#steps',               category: 'Admissions',   content: 'application steps how to apply step by step process procedure enrollment' },
-    { title: 'School Fees Breakdown',      url: '/admissions/fees#fees-breakdown',       category: 'Admissions',   content: 'fees breakdown nursery primary secondary tuition costs term payment amounts table' },
-    { title: 'Required Documents',         url: '/admissions/requirements#documents',    category: 'Admissions',   content: 'required documents birth certificate report card transfer letter health records what to bring application' },
-    { title: 'FAQ Questions',              url: '/faq#questions',                        category: 'Help',         content: 'frequently asked questions answers help information admissions fees term dates uniform' },
-  ];
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [activeIdx, setActiveIdx] = useState(-1);
+  const inputRef = useRef(null);
+  const listRef  = useRef(null);
 
   useEffect(() => {
-    if (searchQuery.trim() === '') {
-      setSearchResults([]);
-      return;
+    if (isOpen) {
+      setQuery(''); setResults([]); setActiveIdx(-1);
+      setTimeout(() => inputRef.current?.focus(), 50);
     }
+  }, [isOpen]);
 
-    setIsSearching(true);
-    const timer = setTimeout(() => {
-      const query = searchQuery.toLowerCase();
-      const results = searchableContent.filter(item =>
-        item.title.toLowerCase().includes(query) ||
-        item.content.toLowerCase().includes(query)
-      ).slice(0, 10);
-      setSearchResults(results);
-      setIsSearching(false);
-    }, 300);
+  useEffect(() => {
+    if (!query.trim()) { setResults([]); setActiveIdx(-1); return; }
+    const q = query.toLowerCase().trim();
 
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery]);
+    // Score each index entry
+    const scored = SEARCH_INDEX.map(entry => {
+      const tl = entry.text.toLowerCase();
+      let score = 0;
+      if (tl === q)              score = 100;
+      else if (tl.startsWith(q)) score = 70;
+      else if (tl.includes(q))   score = tl.indexOf(q) < 40 ? 50 : 30;
+      return score > 0 ? { ...entry, score } : null;
+    }).filter(Boolean);
 
-  const handleResultClick = (url) => {
-    setSearchQuery('');
-    onClose();
-    if (url.includes('#')) {
-      const [path, hash] = url.split('#');
-      if (window.location.pathname === path) {
-        // Already on the page — just scroll
-        document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        navigate(path);
-        // Wait for the page to render then scroll to section
-        setTimeout(() => {
-          document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 500);
-      }
-    } else {
-      navigate(url);
+    // Sort by score desc, deduplicate by url+text leading 60 chars
+    scored.sort((a, b) => b.score - a.score);
+    const seen = new Set();
+    const deduped = [];
+    for (const e of scored) {
+      const key = e.url + e.text.slice(0, 60);
+      if (!seen.has(key)) { seen.add(key); deduped.push(e); }
+      if (deduped.length >= 10) break;
     }
-  };
+    setResults(deduped);
+    setActiveIdx(-1);
+  }, [query]);
 
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      setSearchQuery('');
-      onClose();
-    }
-  };
+  const go = useCallback((url, term) => {
+    setQuery(''); onClose();
+    navigate(url, { state: { highlight: term } });
+  }, [navigate, onClose]);
+
+  const handleKey = useCallback((e) => {
+    if (e.key === 'Escape') { onClose(); return; }
+    if (!results.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActiveIdx(i => Math.min(i + 1, results.length - 1)); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); setActiveIdx(i => Math.max(i - 1, -1)); }
+    if (e.key === 'Enter' && activeIdx >= 0) { e.preventDefault(); go(results[activeIdx].url, query); }
+  }, [results, activeIdx, go, onClose, query]);
+
+  useEffect(() => {
+    if (activeIdx < 0 || !listRef.current) return;
+    listRef.current.querySelectorAll('.sm-result')[activeIdx]?.scrollIntoView({ block: 'nearest' });
+  }, [activeIdx]);
 
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="search-modal-overlay" onClick={handleOverlayClick}>
-      <div className="search-modal">
-        <div className="search-header">
-          <div className="search-input-container">
-            <i className="fas fa-search search-icon"></i>
-            <input
-              type="text"
-              placeholder="Search pages, subjects, admissions..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              autoFocus
-            />
-            <button className="search-close" onClick={() => { setSearchQuery(''); onClose(); }}>
-              <i className="fas fa-times"></i>
+    <div className="sm-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+      <div className="sm-modal" onKeyDown={handleKey}>
+
+        <div className="sm-header">
+          <i className="fas fa-search sm-search-icon"></i>
+          <input
+            ref={inputRef}
+            className="sm-input"
+            type="text"
+            placeholder="Search anything on this website…"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            autoComplete="off"
+            spellCheck="false"
+          />
+          {query && (
+            <button className="sm-clear" onClick={() => { setQuery(''); inputRef.current?.focus(); }}>
+              <i className="fas fa-times-circle"></i>
             </button>
-          </div>
+          )}
+          <button className="sm-close-btn" onClick={onClose}><span>ESC</span></button>
         </div>
 
-        <div className="search-results">
-          {isSearching && (
-            <div className="search-loading">
-              <i className="fas fa-spinner fa-spin"></i>
-              <span>Searching...</span>
-            </div>
-          )}
+        <div className="sm-body" ref={listRef}>
 
-          {!isSearching && searchQuery && searchResults.length === 0 && (
-            <div className="no-results">
-              <i className="fas fa-search"></i>
-              <h3>No results found</h3>
-              <p>Try different keywords</p>
-            </div>
-          )}
-
-          {!isSearching && searchResults.length > 0 && (
-            <>
-              <div className="results-header">
-                <span>{searchResults.length} result{searchResults.length !== 1 ? 's' : ''} found</span>
-              </div>
-              <div className="results-list">
-                {searchResults.map((result, index) => (
-                  <div
-                    key={index}
-                    className="search-result-item"
-                    onClick={() => handleResultClick(result.url)}
-                  >
-                    <div className="result-category">{result.category}</div>
-                    <h4 className="result-title">{result.title}</h4>
-                    <p className="result-snippet">
-                      {result.content.substring(0, 100)}…
-                    </p>
-                  </div>
+          {!query.trim() && (
+            <div className="sm-empty">
+              <p className="sm-empty-label">Popular searches</p>
+              <div className="sm-popular">
+                {POPULAR.map(p => (
+                  <button key={p} className="sm-popular-btn" onClick={() => setQuery(p)}>
+                    <i className="fas fa-search"></i> {p}
+                  </button>
                 ))}
               </div>
+            </div>
+          )}
+
+          {query.trim() && results.length === 0 && (
+            <div className="sm-none">
+              <i className="fas fa-search"></i>
+              <p>No results for <strong>"{query}"</strong></p>
+              <span>Try different keywords</span>
+            </div>
+          )}
+
+          {results.length > 0 && (
+            <>
+              <div className="sm-results-bar">
+                <span>{results.length} result{results.length !== 1 ? 's' : ''}</span>
+                <span className="sm-hint">
+                  <i className="fas fa-arrow-up"></i><i className="fas fa-arrow-down"></i> navigate &nbsp;·&nbsp; Enter to open
+                </span>
+              </div>
+              <ul className="sm-results">
+                {results.map((r, idx) => {
+                  const cat = categoryLabel(r.file);
+                  return (
+                    <li
+                      key={idx}
+                      className={`sm-result${idx === activeIdx ? ' sm-result--active' : ''}`}
+                      onClick={() => go(r.url, query)}
+                      onMouseEnter={() => setActiveIdx(idx)}
+                    >
+                      <span className="sm-result-icon">
+                        <i className={`fas ${categoryIcon(cat)}`}></i>
+                      </span>
+                      <div className="sm-result-body">
+                        <div className="sm-result-top">
+                          <span className="sm-result-cat">{cat}</span>
+                        </div>
+                        <p className="sm-result-text">
+                          <Hl text={r.text} query={query} />
+                        </p>
+                        <span className="sm-result-url">{r.page}</span>
+                      </div>
+                      <i className="fas fa-arrow-right sm-result-arrow"></i>
+                    </li>
+                  );
+                })}
+              </ul>
             </>
           )}
+        </div>
+
+        <div className="sm-footer">
+          <span><i className="fas fa-highlighter"></i> Text is highlighted on the page when you open a result</span>
+          <span>St. Lawrence Academy</span>
         </div>
       </div>
     </div>,
