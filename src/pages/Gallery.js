@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import ReactDOM from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import './Gallery.css';
 import { initScrollAnimations } from '../utils/scrollAnimations';
@@ -223,38 +224,39 @@ const Gallery = () => {
       </section>
 
       {/* ── Lightbox ── */}
-      {lightbox !== null && (
+      {lightbox !== null && ReactDOM.createPortal(
         <div className="gallery-lightbox" onClick={() => setLightbox(null)}>
-          {/* row 1 col 3 — close */}
-          <button className="gallery-lb-close" onClick={(e) => { e.stopPropagation(); setLightbox(null); }} aria-label="Close">
-            <i className="fas fa-times"></i>
-          </button>
 
-          {/* row 2 col 1 — prev */}
-          <button className="gallery-lb-nav gallery-lb-prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Previous">
-            <i className="fas fa-chevron-left"></i>
-          </button>
+          {/* Top bar — close button */}
+          <div className="gallery-lb-topbar" onClick={(e) => e.stopPropagation()}>
+            <button className="gallery-lb-close" onClick={() => setLightbox(null)} aria-label="Close">
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
 
-          {/* row 2 col 2 — image */}
-          <div className="gallery-lb-img-wrap" onClick={(e) => e.stopPropagation()}>
+          {/* Middle — image + arrows */}
+          <div className="gallery-lb-middle" onClick={(e) => e.stopPropagation()}>
+            <button className="gallery-lb-nav gallery-lb-prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Previous">
+              <i className="fas fa-chevron-left"></i>
+            </button>
             <img
               src={filtered[lightbox].src}
               alt={filtered[lightbox].alt}
               className="gallery-lb-img"
             />
+            <button className="gallery-lb-nav gallery-lb-next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Next">
+              <i className="fas fa-chevron-right"></i>
+            </button>
           </div>
 
-          {/* row 2 col 3 — next */}
-          <button className="gallery-lb-nav gallery-lb-next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Next">
-            <i className="fas fa-chevron-right"></i>
-          </button>
-
-          {/* row 3 — caption */}
+          {/* Caption bar */}
           <div className="gallery-lb-caption" onClick={(e) => e.stopPropagation()}>
             <span>{filtered[lightbox].alt}</span>
             <span className="gallery-lb-counter">{lightbox + 1} / {filtered.length}</span>
           </div>
-        </div>
+
+        </div>,
+        document.body
       )}
 
     </div>

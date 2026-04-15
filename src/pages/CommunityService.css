@@ -31,10 +31,9 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.72) 0%,
-    rgba(0,0,0,0.41) 45%,
-    rgba(0,0,0,0.06) 75%,
-    rgba(0,0,0,0.0) 100%
+    rgba(0,0,0,0.55) 0%,
+    rgba(0,0,0,0.35) 38%,
+    rgba(0,0,0,0.0) 65%
   );
 }
 
@@ -415,9 +414,9 @@
   .cs-hero-overlay {
     background: linear-gradient(
       to top,
-      rgba(0,0,0,0.72) 0%,
-      rgba(0,0,0,0.41) 45%,
-      rgba(0,0,0,0.0) 75%
+      rgba(0,0,0,0.55) 0%,
+    rgba(0,0,0,0.35) 38%,
+    rgba(0,0,0,0.0) 65%
     );
   }
 
