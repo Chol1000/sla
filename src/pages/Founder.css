@@ -986,7 +986,7 @@
   }
 
   .founder-hero-overlay {
-    background: rgba(0, 0, 0, 0.48);
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.38) 40%, rgba(0,0,0,0.0) 75%);
   }
 
   /* founder-hero-label stays visible */
