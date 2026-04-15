@@ -225,29 +225,35 @@ const Gallery = () => {
       {/* ── Lightbox ── */}
       {lightbox !== null && (
         <div className="gallery-lightbox" onClick={() => setLightbox(null)}>
-          <button className="gallery-lb-close" onClick={() => setLightbox(null)} aria-label="Close">
+          {/* row 1 col 3 — close */}
+          <button className="gallery-lb-close" onClick={(e) => { e.stopPropagation(); setLightbox(null); }} aria-label="Close">
             <i className="fas fa-times"></i>
           </button>
 
+          {/* row 2 col 1 — prev */}
           <button className="gallery-lb-nav gallery-lb-prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Previous">
             <i className="fas fa-chevron-left"></i>
           </button>
 
+          {/* row 2 col 2 — image */}
           <div className="gallery-lb-img-wrap" onClick={(e) => e.stopPropagation()}>
             <img
               src={filtered[lightbox].src}
               alt={filtered[lightbox].alt}
               className="gallery-lb-img"
             />
-            <div className="gallery-lb-caption">
-              <span>{filtered[lightbox].alt}</span>
-              <span className="gallery-lb-counter">{lightbox + 1} / {filtered.length}</span>
-            </div>
           </div>
 
+          {/* row 2 col 3 — next */}
           <button className="gallery-lb-nav gallery-lb-next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Next">
             <i className="fas fa-chevron-right"></i>
           </button>
+
+          {/* row 3 — caption */}
+          <div className="gallery-lb-caption" onClick={(e) => e.stopPropagation()}>
+            <span>{filtered[lightbox].alt}</span>
+            <span className="gallery-lb-counter">{lightbox + 1} / {filtered.length}</span>
+          </div>
         </div>
       )}
 
