@@ -118,60 +118,42 @@ const Anthem = () => {
                 <div className="anthem-verse">
                   <span className="anthem-verse-label">Verse 1</span>
                   <p>
-                    St. Lawrence Academy, our pride and our light,<br />
-                    A beacon of knowledge, a beacon so bright.<br />
-                    We rise in the morning with purpose and zeal,<br />
-                    To learn and to grow, to think and to feel.
-                  </p>
-                </div>
-
-                <div className="anthem-chorus">
-                  <span className="anthem-verse-label anthem-verse-label--chorus">Chorus</span>
-                  <p>
-                    Forward together, with faith in our hearts,<br />
-                    We honour our values, we play our great parts.<br />
-                    Through wisdom and service, our nation we'll build,<br />
-                    St. Lawrence Academy — our destiny fulfilled.
+                    St. Lawrence Academy, is the home<br />
+                    of great heroes<br />
+                    with great wisdom per &#8209; excellence<br />
+                    and leadership<br />
+                    We stand united train to win in all,<br />
+                    Education is the key of life.
                   </p>
                 </div>
 
                 <div className="anthem-verse">
                   <span className="anthem-verse-label">Verse 2</span>
                   <p>
-                    With integrity always, we walk the right way,<br />
-                    Excellence guides us in all that we say.<br />
-                    Respect for each other, respect for this land,<br />
-                    Together we're stronger when we understand.
-                  </p>
-                </div>
-
-                <div className="anthem-chorus">
-                  <span className="anthem-verse-label anthem-verse-label--chorus">Chorus</span>
-                  <p>
-                    Forward together, with faith in our hearts,<br />
-                    We honour our values, we play our great parts.<br />
-                    Through wisdom and service, our nation we'll build,<br />
-                    St. Lawrence Academy — our destiny fulfilled.
+                    St. Lawrence Academy is the<br />
+                    school of great champions, we<br />
+                    rise to build our country South<br />
+                    Sudan, to raise great leaders<br />
+                    in dignity and peace, in all<br />
+                    professions of life.
                   </p>
                 </div>
 
                 <div className="anthem-verse">
                   <span className="anthem-verse-label">Verse 3</span>
                   <p>
-                    South Sudan is calling, its children must rise,<br />
-                    To reach for the future, to aim for the skies.<br />
-                    St. Lawrence Academy sends us forth to lead,<br />
-                    With knowledge and courage to serve every need.
+                    St. Lawrence Academy, St.<br />
+                    Lawrence Academy. promoting<br />
+                    excellence, in science and &#8209;<br />
+                    technology to be leading centre of<br />
+                    academics.
                   </p>
                 </div>
 
                 <div className="anthem-chorus">
-                  <span className="anthem-verse-label anthem-verse-label--chorus">Final Chorus</span>
+                  <span className="anthem-verse-label anthem-verse-label--chorus">Closing</span>
                   <p>
-                    Forward together, with faith in our hearts,<br />
-                    We honour our values, we play our great parts.<br />
-                    Through wisdom and service, our nation we'll build,<br />
-                    St. Lawrence Academy — our destiny fulfilled!
+                    Excellence, in the region and beyond.
                   </p>
                 </div>
 
