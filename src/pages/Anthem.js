@@ -146,13 +146,7 @@ const Anthem = () => {
                     Lawrence Academy. promoting<br />
                     excellence, in science and &#8209;<br />
                     technology to be leading centre of<br />
-                    academics.
-                  </p>
-                </div>
-
-                <div className="anthem-chorus">
-                  <span className="anthem-verse-label anthem-verse-label--chorus">Closing</span>
-                  <p>
+                    academics.<br /><br />
                     Excellence, in the region and beyond.
                   </p>
                 </div>
