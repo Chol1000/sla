@@ -19,6 +19,7 @@
 .primary-hero-bg {
   position: absolute;
   inset: 0;
+  top: 80px;
 }
 
 .primary-hero-bg img {
