@@ -20,12 +20,6 @@ const HERO_SLIDES = [
     desc: 'Discipline, integrity, and leadership form the foundation of every school day at St. Lawrence Academy — shaping responsible, principled citizens for South Sudan and beyond.',
   },
   {
-    img: '/images/secondary/assembly_view_from_above.JPG',
-    bgPos: 'center center',
-    title: 'A Community United',
-    desc: 'Every morning our students gather with purpose — building discipline, shared identity, and the bonds that carry them through school and beyond.',
-  },
-  {
     img: '/images/secondary/school_view.jpg',
     bgPos: 'center center',
     title: 'A Place to Belong',
@@ -51,9 +45,15 @@ const HERO_SLIDES = [
   },
   {
     img: '/images/secondary/assembly_2.JPG',
-    bgPos: 'center top',
+    bgPos: 'center 80px',
     title: 'Values That Last a Lifetime',
     desc: 'We believe great education is inseparable from strong values — honesty, respect, hard work, and service form the core of every SLA student\'s character.',
+  },
+  {
+    img: '/images/secondary/assembly_view_from_above.JPG',
+    bgPos: 'center center',
+    title: 'A Community United',
+    desc: 'Every morning our students gather with purpose — building discipline, shared identity, and the bonds that carry them through school and beyond.',
   },
   {
     img: '/images/secondary/sla_school_view_1.jpg',
@@ -502,10 +502,14 @@ const Home = () => {
         </div>
         <div className="campus-tour-split">
           <div className="campus-tour-image-side">
-            <div className="campus-tour-slide active" style={{backgroundImage: 'url(/images/primary/pupils.JPG)'}}></div>
-            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/school_view.jpg)'}}></div>
+            <div className="campus-tour-slide active" style={{backgroundImage: 'url(/images/secondary/students_in_class.JPG)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/primary/primary_campus_1.jpg)'}}></div>
             <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/basketball_game.JPG)'}}></div>
             <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/assembly.JPG)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/library.jpg)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/st_chapel.JPG)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/boarding_students.JPG)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/campus_view_from_above_assembly.JPG)'}}></div>
           </div>
           <div className="campus-navigation-mobile">
             <button className="campus-nav-btn campus-prev-mobile" aria-label="Previous"><i className="fas fa-chevron-left"></i></button>
@@ -514,6 +518,10 @@ const Home = () => {
               <button className="campus-nav-dot-mobile" data-index="1"></button>
               <button className="campus-nav-dot-mobile" data-index="2"></button>
               <button className="campus-nav-dot-mobile" data-index="3"></button>
+              <button className="campus-nav-dot-mobile" data-index="4"></button>
+              <button className="campus-nav-dot-mobile" data-index="5"></button>
+              <button className="campus-nav-dot-mobile" data-index="6"></button>
+              <button className="campus-nav-dot-mobile" data-index="7"></button>
             </div>
             <button className="campus-nav-btn campus-next-mobile" aria-label="Next"><i className="fas fa-chevron-right"></i></button>
           </div>
@@ -521,45 +529,89 @@ const Home = () => {
             <div className="campus-content-item active">
               <span className="campus-badge">Learning Spaces</span>
               <h3>Modern Classrooms</h3>
-              <p>Our state-of-the-art classrooms are equipped with modern teaching aids and comfortable seating arrangements designed to foster interactive learning and student engagement.</p>
+              <p>Our classrooms are designed for focused, interactive learning — well-lit, well-ventilated spaces where every student has room to think, ask questions, and grow.</p>
               <ul className="campus-features">
-                <li><i className="fas fa-check-circle"></i>Smart boards and projectors</li>
+                <li><i className="fas fa-check-circle"></i>Teaching aids and projectors</li>
                 <li><i className="fas fa-check-circle"></i>Comfortable seating for 30+ students</li>
                 <li><i className="fas fa-check-circle"></i>Natural lighting and ventilation</li>
-                <li><i className="fas fa-check-circle"></i>Interactive learning tools</li>
+                <li><i className="fas fa-check-circle"></i>Separate nursery, primary & secondary blocks</li>
               </ul>
             </div>
             <div className="campus-content-item">
               <span className="campus-badge">Our Campus</span>
               <h3>School Compound</h3>
-              <p>Our expansive school compound provides a safe and secure environment for learning and growth with well-maintained grounds, green spaces, and modern infrastructure.</p>
+              <p>Set in Hai Referendum, Juba, our campus is a secure, welcoming environment with well-maintained grounds shared by nursery, primary, and secondary students.</p>
               <ul className="campus-features">
-                <li><i className="fas fa-check-circle"></i>24/7 security surveillance</li>
-                <li><i className="fas fa-check-circle"></i>Spacious outdoor areas</li>
-                <li><i className="fas fa-check-circle"></i>Well-maintained facilities</li>
-                <li><i className="fas fa-check-circle"></i>Accessible pathways</li>
+                <li><i className="fas fa-check-circle"></i>24/7 security and supervision</li>
+                <li><i className="fas fa-check-circle"></i>Spacious outdoor and play areas</li>
+                <li><i className="fas fa-check-circle"></i>Separate zones for each school level</li>
+                <li><i className="fas fa-check-circle"></i>Ongoing campus development</li>
               </ul>
             </div>
             <div className="campus-content-item">
               <span className="campus-badge">Athletics</span>
               <h3>Sports Facilities</h3>
-              <p>Our comprehensive sports facilities include basketball courts, football fields, and athletic tracks developing well-rounded students through physical education and competitive sports.</p>
+              <p>From basketball and volleyball to football and athletics, our sports facilities support physical development, teamwork, and competitive achievement at every level.</p>
               <ul className="campus-features">
                 <li><i className="fas fa-check-circle"></i>Full-size basketball court</li>
-                <li><i className="fas fa-check-circle"></i>Football and volleyball fields</li>
-                <li><i className="fas fa-check-circle"></i>Athletic track and field</li>
-                <li><i className="fas fa-check-circle"></i>Professional coaching staff</li>
+                <li><i className="fas fa-check-circle"></i>Football and volleyball grounds</li>
+                <li><i className="fas fa-check-circle"></i>Inter-class and inter-school competitions</li>
+                <li><i className="fas fa-check-circle"></i>Dedicated PE programme</li>
               </ul>
             </div>
             <div className="campus-content-item">
               <span className="campus-badge">Community</span>
               <h3>Assembly Ground</h3>
-              <p>Our large assembly ground serves as the heart of our school community, hosting morning assemblies, cultural events, sports days, and special celebrations.</p>
+              <p>Our assembly ground is the heart of daily school life — where students gather each morning to begin the day with purpose, discipline, and a sense of shared community.</p>
               <ul className="campus-features">
                 <li><i className="fas fa-check-circle"></i>Capacity for 1,500+ students</li>
-                <li><i className="fas fa-check-circle"></i>Covered stage area</li>
-                <li><i className="fas fa-check-circle"></i>Sound system and lighting</li>
-                <li><i className="fas fa-check-circle"></i>Multi-purpose event space</li>
+                <li><i className="fas fa-check-circle"></i>Daily morning assembly</li>
+                <li><i className="fas fa-check-circle"></i>Cultural events and celebrations</li>
+                <li><i className="fas fa-check-circle"></i>Prize-giving and special occasions</li>
+              </ul>
+            </div>
+            <div className="campus-content-item">
+              <span className="campus-badge">Knowledge</span>
+              <h3>School Library</h3>
+              <p>Our library provides a quiet, resourced space for reading, research, and independent study — stocked with textbooks, reference materials, and reading books for all levels.</p>
+              <ul className="campus-features">
+                <li><i className="fas fa-check-circle"></i>Books for nursery through secondary</li>
+                <li><i className="fas fa-check-circle"></i>Dedicated reading and study sections</li>
+                <li><i className="fas fa-check-circle"></i>Open daily before and after school</li>
+                <li><i className="fas fa-check-circle"></i>Supported by trained library staff</li>
+              </ul>
+            </div>
+            <div className="campus-content-item">
+              <span className="campus-badge">Faith</span>
+              <h3>School Chapel</h3>
+              <p>The chapel is a place of reflection, prayer, and spiritual development — central to our values as a school that nurtures the whole child, including their faith and character.</p>
+              <ul className="campus-features">
+                <li><i className="fas fa-check-circle"></i>Regular worship and prayer sessions</li>
+                <li><i className="fas fa-check-circle"></i>Christian Religious Education support</li>
+                <li><i className="fas fa-check-circle"></i>Open to all students and staff</li>
+                <li><i className="fas fa-check-circle"></i>Scripture Union and faith clubs</li>
+              </ul>
+            </div>
+            <div className="campus-content-item">
+              <span className="campus-badge">Campus Life</span>
+              <h3>Evening & Boarding</h3>
+              <p>Our boarding facility offers a structured, supportive environment for students who stay on campus — with supervised study, meals, and evening activities in a safe setting.</p>
+              <ul className="campus-features">
+                <li><i className="fas fa-check-circle"></i>Supervised evening study</li>
+                <li><i className="fas fa-check-circle"></i>Three meals provided daily</li>
+                <li><i className="fas fa-check-circle"></i>Resident house parents</li>
+                <li><i className="fas fa-check-circle"></i>Safe and secure boarding block</li>
+              </ul>
+            </div>
+            <div className="campus-content-item">
+              <span className="campus-badge">Overview</span>
+              <h3>Campus from Above</h3>
+              <p>Seen from above, the full scale of St. Lawrence Academy becomes clear — a growing campus with dedicated spaces for every aspect of student life, learning, and development.</p>
+              <ul className="campus-features">
+                <li><i className="fas fa-check-circle"></i>Nursery, primary & secondary buildings</li>
+                <li><i className="fas fa-check-circle"></i>Sports grounds and open spaces</li>
+                <li><i className="fas fa-check-circle"></i>Library, chapel and admin block</li>
+                <li><i className="fas fa-check-circle"></i>Expanding to serve more students</li>
               </ul>
             </div>
             <div className="campus-navigation-desktop">
@@ -569,6 +621,10 @@ const Home = () => {
                 <button className="campus-nav-dot" data-index="1"></button>
                 <button className="campus-nav-dot" data-index="2"></button>
                 <button className="campus-nav-dot" data-index="3"></button>
+                <button className="campus-nav-dot" data-index="4"></button>
+                <button className="campus-nav-dot" data-index="5"></button>
+                <button className="campus-nav-dot" data-index="6"></button>
+                <button className="campus-nav-dot" data-index="7"></button>
               </div>
               <button className="campus-nav-btn campus-next" aria-label="Next"><i className="fas fa-chevron-right"></i></button>
             </div>
@@ -620,7 +676,7 @@ const Home = () => {
             </a>
             <a href="/student-life/clubs" className="life-highlight-card">
               <div className="life-highlight-image">
-                <img src="/images/primary/pupils.JPG" alt="Academic Clubs" />
+                <img src="/images/secondary/mathematics_club.jpg" alt="Academic Clubs" />
               </div>
               <div className="life-highlight-content">
                 <h3>Academic Clubs</h3>
@@ -629,7 +685,7 @@ const Home = () => {
             </a>
             <a href="/student-life/community-service" className="life-highlight-card">
               <div className="life-highlight-image">
-                <img src="/images/secondary/school_view.jpg" alt="Community Service" />
+                <img src="/images/secondary/community_service.jpg" alt="Community Service" />
               </div>
               <div className="life-highlight-content">
                 <h3>Community Service</h3>
