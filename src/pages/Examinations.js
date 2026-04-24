@@ -16,7 +16,7 @@ const Examinations = () => {
       {/* ── Hero ── */}
       <section className="exams-hero">
         <div className="exams-hero-bg">
-          <img src="/images/nursery/examination.jpg" alt="St. Lawrence Academy Examinations" />
+          <img src="/images/nursery/nurs_exams.jpg" alt="St. Lawrence Academy Examinations" />
         </div>
         <div className="exams-hero-overlay"></div>
         <div className="exams-hero-content">
@@ -116,7 +116,7 @@ const Examinations = () => {
         <div className="container">
           <div className="exams-national-inner reveal">
             <div className="exams-national-img">
-              <img src="/images/secondary/success_card_from_director.jpg" alt="Director wishing S4 students success" />
+              <img src="/images/secondary/exams.jpg" alt="Students sitting examinations" />
             </div>
             <div className="exams-national-text">
               <span className="exams-eyebrow">National Assessments</span>
@@ -225,7 +225,7 @@ const Examinations = () => {
               </div>
             </div>
             <div className="exams-conduct-img">
-              <img src="/images/secondary/students_standing.JPG" alt="Examination hall" />
+              <img src="/images/secondary/sec_examinations.jpg" alt="Examination hall" />
             </div>
           </div>
         </div>
@@ -243,29 +243,29 @@ const Examinations = () => {
               provide a detailed breakdown of performance by subject, with teacher
               comments and guidance for improvement where needed.
             </p>
-            <div className="exams-results-steps">
-              <div className="exams-result-step">
-                <div className="exams-result-step-icon"><i className="fas fa-pen-nib"></i></div>
-                <div className="exams-result-step-text">
-                  <strong>Marking &amp; Moderation</strong>
-                  <span>Scripts are marked and internally moderated for accuracy and consistency.</span>
-                </div>
+          </div>
+          <div className="exams-results-steps">
+            <div className="exams-result-step">
+              <div className="exams-result-step-icon"><i className="fas fa-pen-nib"></i></div>
+              <div className="exams-result-step-text">
+                <strong>Marking &amp; Moderation</strong>
+                <span>Scripts are marked and internally moderated for accuracy and consistency.</span>
               </div>
-              <div className="exams-result-step-arrow"><i className="fas fa-chevron-right"></i></div>
-              <div className="exams-result-step">
-                <div className="exams-result-step-icon"><i className="fas fa-chart-line"></i></div>
-                <div className="exams-result-step-text">
-                  <strong>Grading &amp; Analysis</strong>
-                  <span>Grades are assigned and performance patterns identified to inform teaching.</span>
-                </div>
+            </div>
+            <div className="exams-result-step-arrow"><i className="fas fa-chevron-right"></i></div>
+            <div className="exams-result-step">
+              <div className="exams-result-step-icon"><i className="fas fa-chart-line"></i></div>
+              <div className="exams-result-step-text">
+                <strong>Grading &amp; Analysis</strong>
+                <span>Grades are assigned and performance patterns identified to inform teaching.</span>
               </div>
-              <div className="exams-result-step-arrow"><i className="fas fa-chevron-right"></i></div>
-              <div className="exams-result-step">
-                <div className="exams-result-step-icon"><i className="fas fa-file-alt"></i></div>
-                <div className="exams-result-step-text">
-                  <strong>Report Cards</strong>
-                  <span>Detailed reports are issued to parents with grades, comments, and teacher guidance.</span>
-                </div>
+            </div>
+            <div className="exams-result-step-arrow"><i className="fas fa-chevron-right"></i></div>
+            <div className="exams-result-step">
+              <div className="exams-result-step-icon"><i className="fas fa-file-alt"></i></div>
+              <div className="exams-result-step-text">
+                <strong>Report Cards</strong>
+                <span>Detailed reports are issued to parents with grades, comments, and teacher guidance.</span>
               </div>
             </div>
           </div>

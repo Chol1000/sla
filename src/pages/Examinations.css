@@ -465,7 +465,7 @@
   display: flex;
   align-items: stretch;
   gap: 0;
-  margin-top: 1rem;
+  margin-top: 2.5rem;
 }
 
 .exams-result-step {
@@ -473,7 +473,7 @@
   background: #ffffff;
   border: 1px solid #e8e2d9;
   border-top: 4px solid #c8a96e;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -504,15 +504,15 @@
 }
 
 .exams-result-step-text strong {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #111;
 }
 
 .exams-result-step-text span {
-  font-size: 0.83rem;
+  font-size: 0.88rem;
   color: #666;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .exams-result-step-arrow {

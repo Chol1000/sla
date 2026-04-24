@@ -203,7 +203,9 @@ const photos = [
   { src: '/images/secondary/community_service.jpg',         cat: 'Events', alt: 'Community service' },
   { src: '/images/secondary/debate_team.jpg',               cat: 'Events', alt: 'Debate team' },
   { src: '/images/primary/Debate_winners.jpg',              cat: 'Events', alt: 'Debate competition winners' },
-  { src: '/images/nursery/examination.jpg',                  cat: 'Events', alt: 'Student examination' },
+  { src: '/images/nursery/nurs_exams.jpg',                   cat: 'Events', alt: 'Student examination' },
+  { src: '/images/secondary/exams.jpg',                      cat: 'Events', alt: 'Secondary examinations' },
+  { src: '/images/secondary/sec_examinations.jpg',           cat: 'Events', alt: 'Examination hall' },
 
   // ── Cultural ──
   { src: '/images/secondary/sla_cultural_dance.jpg',         cat: 'Cultural', alt: 'Cultural dance performance' },
