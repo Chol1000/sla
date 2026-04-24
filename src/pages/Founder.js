@@ -5,7 +5,7 @@ import { setPageMeta } from '../utils/pageMeta';
 
 const Founder = () => {
   useEffect(() => {
-    setPageMeta('The Founder', 'Achier John — Founder & Director of St. Lawrence Academy, Juba, South Sudan. A visionary educator dedicated to transforming lives through quality education.');
+    setPageMeta('The Founder', 'Achier Manyuat John — Founder & Director of St. Lawrence Academy, Juba, South Sudan. A visionary educator dedicated to transforming lives through quality education.');
     const timer = setTimeout(() => {
       initScrollAnimations();
     }, 100);
@@ -18,21 +18,23 @@ const Founder = () => {
       {/* ── Hero ── */}
       <section className="founder-hero">
         <div className="founder-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/general/Director_achier_john.jpg" alt="Achier Manyuat John — Founder &amp; Director" />
         </div>
         <div className="founder-hero-overlay"></div>
         <div className="founder-hero-content">
-          <div className="founder-hero-label">
-            <span className="label-line"></span>
-            Founder &amp; Director — St. Lawrence Academy
-            <span className="label-line"></span>
-          </div>
-          <h1 className="founder-hero-name">Achier John</h1>
-          <p className="founder-hero-tagline">
-            "Education is not just the transfer of knowledge; it is the transformation of character, the lifting of a nation."
-          </p>
-          <div className="founder-hero-scroll">
-            <span></span>
+          <div className="container">
+            <div className="founder-hero-label">
+              <span className="label-line"></span>
+              Founder &amp; Director — St. Lawrence Academy
+              <span className="label-line"></span>
+            </div>
+            <h1 className="founder-hero-name">Achier Manyuat John</h1>
+            <p className="founder-hero-tagline">
+              "Education is not just the transfer of knowledge; it is the transformation of character, the lifting of a nation."
+            </p>
+            <div className="founder-hero-scroll">
+              <span></span>
+            </div>
           </div>
         </div>
       </section>
@@ -42,7 +44,7 @@ const Founder = () => {
         <div className="founder-name-band-inner">
           <div className="founder-name-band-text">
             <span className="founder-name-band-eyebrow">Founder &amp; Director</span>
-            <h2 className="founder-name-band-name">Achier John</h2>
+            <h2 className="founder-name-band-name">Achier Manyuat John</h2>
             <span className="founder-name-band-sub">St. Lawrence Academy, Juba, South Sudan</span>
           </div>
         </div>
@@ -56,7 +58,7 @@ const Founder = () => {
             {/* Left: editorial text */}
             <div className="founder-article-text animate-on-scroll">
               <div className="article-category">Profile &mdash; Founder &amp; Director</div>
-              <h2 className="article-headline">Achier John: The Man Who Dared to Build</h2>
+              <h2 className="article-headline">Achier Manyuat John: The Man Who Dared to Build</h2>
               <p className="article-subheadline">
                 A visionary educator whose belief in quality schooling is quietly transforming a generation in Juba, South Sudan.
               </p>
@@ -70,7 +72,7 @@ const Founder = () => {
 
               <div className="article-body">
                 <p>
-                  Achier John is the driving force behind St. Lawrence Academy — a visionary leader whose passion for education was forged through personal experience and a deep desire to see South Sudan rise through the power of knowledge.
+                  Achier Manyuat John is the driving force behind St. Lawrence Academy — a visionary leader whose passion for education was forged through personal experience and a deep desire to see South Sudan rise through the power of knowledge.
                 </p>
                 <p>
                   With a profound belief that quality education is the foundation of every thriving society, Achier founded St. Lawrence Academy in 2020 with a singular mission: to provide young South Sudanese with the academic excellence, moral grounding, and life skills they need to lead and serve their communities.
@@ -90,10 +92,10 @@ const Founder = () => {
             <div className="founder-article-side animate-on-scroll">
               <div className="article-portrait">
                 <div className="article-portrait-img">
-                  <img src="/sla_school_view_1.jpg" alt="Achier John — Founder & Director" />
+                  <img src="/images/general/Director_achier_john.jpg" alt="Achier Manyuat John — Founder &amp; Director" />
                 </div>
                 <div className="article-portrait-caption">
-                  <strong>Achier John</strong>
+                  <strong>Achier Manyuat John</strong>
                   <span>Founder &amp; Director, St. Lawrence Academy</span>
                 </div>
               </div>
@@ -126,7 +128,7 @@ const Founder = () => {
                 <span className="story-chapter-tag">The Beginning</span>
                 <h3>A Calling Recognised</h3>
                 <p>
-                  Growing up in South Sudan, Achier John witnessed firsthand the challenges faced by young people seeking quality education. Access was limited, resources were scarce, and the potential of an entire generation risked going unfulfilled. This reality ignited in him a sense of calling — not just to teach, but to build.
+                  Growing up in South Sudan, Achier Manyuat John witnessed firsthand the challenges faced by young people seeking quality education. Access was limited, resources were scarce, and the potential of an entire generation risked going unfulfilled. This reality ignited in him a sense of calling — not just to teach, but to build.
                 </p>
               </div>
               <div className="story-chapter-accent"></div>
@@ -150,7 +152,7 @@ const Founder = () => {
                 <span className="story-chapter-tag">The Founding</span>
                 <h3>St. Lawrence Academy Is Born</h3>
                 <p>
-                  With unwavering determination and the support of a committed team, Achier John opened the doors of St. Lawrence Academy in Juba, South Sudan. The school was founded on three pillars: academic excellence, character development, and community service. From its very first students, the academy became a beacon of hope and possibility.
+                  With unwavering determination and the support of a committed team, Achier Manyuat John opened the doors of St. Lawrence Academy in Juba, South Sudan. The school was founded on three pillars: academic excellence, character development, and community service. From its very first students, the academy became a beacon of hope and possibility.
                 </p>
               </div>
               <div className="story-chapter-accent"></div>
@@ -174,7 +176,7 @@ const Founder = () => {
                 <span className="story-chapter-tag">Today</span>
                 <h3>The Vision Continues</h3>
                 <p>
-                  Achier John continues to lead with the same passion that first drove him to found St. Lawrence Academy — mentoring teachers, engaging with families, and constantly pursuing new ways to elevate what the school offers. His vision is clear: St. Lawrence Academy must be a world-class institution that all of South Sudan can be proud of.
+                  Achier Manyuat John continues to lead with the same passion that first drove him to found St. Lawrence Academy — mentoring teachers, engaging with families, and constantly pursuing new ways to elevate what the school offers. His vision is clear: St. Lawrence Academy must be a world-class institution that all of South Sudan can be proud of.
                 </p>
               </div>
               <div className="story-chapter-accent"></div>
@@ -190,7 +192,7 @@ const Founder = () => {
           <div className="section-header-gold animate-on-scroll">
             <p className="section-eyebrow">Leadership Philosophy</p>
             <h2>Vision &amp; Core Beliefs</h2>
-            <p>The principles that guide Achier John's leadership and shape everything at St. Lawrence Academy.</p>
+            <p>The principles that guide Achier Manyuat John's leadership and shape everything at St. Lawrence Academy.</p>
           </div>
 
           <div className="vision-pillars">
@@ -257,7 +259,7 @@ const Founder = () => {
             </div>
             <div className="legacy-header-right">
               <p>
-                What Achier John has built at St. Lawrence Academy is more than a school — it is a movement. A movement that says the children of South Sudan deserve the very best, and that with the right environment, support, and inspiration, they can achieve anything.
+                What Achier Manyuat John has built at St. Lawrence Academy is more than a school — it is a movement. A movement that says the children of South Sudan deserve the very best, and that with the right environment, support, and inspiration, they can achieve anything.
               </p>
               <p>
                 His legacy is written not in stone, but in the lives of the students who have passed through these halls — students now pursuing careers in medicine, law, engineering, education, and public service, becoming the leaders their country needs.
@@ -315,7 +317,7 @@ const Founder = () => {
           <blockquote>
             We are not just building a school. We are building the future of South Sudan — one student, one lesson, one act of kindness at a time.
           </blockquote>
-          <cite>Achier John &mdash; Founder &amp; Director, St. Lawrence Academy</cite>
+          <cite>Achier Manyuat John &mdash; Founder &amp; Director, St. Lawrence Academy</cite>
           <div className="gold-divider" style={{marginTop: '2.5rem'}}>
             <div className="gold-divider-line"></div>
             <div className="gold-divider-diamond"></div>

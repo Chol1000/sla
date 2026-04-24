@@ -16,7 +16,7 @@ const Secondary = () => {
       {/* ── Hero ── */}
       <section className="secondary-hero">
         <div className="secondary-hero-bg">
-          <img src="/sla_secondary_school.jpg" alt="St. Lawrence Academy Secondary School" />
+          <img src="/images/secondary/beautiful_students_school_view.JPG" alt="St. Lawrence Academy Secondary School" />
         </div>
         <div className="secondary-hero-overlay"></div>
         <div className="secondary-hero-content">
@@ -86,7 +86,7 @@ const Secondary = () => {
               </div>
             </div>
             <div className="secondary-about-img">
-              <img src="/sla_students_20.jpg" alt="Secondary students at St. Lawrence Academy" />
+              <img src="/images/secondary/pic_1.JPG" alt="Secondary students at St. Lawrence Academy" />
             </div>
           </div>
         </div>
@@ -216,7 +216,7 @@ const Secondary = () => {
               </div>
             </div>
             <div className="secondary-sscse-img">
-              <img src="/sla_students_21.jpg" alt="Secondary students preparing for examinations" />
+              <img src="/images/secondary/success_card_from_director.jpg" alt="Director wishing S4 students success" />
             </div>
           </div>
         </div>
@@ -231,13 +231,13 @@ const Secondary = () => {
           </div>
           <div className="secondary-gallery-row">
             <div className="secondary-gallery-cell">
-              <img src="/sla_students_25.jpg" alt="Secondary students at SLA" />
+              <img src="/images/secondary/assembly_overview.JPG" alt="Secondary school assembly" />
             </div>
             <div className="secondary-gallery-cell">
-              <img src="/sla_students_26.jpg" alt="Secondary school classroom" />
+              <img src="/images/secondary/school_view.jpg" alt="Secondary school campus" />
             </div>
             <div className="secondary-gallery-cell">
-              <img src="/sla_students_27.jpg" alt="Secondary school activity" />
+              <img src="/images/secondary/flags_on_campus.jpg" alt="Campus flags" />
             </div>
           </div>
         </div>

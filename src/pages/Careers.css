@@ -2,20 +2,16 @@
 
 .careers-page {
   background: #ffffff;
-  padding-top: 125px;
   transition: padding-top 0.35s ease;
 }
 
-body.topbar-hidden .careers-page {
-  padding-top: 65px;
-}
 
 /* ── Hero ── */
 .careers-hero {
   position: relative;
-  height: 55vh;
-  min-height: 380px;
-  max-height: 580px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -557,7 +553,7 @@ body.topbar-hidden .careers-page {
 }
 
 @media (max-width: 900px) {
-  .careers-hero { height: 45vh; min-height: 300px; }
+  .careers-hero { height: 72vh; min-height: 460px; max-height: none; }
 
   .careers-intro-inner {
     flex-direction: column;
@@ -577,7 +573,7 @@ body.topbar-hidden .careers-page {
 }
 
 @media (max-width: 600px) {
-  .careers-hero { height: 42vh; min-height: 280px; }
+  .careers-hero { height: 72vh; min-height: 460px; max-height: none; }
   .careers-hero-title { display: none; }
   .careers-hero-overlay {
     background: linear-gradient(

@@ -59,7 +59,7 @@ const DiningServices = () => {
       {/* ── Hero ── */}
       <section className="ds-hero">
         <div className="ds-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="Dining at St. Lawrence Academy" />
+          <img src="/images/secondary/dinner.jpg" alt="Dining at St. Lawrence Academy" />
         </div>
         <div className="ds-hero-overlay"></div>
         <div className="ds-hero-content">
@@ -161,7 +161,7 @@ const DiningServices = () => {
         <div className="container">
           <div className="ds-feature-inner reveal">
             <div className="ds-feature-visual">
-              <img src="/sla_assembly.jpg" alt="Students at St. Lawrence Academy" />
+              <img src="/images/secondary/students_dinner.jpg" alt="Students dining at St. Lawrence Academy" />
               <div className="ds-feature-badge">
                 <span>Fresh &amp;</span>
                 <span>Nutritious</span>

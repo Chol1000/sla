@@ -16,7 +16,7 @@ const Library = () => {
       {/* ── Hero ── */}
       <section className="library-hero">
         <div className="library-hero-bg">
-          <img src="/sla_pupils_2.jpg" alt="St. Lawrence Academy Library" />
+          <img src="/images/secondary/library.jpg" alt="St. Lawrence Academy Library" />
         </div>
         <div className="library-hero-overlay"></div>
         <div className="library-hero-content">
@@ -77,23 +77,9 @@ const Library = () => {
                 on hand to guide students to the right resources and support their
                 academic journey.
               </p>
-              <div className="library-about-stats">
-                <div className="library-stat">
-                  <span className="library-stat-num">5,000+</span>
-                  <span className="library-stat-label">Books &amp; References</span>
-                </div>
-                <div className="library-stat">
-                  <span className="library-stat-num">3</span>
-                  <span className="library-stat-label">Dedicated Reading Sections</span>
-                </div>
-                <div className="library-stat">
-                  <span className="library-stat-num">Daily</span>
-                  <span className="library-stat-label">Access for All Students</span>
-                </div>
-              </div>
             </div>
             <div className="library-about-img">
-              <img src="/sla_pupils_14.jpg" alt="Students in library" />
+              <img src="/images/secondary/library_1.jpg" alt="Students in library" />
             </div>
           </div>
         </div>
@@ -189,7 +175,7 @@ const Library = () => {
         <div className="container">
           <div className="library-reading-inner reveal">
             <div className="library-reading-img">
-              <img src="/sla_pupils_9.jpg" alt="Students reading" />
+              <img src="/images/secondary/library_2.jpg" alt="Students reading" />
             </div>
             <div className="library-reading-text">
               <span className="library-eyebrow">Reading Programme</span>

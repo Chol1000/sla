@@ -84,20 +84,20 @@ const StudentLeadership = () => {
       {/* ── Hero ── */}
       <section className="leadership-hero">
         <div className="leadership-hero-bg">
-          <img src="/sla_assembly.jpg" alt="Student Leadership at St. Lawrence Academy" />
+          <img src="/images/secondary/students_with_staff.JPG" alt="Student Leadership at St. Lawrence Academy" />
         </div>
         <div className="leadership-hero-overlay"></div>
         <div className="leadership-hero-content">
-          <div className="leadership-hero-label">
-            <span className="lh-line"></span>
-            St. Lawrence Academy
-            <span className="lh-line"></span>
+          <div className="container">
+            <div className="leadership-hero-inner">
+              <span className="leadership-hero-label">St. Lawrence Academy</span>
+              <h1 className="leadership-hero-title">Student <span>Leadership</span></h1>
+              <p className="leadership-hero-sub">
+                The head students, prefects, and student representatives who serve and
+                lead the SLA community — year by year.
+              </p>
+            </div>
           </div>
-          <h1 className="leadership-hero-title">Student Leadership</h1>
-          <p className="leadership-hero-sub">
-            The head students, prefects, and student representatives who serve and
-            lead the SLA community — year by year.
-          </p>
         </div>
       </section>
 

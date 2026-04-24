@@ -51,10 +51,10 @@
   font-weight: 900;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: #c8a96e;
+  color: rgba(255,255,255,0.85);
   margin: 0 0 1.2rem;
   padding-bottom: 0.65rem;
-  border-bottom: 1px solid rgba(200,169,110,0.15);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .footer-links {
@@ -108,7 +108,7 @@
   font-size: 0.74rem;
   font-weight: 900;
   letter-spacing: 3px;
-  color: #c8a96e;
+  color: rgba(255,255,255,0.9);
   white-space: nowrap;
 }
 
@@ -143,7 +143,7 @@
 
 .footer-bottom-contact i {
   font-size: 0.68rem;
-  color: #c8a96e;
+  color: rgba(255,255,255,0.5);
   width: 12px;
   text-align: center;
   flex-shrink: 0;

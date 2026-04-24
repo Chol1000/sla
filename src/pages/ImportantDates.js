@@ -6,11 +6,11 @@ import { setPageMeta } from '../utils/pageMeta';
 const terms = [
   {
     label: 'Term 1',
-    current: true,
+    current: false,
     days: '70 instructional days',
     rows: [
-      { key: 'Registration', value: 'To be announced', past: true },
-      { key: 'Term Opens', value: '2 Feb 2026', past: true },
+      { key: 'Registration', value: 'Passed', past: false },
+      { key: 'Term Opens', value: '2 Feb 2026', past: false },
       { key: 'Term Closes', value: '15 May 2026', past: false },
     ],
   },
@@ -73,7 +73,7 @@ const ImportantDates = () => {
       {/* ── Hero ── */}
       <section className="dates-hero">
         <div className="dates-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/assembly_2.JPG" alt="St. Lawrence Academy" />
         </div>
         <div className="dates-hero-overlay"></div>
         <div className="dates-hero-content">

@@ -2,25 +2,18 @@
 
 .pta-page {
   background: #ffffff;
-  padding-top: 125px;
-  transition: padding-top 0.35s ease;
 }
 
-body.topbar-hidden .pta-page {
-  padding-top: 65px;
-}
 
 /* ── Hero ── */
 .pta-hero {
   position: relative;
-  height: 55vh;
-  min-height: 380px;
-  max-height: 580px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
   overflow: hidden;
-  text-align: center;
 }
 
 .pta-hero-bg {
@@ -50,31 +43,20 @@ body.topbar-hidden .pta-page {
 .pta-hero-content {
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 0 1.5rem 3.5rem;
+  padding: 0 0 4rem;
   width: 100%;
 }
 
+.pta-hero-inner { max-width: 720px; }
+
 .pta-hero-label {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: block;
   color: #c8a96e;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-}
-
-.pta-fh-line {
-  display: inline-block;
-  width: 36px;
-  height: 1px;
-  background: #c8a96e;
-  opacity: 0.7;
+  margin-bottom: 1rem;
 }
 
 .pta-hero-title {
@@ -594,8 +576,9 @@ body.topbar-hidden .pta-page {
 
 @media (max-width: 900px) {
   .pta-hero {
-    height: 45vh;
-    min-height: 300px;
+    height: 72vh;
+    min-height: 460px;
+    max-height: none;
   }
 
   .pta-intro-inner {
@@ -650,8 +633,9 @@ body.topbar-hidden .pta-page {
   }
 
   .pta-hero {
-    height: 42vh;
-    min-height: 280px;
+    height: 72vh;
+    min-height: 460px;
+    max-height: none;
   }
 
   .pta-hero-title { display: none; }

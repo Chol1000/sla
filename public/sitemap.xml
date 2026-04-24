@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Core -->
+  <url><loc>https://sla.pythonanywhere.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/about</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/contact</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/gallery</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/reviews</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
+
+  <!-- About -->
+  <url><loc>https://sla.pythonanywhere.com/founder</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/history</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/faculty</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/pta</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/anthem</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+
+  <!-- Academics -->
+  <url><loc>https://sla.pythonanywhere.com/nursery</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/primary</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/secondary</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/curriculum</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/subjects</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/examinations</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Campus & Facilities -->
+  <url><loc>https://sla.pythonanywhere.com/campus</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/library</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/science-labs</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/technology</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Admissions -->
+  <url><loc>https://sla.pythonanywhere.com/admissions/apply</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/admissions/requirements</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/admissions/fees</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/admissions/contact</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/admissions/visit</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/admissions/dates</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Student Life -->
+  <url><loc>https://sla.pythonanywhere.com/student-life/sports</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/student-life/clubs</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/student-life/arts</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/student-life/leadership</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/student-life/events</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/student-life/community-service</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/student-life/counseling</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/student-life/health</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/student-life/dining</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Community -->
+  <url><loc>https://sla.pythonanywhere.com/alumni</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/careers</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/blog</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://sla.pythonanywhere.com/support</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+
+</urlset>

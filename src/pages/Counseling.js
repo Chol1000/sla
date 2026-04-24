@@ -65,7 +65,7 @@ const Counseling = () => {
       {/* ── Hero ── */}
       <section className="cns-hero">
         <div className="cns-hero-bg">
-          <img src="/sla_assembly_2.jpg" alt="Student support at St. Lawrence Academy" />
+          <img src="/images/secondary/counselling.jpg" alt="Student support at St. Lawrence Academy" />
         </div>
         <div className="cns-hero-overlay"></div>
         <div className="cns-hero-content">
@@ -110,7 +110,7 @@ const Counseling = () => {
       {/* ── Feature ── */}
       <section className="cns-feature">
         <div className="cns-feature-img">
-          <img src="/sla_assembly.jpg" alt="Teachers and students at St. Lawrence Academy" />
+          <img src="/images/secondary/admin_with_students.JPG" alt="Teachers and students at St. Lawrence Academy" />
           <div className="cns-feature-overlay">
             <blockquote>
               "A good teacher is like a candle — it consumes itself to light the way for others."

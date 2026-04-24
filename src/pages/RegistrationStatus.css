@@ -9,7 +9,7 @@
   background: #fff;
   border-bottom: 1px solid #e5e7eb;
   padding: 0.85rem 0;
-  margin-top: 80px;
+  margin-top: var(--header-bottom, 120px);
 }
 
 .rs-topbar-inner {

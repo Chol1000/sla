@@ -16,7 +16,7 @@ const ScienceLab = () => {
       {/* ── Hero ── */}
       <section className="lab-hero">
         <div className="lab-hero-bg">
-          <img src="/sla_students_22.jpg" alt="St. Lawrence Academy Science Labs" />
+          <img src="/images/secondary/students_5.JPG" alt="St. Lawrence Academy Science Labs" />
         </div>
         <div className="lab-hero-overlay"></div>
         <div className="lab-hero-content">
@@ -62,7 +62,7 @@ const ScienceLab = () => {
         <div className="container">
           <div className="lab-about-inner reveal">
             <div className="lab-about-imgs">
-              <img className="lab-about-img-main" src="/sla_students_24.jpg" alt="Students in science lab" />
+              <img className="lab-about-img-main" src="/images/secondary/campus_night_view.jpg" alt="St. Lawrence Academy at night" />
             </div>
             <div className="lab-about-text">
               <span className="lab-eyebrow">Our Facility</span>
@@ -143,7 +143,7 @@ const ScienceLab = () => {
         <div className="container">
           <div className="lab-safety-inner reveal">
             <div className="lab-safety-img">
-              <img src="/sla_students_23.jpg" alt="Safe lab environment" />
+              <img src="/images/secondary/students_in_class.JPG" alt="Safe lab environment" />
             </div>
             <div className="lab-safety-text">
               <span className="lab-eyebrow">Safety First</span>

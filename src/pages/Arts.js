@@ -8,25 +8,25 @@ const disciplines = [
     tag: 'Performing Arts',
     title: 'Music & Singing',
     body: 'Music is woven into the fabric of St. Lawrence Academy. From morning assemblies to special performances, students engage in singing, choral work, and musical expression that builds confidence, unity, and joy. Our students represent a rich diversity of musical traditions.',
-    img: '/sla_assembly.jpg',
+    img: '/images/secondary/events_3.jpg',
   },
   {
     tag: 'Performing Arts',
     title: 'Drama & Theatre',
     body: 'Our drama programme gives students the stage to tell stories, embody characters, and explore the human experience. School productions — performed for families and the wider community — are a highlight of the academic year and a powerful showcase of student talent.',
-    img: '/sla_assembly_1.jpg',
+    img: '/images/secondary/palm_sunday.JPG',
   },
   {
     tag: 'Visual Arts',
     title: 'Art & Creative Expression',
     body: 'Students at SLA are encouraged to express themselves through drawing, painting, design, and craft. Art classes nurture creativity, fine motor skills, and an appreciation for beauty. Student work is displayed across the school and celebrated at end-of-year exhibitions.',
-    img: '/sla_assembly_2.jpg',
+    img: '/images/secondary/events_2.jpg',
   },
   {
     tag: 'Cultural Arts',
     title: 'Traditional Dance & Movement',
     body: 'Dance at St. Lawrence Academy celebrates the rich cultural heritage of South Sudan and the wider African continent. Students learn traditional and contemporary movement, performing at cultural events, national days, and community celebrations.',
-    img: '/sla_school_overview.jpg',
+    img: '/images/secondary/sla_cultural_dance.jpg',
   },
 ];
 
@@ -62,7 +62,7 @@ const Arts = () => {
       {/* ── Hero ── */}
       <section className="arts-hero">
         <div className="arts-hero-bg">
-          <img src="/sla_assembly_2.jpg" alt="Arts and Culture at St. Lawrence Academy" />
+          <img src="/images/secondary/sla_cultural_dance.jpg" alt="Arts and Culture at St. Lawrence Academy" />
         </div>
         <div className="arts-hero-overlay"></div>
         <div className="arts-hero-content">
@@ -151,7 +151,7 @@ const Arts = () => {
               </p>
             </div>
             <div className="arts-cultures-visual">
-              <img src="/sla_assembly.jpg" alt="Cultural diversity at St. Lawrence Academy" />
+              <img src="/images/secondary/palm_sunday_with_students.JPG" alt="Cultural diversity at St. Lawrence Academy" />
               <div className="arts-cultures-visual-badge">
                 <span>Everyone</span>
                 <span>is Welcome</span>

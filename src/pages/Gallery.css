@@ -8,9 +8,9 @@
 /* ── Hero ── */
 .gallery-hero {
   position: relative;
-  height: 65vh;
-  min-height: 460px;
-  max-height: 720px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -31,9 +31,10 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.55) 0%,
-    rgba(0,0,0,0.35) 38%,
-    rgba(0,0,0,0.0) 65%
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.38) 38%,
+    rgba(0,0,0,0.08) 65%,
+    rgba(0,0,0,0.0) 78%
   );
 }
 
@@ -341,7 +342,7 @@
 }
 
 @media (max-width: 640px) {
-  .gallery-hero { height: 70vh; min-height: 420px; max-height: none; }
+  .gallery-hero { height: 72vh; min-height: 460px; max-height: none; }
   .gallery-hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 45%, transparent 75%); }
   .gallery-hero-content { padding-bottom: 2.5rem; }
   .gallery-hero-title { display: none; }

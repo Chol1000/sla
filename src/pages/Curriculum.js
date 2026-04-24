@@ -17,7 +17,7 @@ const Curriculum = () => {
       {/* ── Hero ── */}
       <section className="curriculum-hero">
         <div className="curriculum-hero-bg">
-          <img src="/sla_students_20.jpg" alt="St. Lawrence Academy Curriculum" />
+          <img src="/images/secondary/students_in_class.JPG" alt="St. Lawrence Academy Curriculum" />
         </div>
         <div className="curriculum-hero-overlay"></div>
         <div className="curriculum-hero-content">

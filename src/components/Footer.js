@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="footer-body">
 
         {/* Centered ghost watermark */}
-        <img src="/ST_Logo.png" alt="" className="footer-watermark" aria-hidden="true" />
+        <img src="/images/general/transparent_logo.png" alt="" className="footer-watermark" aria-hidden="true" />
 
         <div className="container footer-body-container">
           <div className="footer-nav-grid">

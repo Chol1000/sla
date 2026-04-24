@@ -182,7 +182,7 @@ const Alumni = () => {
       {/* ── Hero ── */}
       <section className="alumni-hero">
         <div className="alumni-hero-bg">
-          <img src="/sla_assembly.jpg" alt="St. Lawrence Academy Alumni" />
+          <img src="/images/secondary/alumni_visit.jpg" alt="St. Lawrence Academy Alumni" />
         </div>
         <div className="alumni-hero-overlay"></div>
         <div className="alumni-hero-content">

@@ -111,7 +111,7 @@ const ApplicationProcess = () => {
       {/* ── Hero ── */}
       <section className="apply-hero">
         <div className="apply-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/campus_view_from_above_assembly.JPG" alt="St. Lawrence Academy students" />
         </div>
         <div className="apply-hero-overlay"></div>
         <div className="apply-hero-content">

@@ -8,9 +8,9 @@
 /* ── Hero ── */
 .subjects-hero {
   position: relative;
-  height: 65vh;
-  min-height: 480px;
-  max-height: 700px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
   overflow: hidden;

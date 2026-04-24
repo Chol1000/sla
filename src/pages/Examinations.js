@@ -16,7 +16,7 @@ const Examinations = () => {
       {/* ── Hero ── */}
       <section className="exams-hero">
         <div className="exams-hero-bg">
-          <img src="/sla_students_28.jpg" alt="St. Lawrence Academy Examinations" />
+          <img src="/images/nursery/examination.jpg" alt="St. Lawrence Academy Examinations" />
         </div>
         <div className="exams-hero-overlay"></div>
         <div className="exams-hero-content">
@@ -116,7 +116,7 @@ const Examinations = () => {
         <div className="container">
           <div className="exams-national-inner reveal">
             <div className="exams-national-img">
-              <img src="/sla_students_30.jpg" alt="Students in examination hall" />
+              <img src="/images/secondary/success_card_from_director.jpg" alt="Director wishing S4 students success" />
             </div>
             <div className="exams-national-text">
               <span className="exams-eyebrow">National Assessments</span>
@@ -225,7 +225,7 @@ const Examinations = () => {
               </div>
             </div>
             <div className="exams-conduct-img">
-              <img src="/sla_students_31.jpg" alt="Examination hall" />
+              <img src="/images/secondary/students_standing.JPG" alt="Examination hall" />
             </div>
           </div>
         </div>

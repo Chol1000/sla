@@ -8,9 +8,9 @@
 /* ── Hero ── */
 .adm-contact-hero {
   position: relative;
-  height: 65vh;
-  min-height: 480px;
-  max-height: 700px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -34,9 +34,10 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.55) 0%,
-    rgba(0,0,0,0.35) 38%,
-    rgba(0,0,0,0.0) 65%
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.38) 38%,
+    rgba(0,0,0,0.08) 65%,
+    rgba(0,0,0,0.0) 78%
   );
 }
 
@@ -262,7 +263,7 @@
 .adm-contact-topic-num {
   font-size: 2rem;
   font-weight: 900;
-  color: rgba(200,169,110,0.25);
+  color: #c8a96e;
   font-family: Georgia, serif;
   line-height: 1;
   margin-bottom: 0.85rem;

@@ -16,7 +16,7 @@ const Technology = () => {
       {/* ── Hero ── */}
       <section className="tech-hero">
         <div className="tech-hero-bg">
-          <img src="/computer_cover.jpg" alt="St. Lawrence Academy Technology & ICT" />
+          <img src="/images/secondary/students.JPG" alt="St. Lawrence Academy Technology & ICT" />
         </div>
         <div className="tech-hero-overlay"></div>
         <div className="tech-hero-content">
@@ -61,7 +61,7 @@ const Technology = () => {
         <div className="container">
           <div className="tech-lab-inner reveal">
             <div className="tech-lab-imgs">
-              <img className="tech-lab-img-main" src="/sla_students_26.jpg" alt="Students in computer lab" />
+              <img className="tech-lab-img-main" src="/images/secondary/school_view.jpg" alt="Students in computer lab" />
             </div>
             <div className="tech-lab-text">
               <span className="tech-eyebrow">Our Facility</span>
@@ -159,7 +159,7 @@ const Technology = () => {
         <div className="container">
           <div className="tech-why-inner reveal">
             <div className="tech-why-img">
-              <img src="/sla_students_27.jpg" alt="Technology in education" />
+              <img src="/images/secondary/mathematics_club.jpg" alt="Technology in education" />
             </div>
             <div className="tech-why-text">
               <span className="tech-eyebrow">Our Approach</span>

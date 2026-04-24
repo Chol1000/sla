@@ -52,19 +52,19 @@ const PTA = () => {
       {/* ── Hero ── */}
       <section className="pta-hero">
         <div className="pta-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/general/pta_meeting.jpg" alt="PTA Meeting at St. Lawrence Academy" />
         </div>
         <div className="pta-hero-overlay"></div>
         <div className="pta-hero-content">
-          <div className="pta-hero-label">
-            <span className="pta-fh-line"></span>
-            St. Lawrence Academy
-            <span className="pta-fh-line"></span>
+          <div className="container">
+            <div className="pta-hero-inner">
+              <span className="pta-hero-label">St. Lawrence Academy</span>
+              <h1 className="pta-hero-title">Parent-Teacher Association</h1>
+              <p className="pta-hero-sub">
+                The bridge between families and the school community — partnering to support every child's growth and success.
+              </p>
+            </div>
           </div>
-          <h1 className="pta-hero-title">Parent-Teacher Association</h1>
-          <p className="pta-hero-sub">
-            The bridge between families and the school community — partnering to support every child's growth and success.
-          </p>
         </div>
       </section>
 

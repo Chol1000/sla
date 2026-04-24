@@ -106,7 +106,7 @@ const EventsActivities = () => {
       {/* ── Hero ── */}
       <section className="ea-hero">
         <div className="ea-hero-bg">
-          <img src="/sla_assembly_1.jpg" alt="Events at St. Lawrence Academy" />
+          <img src="/images/secondary/events_2.jpg" alt="Events at St. Lawrence Academy" />
         </div>
         <div className="ea-hero-overlay"></div>
         <div className="ea-hero-content">
@@ -223,7 +223,7 @@ const EventsActivities = () => {
         <div className="container">
           <div className="ea-community-inner reveal">
             <div className="ea-community-visual">
-              <img src="/sla_assembly_2.jpg" alt="SLA school event" />
+              <img src="/images/secondary/events_3.jpg" alt="SLA school event" />
               <div className="ea-community-badge">
                 <span>Where</span>
                 <span>Memories Are Made</span>

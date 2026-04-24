@@ -88,7 +88,7 @@ const Fees = () => {
       {/* ── Hero ── */}
       <section className="fees-hero">
         <div className="fees-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/school_view.jpg" alt="St. Lawrence Academy" />
         </div>
         <div className="fees-hero-overlay"></div>
         <div className="fees-hero-content">

@@ -102,7 +102,7 @@ const Blog = () => {
       {/* ── Hero ── */}
       <section className="blog-hero">
         <div className="blog-hero-bg">
-          <img src="/sla_assembly_1.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/press_1.jpeg" alt="St. Lawrence Academy News" />
         </div>
         <div className="blog-hero-overlay"></div>
         <div className="blog-hero-content">

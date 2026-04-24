@@ -8,38 +8,36 @@ const featuredClubs = [
     label: 'Featured Club',
     title: 'Debate Club',
     body: 'The SLA Debate Club trains students to research, argue, and communicate with confidence. Members participate in structured debates on current affairs, social issues, and academic topics, developing critical thinking and public speaking skills that serve them throughout life.',
-    img: '/sla_assembly.jpg',
+    img: '/images/secondary/debate_team.jpg',
   },
   {
     label: 'Featured Club',
     title: 'Environmental Club',
     body: 'The Environmental Club raises awareness about sustainability, conservation, and the natural world. Members lead school-wide initiatives including tree planting, clean-up drives, recycling campaigns, and environmental education for younger students.',
-    img: '/sla_school_overview.jpg',
+    img: '/images/secondary/sla_school_view_1.jpg',
   },
   {
     label: 'Featured Club',
-    title: 'Health & Wellness Club',
-    body: 'The Health Club promotes physical and mental wellbeing across the school. Activities include health awareness campaigns, peer education sessions, and community outreach on hygiene, nutrition, and mental health.',
-    img: '/sla_assembly_1.jpg',
+    title: 'Mathematics Club',
+    body: 'Problem-solving competitions, puzzles, and applied maths for curious minds. The Mathematics Club challenges students to think beyond the textbook and develop a love for numbers, logic, and creative reasoning.',
+    img: '/images/secondary/mathematics_club.jpg',
   },
   {
     label: 'Featured Club',
     title: 'Journalism Club',
     body: 'Our Journalism Club gives students a platform to write, report, and tell stories. Members contribute to the school newsletter, produce written features on school life and current events, and develop skills of researching, interviewing, and writing for a real audience.',
-    img: '/sla_assembly_2.jpg',
+    img: '/images/secondary/press_clear_pic.jpg',
+    imgPosition: 'center top',
   },
 ];
 
 const otherClubs = [
-  { title: 'Football Club',       body: 'Students passionate about football meet regularly for training, tactics, and friendly inter-class matches.' },
-  { title: 'Basketball Club',     body: 'An extension of our athletics programme — open to students who want extra court time and skills training.' },
-  { title: 'Volleyball Club',     body: 'Recreational and competitive play for students across all levels who love the game.' },
-  { title: 'Science Club',        body: 'Experiments, investigations, and STEM challenges beyond the classroom curriculum.' },
-  { title: 'Mathematics Club',    body: 'Problem-solving competitions, puzzles, and applied maths for curious minds.' },
-  { title: 'Reading Club',        body: 'A safe, quiet space for students who love books to share and discuss what they read.' },
-  { title: 'Agriculture Club',    body: 'Hands-on learning about growing food, farming practices, and food security.' },
-  { title: 'Christian Union',     body: 'Faith-based fellowship, Bible study, and community service activities.' },
-  { title: 'Student Council',     body: 'Representative body giving students a voice in school decision-making.' },
+  { title: 'Science Club',           body: 'Experiments, investigations, and STEM challenges beyond the classroom curriculum.' },
+  { title: 'Health & Wellness Club', body: 'Health awareness campaigns, peer education sessions, and community outreach on hygiene, nutrition, and mental health.' },
+  { title: 'Reading Club',           body: 'A safe, quiet space for students who love books to share and discuss what they read.' },
+  { title: 'Agriculture Club',       body: 'Hands-on learning about growing food, farming practices, and food security.' },
+  { title: 'Christian Union',        body: 'Faith-based fellowship, Bible study, and community service activities.' },
+  { title: 'Student Council',        body: 'Representative body giving students a voice in school decision-making.' },
 ];
 
 const benefits = [
@@ -62,7 +60,7 @@ const Clubs = () => {
       {/* ── Hero ── */}
       <section className="clubs-hero">
         <div className="clubs-hero-bg">
-          <img src="/sla_assembly.jpg" alt="St. Lawrence Academy Clubs" />
+          <img src="/images/secondary/sla_students_scripture_union.jpg" alt="St. Lawrence Academy Clubs" />
         </div>
         <div className="clubs-hero-overlay"></div>
         <div className="clubs-hero-content">
@@ -117,7 +115,7 @@ const Clubs = () => {
             {featuredClubs.map((club, i) => (
               <div className="clubs-feature-card reveal" key={i}>
                 <div className="clubs-feature-img">
-                  <img src={club.img} alt={club.title} />
+                  <img src={club.img} alt={club.title} style={club.imgPosition ? { objectPosition: club.imgPosition } : undefined} />
                   <div className="clubs-feature-img-overlay"></div>
                   <span className="clubs-feature-label">{club.label}</span>
                 </div>

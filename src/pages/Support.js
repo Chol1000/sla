@@ -19,7 +19,7 @@ const Support = () => {
       {/* ── Hero ── */}
       <section className="support-hero">
         <div className="support-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/boarding_students_group_pic.JPG" alt="St. Lawrence Academy" />
         </div>
         <div className="support-hero-overlay"></div>
         <div className="support-hero-content">

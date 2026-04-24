@@ -97,7 +97,7 @@ const Contact = () => {
       {/* ── Hero ── */}
       <section className="contact-hero">
         <div className="contact-hero-bg">
-          <img src="/sla_school_view_4.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/primary/primary_campus.jpg" alt="St. Lawrence Academy" />
         </div>
         <div className="contact-hero-overlay"></div>
         <div className="contact-hero-content">

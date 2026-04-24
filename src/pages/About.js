@@ -22,7 +22,7 @@ const About = () => {
       {/* ── Hero ── */}
       <section className="about-hero">
         <div className="about-hero-bg">
-          <img src="/sla_school_gate.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/campus_view_from_above_assembly.JPG" alt="St. Lawrence Academy" />
         </div>
         <div className="about-hero-overlay"></div>
         <div className="about-hero-content">

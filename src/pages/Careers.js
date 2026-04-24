@@ -55,7 +55,7 @@ const Careers = () => {
       {/* ── Hero ── */}
       <section className="careers-hero">
         <div className="careers-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy — Careers" />
+          <img src="/images/secondary/students_with_staff.JPG" alt="St. Lawrence Academy — Careers" />
         </div>
         <div className="careers-hero-overlay"></div>
         <div className="careers-hero-content">

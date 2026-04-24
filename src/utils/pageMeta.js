@@ -1,6 +1,6 @@
 const SITE_NAME = 'St. Lawrence Academy';
 const SITE_URL  = 'https://stlawrenceacademy.pythonanywhere.com';
-const DEFAULT_IMAGE = `${SITE_URL}/sla_school_overview.jpg`;
+const DEFAULT_IMAGE = `${SITE_URL}/images/secondary/assembly_overview.JPG`;
 
 const setMeta = (property, content, isName = false) => {
   const attr = isName ? 'name' : 'property';

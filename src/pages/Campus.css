@@ -8,9 +8,9 @@
 /* ── Hero ── */
 .campus-hero {
   position: relative;
-  height: 65vh;
-  min-height: 480px;
-  max-height: 700px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -34,9 +34,10 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.55) 0%,
-    rgba(0,0,0,0.35) 38%,
-    rgba(0,0,0,0.0) 65%
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.38) 38%,
+    rgba(0,0,0,0.08) 65%,
+    rgba(0,0,0,0.0) 78%
   );
 }
 
@@ -207,11 +208,6 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s ease;
-}
-
-.campus-location-img:hover img {
-  transform: scale(1.04);
 }
 
 /* ── Level Sections ── */
@@ -254,7 +250,7 @@
 .campus-level-number {
   font-size: 5rem;
   font-weight: 900;
-  color: rgba(200,169,110,0.15);
+  color: #c8a96e;
   line-height: 1;
   margin: 0;
   letter-spacing: -3px;
@@ -311,11 +307,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s ease;
-}
-
-.campus-level-grid-item:hover img {
-  transform: scale(1.06);
 }
 
 /* Gallery link */
@@ -395,11 +386,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s ease;
-}
-
-.campus-grounds-item:hover img {
-  transform: scale(1.05);
 }
 
 /* ── Responsive ── */

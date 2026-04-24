@@ -77,7 +77,7 @@ const HealthWellness = () => {
       {/* ── Hero ── */}
       <section className="hw-hero">
         <div className="hw-hero-bg">
-          <img src="/sla_assembly_1.jpg" alt="Health and Wellness at St. Lawrence Academy" />
+          <img src="/images/secondary/assembly_1.JPG" alt="Health and Wellness at St. Lawrence Academy" />
         </div>
         <div className="hw-hero-overlay"></div>
         <div className="hw-hero-content">
@@ -176,7 +176,7 @@ const HealthWellness = () => {
         <div className="container">
           <div className="hw-culture-inner reveal">
             <div className="hw-culture-visual">
-              <img src="/sla_assembly.jpg" alt="Students at St. Lawrence Academy" />
+              <img src="/images/nursery/nursery_wave.JPG" alt="Students at St. Lawrence Academy" />
               <div className="hw-culture-badge">
                 <span>Healthy</span>
                 <span>Body &amp; Mind</span>

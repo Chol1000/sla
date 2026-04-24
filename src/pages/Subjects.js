@@ -96,7 +96,7 @@ const Subjects = () => {
       {/* ── Hero ── */}
       <section className="subjects-hero">
         <div className="subjects-hero-bg">
-          <img src="/sla_students_33.jpg" alt="St. Lawrence Academy Subjects Offered" />
+          <img src="/images/secondary/library_2.jpg" alt="St. Lawrence Academy Subjects Offered" />
         </div>
         <div className="subjects-hero-overlay"></div>
         <div className="subjects-hero-content">

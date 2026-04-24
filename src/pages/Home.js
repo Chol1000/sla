@@ -8,40 +8,64 @@ import { setPageMeta } from '../utils/pageMeta';
 
 const HERO_SLIDES = [
   {
-    img: '/sla_school_overview.jpg',
+    img: '/images/primary/primary_campus.jpg',
+    bgPos: 'center center',
     title: 'Excellence in Education',
     desc: 'St. Lawrence Academy — a leading school in Juba offering quality Nursery, Primary, and Secondary education built on academic rigour, strong values, and genuine care for every child.',
   },
   {
-    img: '/sla_assembly.jpg',
+    img: '/images/secondary/morning_assembly.JPG',
+    bgPos: 'center 40%',
     title: 'Building Character Daily',
     desc: 'Discipline, integrity, and leadership form the foundation of every school day at St. Lawrence Academy — shaping responsible, principled citizens for South Sudan and beyond.',
   },
   {
-    img: '/sla_students_16.jpg',
-    title: 'Shaping Futures Together',
-    desc: 'Every student at SLA is known by name, supported individually, and guided step by step toward discovering their true potential and purpose.',
+    img: '/images/secondary/assembly_view_from_above.JPG',
+    bgPos: 'center center',
+    title: 'A Community United',
+    desc: 'Every morning our students gather with purpose — building discipline, shared identity, and the bonds that carry them through school and beyond.',
   },
   {
-    img: '/sla_cultural_dance.jpg',
-    bgPos: 'center 20%',
-    title: 'Beyond the Classroom',
-    desc: 'From athletics and music to cultural celebrations and community service — SLA nurtures well-rounded, confident individuals who are proud of who they are.',
-  },
-  {
-    img: '/sla_school_view.jpg',
+    img: '/images/secondary/school_view.jpg',
+    bgPos: 'center center',
     title: 'A Place to Belong',
     desc: 'Our safe, welcoming campus in Hai Referendum, Juba is designed to inspire curiosity, nurture every talent, and make every child feel truly at home.',
   },
   {
-    img: '/sla_school_gate.jpg',
+    img: '/images/secondary/school_gate.jpg',
+    bgPos: 'center center',
     title: 'Where Dreams Begin',
     desc: 'Join the St. Lawrence Academy family — trusted by parents across Juba since 2020 for education that genuinely prepares children for life, university, and the world.',
   },
   {
-    img: '/sla_secondary_school.jpg',
-    title: 'Prepared for Tomorrow',
-    desc: 'Our S1–S4 programme prepares students for national examinations, higher education, and the global opportunities that await beyond school.',
+    img: '/images/secondary/assembly_1.JPG',
+    bgPos: 'center 35%',
+    title: 'Shaping Futures Together',
+    desc: 'Every student at SLA is known by name, supported individually, and guided step by step toward discovering their true potential and purpose.',
+  },
+  {
+    img: '/images/primary/primary_campus_1.jpg',
+    bgPos: 'center center',
+    title: 'Beyond the Classroom',
+    desc: 'From athletics and music to cultural celebrations and community service — SLA nurtures well-rounded, confident individuals who are proud of who they are.',
+  },
+  {
+    img: '/images/secondary/assembly_2.JPG',
+    bgPos: 'center top',
+    title: 'Values That Last a Lifetime',
+    desc: 'We believe great education is inseparable from strong values — honesty, respect, hard work, and service form the core of every SLA student\'s character.',
+  },
+  {
+    img: '/images/secondary/sla_school_view_1.jpg',
+    bgPos: 'center center',
+    title: 'Our Growing Campus',
+    desc: 'A modern, expanding campus built to give every student the facilities, space, and environment they need to learn, grow, and thrive.',
+  },
+  {
+    img: '/images/secondary/campus_view_from_above_assembly.JPG',
+    bgPos: 'center center',
+    title: 'Rooted in Community',
+    desc: 'St. Lawrence Academy is more than a school — it is a community of families, educators, and students united by a shared belief in the power of education.',
   },
 ];
 
@@ -209,7 +233,7 @@ const Home = () => {
         setTimeout(() => setPrevCarouselIdx(null), 1200);
         return next;
       });
-    }, 15000);
+    }, 10000);
   };
 
   useEffect(() => {
@@ -248,7 +272,7 @@ const Home = () => {
       return `${API_URL}${post.video}`;
     }
     if (post.video_url) return post.video_url;
-    return '/sla_school_overview.jpg';
+    return '/images/secondary/assembly_overview.JPG';
   };
 
   const isVideo = (post) => {
@@ -334,7 +358,7 @@ const Home = () => {
           <div className="prog-cards-grid">
             <a href="/nursery" className="prog-card">
               <div className="prog-card-img">
-                <img src="/sla_nursery_1.jpg" alt="Nursery School" />
+                <img src="/images/nursery/nursery_1.JPG" alt="Nursery School" />
               </div>
               <div className="prog-card-body">
                 <span className="prog-card-tag">Baby – Top</span>
@@ -349,7 +373,7 @@ const Home = () => {
 
             <a href="/primary" className="prog-card prog-card-featured">
               <div className="prog-card-img">
-                <img src="/sla_pupils_1.jpg" alt="Primary School" />
+                <img src="/images/primary/pupils.JPG" alt="Primary School" />
               </div>
               <div className="prog-card-body">
                 <span className="prog-card-tag">Primary 1 – 8</span>
@@ -364,7 +388,7 @@ const Home = () => {
 
             <a href="/secondary" className="prog-card">
               <div className="prog-card-img">
-                <img src="/sla_secondary_school.jpg" alt="Secondary School" />
+                <img src="/images/secondary/secondary_students.JPG" alt="Secondary School" />
               </div>
               <div className="prog-card-body">
                 <span className="prog-card-tag">S1 – S4</span>
@@ -478,10 +502,10 @@ const Home = () => {
         </div>
         <div className="campus-tour-split">
           <div className="campus-tour-image-side">
-            <div className="campus-tour-slide active" style={{backgroundImage: 'url(/sla_pupils_1.jpg)'}}></div>
-            <div className="campus-tour-slide" style={{backgroundImage: 'url(/sla_school_view.jpg)'}}></div>
-            <div className="campus-tour-slide" style={{backgroundImage: 'url(/sla_basketball_1.jpg)'}}></div>
-            <div className="campus-tour-slide" style={{backgroundImage: 'url(/sla_assembly.jpg)'}}></div>
+            <div className="campus-tour-slide active" style={{backgroundImage: 'url(/images/primary/pupils.JPG)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/school_view.jpg)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/basketball_game.JPG)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/assembly.JPG)'}}></div>
           </div>
           <div className="campus-navigation-mobile">
             <button className="campus-nav-btn campus-prev-mobile" aria-label="Previous"><i className="fas fa-chevron-left"></i></button>
@@ -569,7 +593,7 @@ const Home = () => {
           <div className="life-highlights-grid">
             <a href="/student-life/sports" className="life-highlight-card">
               <div className="life-highlight-image">
-                <img src="/sla_basketball_1.jpg" alt="Sports & Athletics" />
+                <img src="/images/secondary/basketball_game.JPG" alt="Sports & Athletics" />
               </div>
               <div className="life-highlight-content">
                 <h3>Sports &amp; Athletics</h3>
@@ -578,7 +602,7 @@ const Home = () => {
             </a>
             <a href="/student-life/leadership" className="life-highlight-card">
               <div className="life-highlight-image">
-                <img src="/sla_assembly.jpg" alt="Leadership Development" />
+                <img src="/images/secondary/assembly.JPG" alt="Leadership Development" />
               </div>
               <div className="life-highlight-content">
                 <h3>Leadership Development</h3>
@@ -587,7 +611,7 @@ const Home = () => {
             </a>
             <a href="/student-life/arts" className="life-highlight-card">
               <div className="life-highlight-image">
-                <img src="/sla_cultural_dance.jpg" alt="Cultural Activities" />
+                <img src="/images/secondary/sla_cultural_dance.jpg" alt="Cultural Activities" />
               </div>
               <div className="life-highlight-content">
                 <h3>Cultural Activities</h3>
@@ -596,7 +620,7 @@ const Home = () => {
             </a>
             <a href="/student-life/clubs" className="life-highlight-card">
               <div className="life-highlight-image">
-                <img src="/sla_pupils_1.jpg" alt="Academic Clubs" />
+                <img src="/images/primary/pupils.JPG" alt="Academic Clubs" />
               </div>
               <div className="life-highlight-content">
                 <h3>Academic Clubs</h3>
@@ -605,7 +629,7 @@ const Home = () => {
             </a>
             <a href="/student-life/community-service" className="life-highlight-card">
               <div className="life-highlight-image">
-                <img src="/sla_school_view.jpg" alt="Community Service" />
+                <img src="/images/secondary/school_view.jpg" alt="Community Service" />
               </div>
               <div className="life-highlight-content">
                 <h3>Community Service</h3>
@@ -614,7 +638,7 @@ const Home = () => {
             </a>
             <a href="/student-life/counseling" className="life-highlight-card">
               <div className="life-highlight-image">
-                <img src="/sla_secondary_school.jpg" alt="Career Preparation" />
+                <img src="/images/secondary/secondary_students.JPG" alt="Career Preparation" />
               </div>
               <div className="life-highlight-content">
                 <h3>Career Preparation</h3>

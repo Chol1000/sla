@@ -7,14 +7,12 @@
 /* ── Hero ── */
 .faculty-hero {
   position: relative;
-  height: 60vh;
-  min-height: 420px;
-  max-height: 650px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
   overflow: hidden;
-  text-align: center;
 }
 
 .faculty-hero-bg {
@@ -34,31 +32,30 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.55) 0%,
-    rgba(0,0,0,0.35) 38%,
-    rgba(0,0,0,0.0) 65%
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.38) 38%,
+    rgba(0,0,0,0.08) 65%,
+    rgba(0,0,0,0.0) 78%
   );
 }
 
 .faculty-hero-content {
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 0 1.5rem 3.5rem;
+  padding: 0 0 4rem;
   width: 100%;
 }
 
+.faculty-hero-inner { max-width: 720px; }
+
 .faculty-hero-label {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: block;
   color: #c8a96e;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
   text-transform: uppercase;
 }
 
@@ -667,8 +664,9 @@
 
 @media (max-width: 600px) {
   .faculty-hero {
-    height: 55vh;
-    min-height: 360px;
+    height: 72vh;
+    min-height: 460px;
+    max-height: none;
   }
 
   .faculty-hero-title {

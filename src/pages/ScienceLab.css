@@ -8,9 +8,9 @@
 /* ── Hero ── */
 .lab-hero {
   position: relative;
-  height: 65vh;
-  min-height: 480px;
-  max-height: 700px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -19,13 +19,14 @@
 .lab-hero-bg {
   position: absolute;
   inset: 0;
+  top: 80px;
 }
 
 .lab-hero-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center top;
   display: block;
 }
 
@@ -34,9 +35,10 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.55) 0%,
-    rgba(0,0,0,0.35) 38%,
-    rgba(0,0,0,0.0) 65%
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.38) 38%,
+    rgba(0,0,0,0.08) 65%,
+    rgba(0,0,0,0.0) 78%
   );
 }
 
@@ -157,11 +159,6 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s ease;
-}
-
-.lab-about-imgs:hover .lab-about-img-main {
-  transform: scale(1.04);
 }
 
 .lab-about-heading {
@@ -282,11 +279,6 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s ease;
-}
-
-.lab-safety-img:hover img {
-  transform: scale(1.04);
 }
 
 .lab-safety-heading {

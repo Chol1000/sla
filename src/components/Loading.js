@@ -16,7 +16,7 @@ const Loading = () => (
 
       {/* Logo centred inside the rings */}
       <div className="loading-logo-wrap">
-        <img src="/ST_Logo.png" alt="St. Lawrence Academy" className="loading-logo" />
+        <img src="/images/general/logo.png" alt="St. Lawrence Academy" className="loading-logo" />
       </div>
 
     </div>

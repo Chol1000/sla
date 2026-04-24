@@ -16,7 +16,7 @@ const Nursery = () => {
       {/* ── Hero ── */}
       <section className="nursery-hero">
         <div className="nursery-hero-bg">
-          <img src="/sla_nursery_1.jpg" alt="St. Lawrence Academy Nursery School" />
+          <img src="/images/nursery/nursery_with_staff.JPG" alt="St. Lawrence Academy Nursery School" />
         </div>
         <div className="nursery-hero-overlay"></div>
         <div className="nursery-hero-content">
@@ -63,7 +63,7 @@ const Nursery = () => {
         <div className="container">
           <div className="nursery-about-inner reveal">
             <div className="nursery-about-img">
-              <img src="/sla_nursery_4.jpg" alt="Nursery children at St. Lawrence Academy" />
+              <img src="/images/nursery/nursery_kids.JPG" alt="Nursery children at St. Lawrence Academy" />
             </div>
             <div className="nursery-about-text">
               <span className="nursery-eyebrow">Our Approach</span>
@@ -212,7 +212,7 @@ const Nursery = () => {
         <div className="container">
           <div className="nursery-day-inner reveal">
             <div className="nursery-day-img">
-              <img src="/sla_nursery_9.jpg" alt="Children during a typical nursery day" />
+              <img src="/images/nursery/nursery_1.JPG" alt="Children during a typical nursery day" />
             </div>
             <div className="nursery-day-text">
               <span className="nursery-eyebrow">Daily Life</span>
@@ -326,13 +326,16 @@ const Nursery = () => {
           </div>
           <div className="nursery-gallery-row">
             <div className="nursery-gallery-cell">
-              <img src="/sla_nursery_11.jpg" alt="Nursery learning activity" />
+              <img src="/images/nursery/nursery_pic_3.JPG" alt="Nursery learning activity" />
             </div>
             <div className="nursery-gallery-cell">
-              <img src="/sla_nursery_12.jpg" alt="Nursery play session" />
+              <img src="/images/nursery/nursery_group_pic_1.JPG" alt="Nursery play session" />
             </div>
             <div className="nursery-gallery-cell">
-              <img src="/sla_nursery_14.jpg" alt="Nursery classroom" />
+              <img src="/images/nursery/nursery_with_staff.JPG" alt="Nursery classroom" />
+            </div>
+            <div className="nursery-gallery-cell">
+              <img src="/images/nursery/nursery_gate.jpg" alt="Nursery gate" />
             </div>
           </div>
         </div>

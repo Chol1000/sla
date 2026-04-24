@@ -9,11 +9,11 @@ const mainSports = [
     title: 'Basketball',
     body: 'Basketball is one of the most popular sports at St. Lawrence Academy. Our teams compete at inter-school level, with separate squads for boys and girls. Training takes place on the school\'s outdoor court throughout the year.',
     images: [
-      '/sla_basketball_1.jpg',
-      '/sla_basketball_2.jpg',
-      '/sla_basketball_3.jpg',
-      '/sla_basketball_4.jpg',
-      '/sla_basketball_5.jp',
+      '/images/secondary/basketball_game.JPG',
+      '/images/secondary/sla_basketball_2.jpg',
+      '/images/secondary/basketball_team.jpg',
+      '/images/secondary/basketball_training.jpg',
+      '/images/secondary/basket_team.jpg',
     ],
   },
   {
@@ -21,11 +21,11 @@ const mainSports = [
     title: 'Football',
     body: 'Football brings our school community together like nothing else. Our teams train regularly and take part in local competitions and friendly matches. The game is open to all students across Primary and Secondary.',
     images: [
-      '/sla_school_overview.jpg',
-      '/sla_assembly.jpg',
-      '/sla_assembly_1.jpg',
-      '/sla_assembly_2.jpg',
-      '/sla_baskeltball.jpg',
+      '/images/secondary/football_interclasses.JPG',
+      '/images/primary/football_team.JPG',
+      '/images/primary/primary_football_team.JPG',
+      '/images/primary/primary_school_football_team.JPG',
+      '/images/primary/girls_team.JPG',
     ],
   },
   {
@@ -33,11 +33,9 @@ const mainSports = [
     title: 'Volleyball',
     body: 'Volleyball is played and loved across all school levels at SLA. Our courts provide a great space for students to develop teamwork, communication, and athletic skill in a fun and competitive environment.',
     images: [
-      '/sla_assembly.jpg',
-      '/sla_assembly_1.jpg',
-      '/sla_assembly_2.jpg',
-      '/sla_basketball_1.jpg',
-      '/sla_school_overview.jpg',
+      '/images/secondary/sla_volleyball_2.jpg',
+      '/images/secondary/sla_volleyball_3.jpg',
+      '/images/primary/full_girls_squad.JPG',
     ],
   },
   {
@@ -45,11 +43,7 @@ const mainSports = [
     title: 'Athletics & Track',
     body: 'Our athletics programme covers running, jumping, and field events. Students represent the school at inter-school athletics meets and national youth competitions throughout the year.',
     images: [
-      '/sla_assembly_1.jpg',
-      '/sla_assembly_2.jpg',
-      '/sla_basketball_2.jpg',
-      '/sla_basketball_3.jpg',
-      '/sla_school_overview.jpg',
+      '/images/secondary/sla_basketball_cover.jpg',
     ],
   },
 ];
@@ -93,7 +87,7 @@ const Sports = () => {
       {/* ── Hero ── */}
       <section className="sports-hero">
         <div className="sports-hero-bg">
-          <img src="/sla_basketball_1.jpg" alt="St. Lawrence Academy Sports" />
+          <img src="/images/secondary/basketball_game.JPG" alt="St. Lawrence Academy Sports" />
         </div>
         <div className="sports-hero-overlay"></div>
         <div className="sports-hero-content">

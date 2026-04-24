@@ -121,19 +121,19 @@ const Faculty = () => {
       {/* ── Hero ── */}
       <section className="faculty-hero">
         <div className="faculty-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/students_with_staff.JPG" alt="St. Lawrence Academy" />
         </div>
         <div className="faculty-hero-overlay"></div>
         <div className="faculty-hero-content">
-          <div className="faculty-hero-label">
-            <span className="fh-line"></span>
-            St. Lawrence Academy
-            <span className="fh-line"></span>
+          <div className="container">
+            <div className="faculty-hero-inner">
+              <span className="faculty-hero-label">St. Lawrence Academy</span>
+              <h1 className="faculty-hero-title">Faculty and Staff</h1>
+              <p className="faculty-hero-sub">
+                Meet the dedicated educators and leaders shaping the next generation in Juba, South Sudan.
+              </p>
+            </div>
           </div>
-          <h1 className="faculty-hero-title">Faculty and Staff</h1>
-          <p className="faculty-hero-sub">
-            Meet the dedicated educators and leaders shaping the next generation in Juba, South Sudan.
-          </p>
         </div>
       </section>
 

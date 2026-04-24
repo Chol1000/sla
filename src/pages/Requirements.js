@@ -70,7 +70,7 @@ const Requirements = () => {
       {/* ── Hero ── */}
       <section className="req-hero">
         <div className="req-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/primary/primary_girls.JPG" alt="St. Lawrence Academy primary students" />
         </div>
         <div className="req-hero-overlay"></div>
         <div className="req-hero-content">

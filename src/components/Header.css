@@ -228,7 +228,7 @@ body.topbar-hidden .header {
 /* ── Mega-menu: anchored to the header bar, full width ── */
 .dropdown-menu {
   position: fixed;
-  top: calc(60px + 65px); /* topbar + header height */
+  top: var(--header-bottom, calc(60px + 65px)); /* set by JS to exact header bottom */
   left: 0;
   right: 0;
   width: 100%;
@@ -244,7 +244,7 @@ body.topbar-hidden .header {
 }
 
 body.topbar-hidden .dropdown-menu {
-  top: 65px; /* only header height when topbar gone */
+  top: var(--header-bottom, 65px); /* fallback only, JS keeps this current */
 }
 
 .nav-dropdown:hover .dropdown-menu,
@@ -614,10 +614,10 @@ body.dark-theme .menu-toggle:focus {
 
   .nav {
     position: fixed;
-    top: 125px;
+    top: var(--header-bottom, 125px);
     left: -280px;
     width: 280px;
-    height: calc(100vh - 125px);
+    height: calc(100vh - var(--header-bottom, 125px));
     background: white;
     flex-direction: column;
     align-items: flex-start;
@@ -785,8 +785,8 @@ body.dark-theme .menu-toggle:focus {
 
   /* When topbar hides, reposition mobile nav panel */
   body.topbar-hidden .nav {
-    top: 65px;
-    height: calc(100vh - 65px);
+    top: var(--header-bottom, 65px);
+    height: calc(100vh - var(--header-bottom, 65px));
   }
   
 

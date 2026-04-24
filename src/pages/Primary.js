@@ -16,7 +16,7 @@ const Primary = () => {
       {/* ── Hero ── */}
       <section className="primary-hero">
         <div className="primary-hero-bg">
-          <img src="/sla_pupils_1.jpg" alt="St. Lawrence Academy Primary School" />
+          <img src="/images/primary/pupils.JPG" alt="St. Lawrence Academy Primary School" />
         </div>
         <div className="primary-hero-overlay"></div>
         <div className="primary-hero-content">
@@ -62,7 +62,7 @@ const Primary = () => {
         <div className="container">
           <div className="primary-about-inner reveal">
             <div className="primary-about-img">
-              <img src="/sla_pupils_8.jpg" alt="Primary students at St. Lawrence Academy" />
+              <img src="/images/primary/primary_assembly.JPG" alt="Primary students at St. Lawrence Academy" />
             </div>
             <div className="primary-about-text">
               <span className="primary-eyebrow">Our Approach</span>
@@ -216,13 +216,13 @@ const Primary = () => {
           </div>
           <div className="primary-gallery-row">
             <div className="primary-gallery-cell">
-              <img src="/sla_pupils_10.jpg" alt="Primary students learning" />
+              <img src="/images/primary/assembly.JPG" alt="Primary school assembly" />
             </div>
             <div className="primary-gallery-cell">
-              <img src="/sla_pupils_11.jpg" alt="Primary classroom" />
+              <img src="/images/primary/primary_campus.jpg" alt="Primary school campus" />
             </div>
             <div className="primary-gallery-cell">
-              <img src="/sla_pupils_12.jpg" alt="Primary school activity" />
+              <img src="/images/primary/primary_campus_1.jpg" alt="Primary campus building" />
             </div>
           </div>
         </div>

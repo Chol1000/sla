@@ -57,7 +57,7 @@ const faqs = [
   {
     cat: 'Admissions',
     q: 'When does the academic year begin?',
-    a: 'The academic year at St. Lawrence Academy follows the South Sudan national school calendar. The year is divided into terms, with the first term typically beginning in August or September. Exact dates are published at the start of each year.',
+    a: 'The academic year at St. Lawrence Academy follows the South Sudan national school calendar. The year is divided into three terms: Term 1 begins in February, Term 2 opens in June, and Term 3 runs from September through to December. Exact dates for each academic year are published on our Important Dates page.',
   },
   {
     cat: 'Admissions',
@@ -202,7 +202,7 @@ const FAQ = () => {
       {/* ── Hero ── */}
       <section className="faq-hero">
         <div className="faq-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/assembly_overview.JPG" alt="St. Lawrence Academy" />
         </div>
         <div className="faq-hero-overlay"></div>
         <div className="faq-hero-content">

@@ -62,7 +62,7 @@ const Anthem = () => {
       {/* ── Hero ── */}
       <section className="anthem-hero">
         <div className="anthem-hero-bg">
-          <img src="/sla_assembly.jpg" alt="St. Lawrence Academy Assembly" />
+          <img src="/images/primary/primary_assembly.JPG" alt="St. Lawrence Academy Assembly" />
         </div>
         <div className="anthem-hero-overlay"></div>
         <div className="anthem-hero-content">

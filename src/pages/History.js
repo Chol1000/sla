@@ -16,7 +16,7 @@ const History = () => {
       {/* ── Hero ── */}
       <section className="history-hero">
         <div className="history-hero-bg">
-          <img src="/sla_school_gate.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/secondary/assembly_overview.JPG" alt="St. Lawrence Academy" />
         </div>
         <div className="history-hero-overlay"></div>
         <div className="history-hero-content">
@@ -65,8 +65,8 @@ const History = () => {
             </div>
             <div className="history-origin-img-wrap">
               <img
-                src="/sla_school_overview.jpg"
-                alt="St. Lawrence Academy campus"
+                src="/images/primary/primary_view.jpg"
+                alt="Where it all began — St. Lawrence Academy"
               />
             </div>
           </div>

@@ -8,9 +8,9 @@
 /* ── Hero ── */
 .dates-hero {
   position: relative;
-  height: 65vh;
-  min-height: 480px;
-  max-height: 700px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 760px;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -19,13 +19,14 @@
 .dates-hero-bg {
   position: absolute;
   inset: 0;
+  top: 80px;
 }
 
 .dates-hero-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 40%;
+  object-position: center top;
   display: block;
 }
 
@@ -34,9 +35,10 @@
   inset: 0;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.55) 0%,
-    rgba(0,0,0,0.35) 38%,
-    rgba(0,0,0,0.0) 65%
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.38) 38%,
+    rgba(0,0,0,0.08) 65%,
+    rgba(0,0,0,0.0) 78%
   );
 }
 
@@ -256,8 +258,7 @@
 .dates-holidays-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: #e8e2d9;
+  gap: 0;
   border: 1px solid #e8e2d9;
 }
 
@@ -265,10 +266,16 @@
   background: white;
   padding: 1.5rem 1.75rem;
   border-left: 3px solid transparent;
+  border-right: 1px solid #e8e2d9;
+  border-bottom: 1px solid #e8e2d9;
   transition: border-color 0.2s;
   display: flex;
   align-items: flex-start;
   gap: 1.25rem;
+}
+
+.dates-holiday-card:nth-child(3n) {
+  border-right: none;
 }
 
 .dates-holiday-card:hover {
@@ -346,7 +353,7 @@
 .dates-exam-num {
   font-size: 2rem;
   font-weight: 900;
-  color: rgba(200,169,110,0.28);
+  color: #c8a96e;
   font-family: Georgia, serif;
   line-height: 1;
   text-align: center;

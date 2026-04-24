@@ -83,7 +83,7 @@ const CommunityService = () => {
       {/* ── Hero ── */}
       <section className="cs-hero">
         <div className="cs-hero-bg">
-          <img src="/sla_assembly.jpg" alt="Community Service at St. Lawrence Academy" />
+          <img src="/images/secondary/community_service.jpg" alt="Community Service at St. Lawrence Academy" />
         </div>
         <div className="cs-hero-overlay"></div>
         <div className="cs-hero-content">
@@ -155,7 +155,7 @@ const CommunityService = () => {
         <div className="container">
           <div className="cs-impact-inner reveal">
             <div className="cs-impact-photo">
-              <img src="/sla_assembly_1.jpg" alt="SLA students serving" />
+              <img src="/images/secondary/community_service.jpg" alt="SLA students serving" />
             </div>
             <div className="cs-impact-quote">
               <i className="fas fa-quote-left cs-impact-icon"></i>

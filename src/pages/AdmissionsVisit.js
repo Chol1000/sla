@@ -102,7 +102,7 @@ const AdmissionsVisit = () => {
       {/* ── Hero ── */}
       <section className="visit-hero">
         <div className="visit-hero-bg">
-          <img src="/sla_school_view_4.jpg" alt="St. Lawrence Academy campus" />
+          <img src="/images/secondary/beautiful_students_school_view.JPG" alt="St. Lawrence Academy campus" />
         </div>
         <div className="visit-hero-overlay"></div>
         <div className="visit-hero-content">
@@ -349,13 +349,13 @@ const AdmissionsVisit = () => {
           </div>
           <div className="visit-gallery-row">
             <div className="visit-gallery-cell">
-              <img src="/sla_school_view.jpg" alt="St. Lawrence Academy" />
+              <img src="/images/secondary/sla_secondary_school_gate.jpg" alt="St. Lawrence Academy Secondary School gate" />
             </div>
             <div className="visit-gallery-cell">
-              <img src="/sla_secondary_school.jpg" alt="SLA secondary school building" />
+              <img src="/images/secondary/sla_school_view_1.jpg" alt="SLA secondary school building" />
             </div>
             <div className="visit-gallery-cell">
-              <img src="/sla_school_overview.jpg" alt="School overview" />
+              <img src="/images/primary/primary_school_gate.JPG" alt="St. Lawrence Academy Primary School gate" />
             </div>
           </div>
           <div className="visit-gallery-footer">

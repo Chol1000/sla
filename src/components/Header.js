@@ -28,6 +28,23 @@ const Header = ({ isScrolled: forceScrolled }) => {
   };
 
 
+  // Keep --header-bottom CSS variable in sync so dropdown sits flush with header.
+  // We compute from state rather than getBoundingClientRect to avoid reading
+  // mid-animation values while the header slides (transition: top 0.35s).
+  useEffect(() => {
+    const updateHeaderBottom = () => {
+      const header = document.querySelector('.header');
+      if (!header) return;
+      const headerHeight = header.getBoundingClientRect().height;
+      const topbarVisible = !document.body.classList.contains('topbar-hidden');
+      const topbarHeight = topbarVisible ? 60 : 0;
+      document.documentElement.style.setProperty('--header-bottom', `${Math.round(topbarHeight + headerHeight)}px`);
+    };
+    updateHeaderBottom();
+    window.addEventListener('resize', updateHeaderBottom);
+    return () => window.removeEventListener('resize', updateHeaderBottom);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
@@ -57,9 +74,13 @@ const Header = ({ isScrolled: forceScrolled }) => {
       if (!isHidden && currentY > 80) {
         document.body.classList.add('topbar-hidden');
         setIsScrolled(true);
+        const h = document.querySelector('.header');
+        if (h) document.documentElement.style.setProperty('--header-bottom', `${Math.round(h.getBoundingClientRect().height)}px`);
       } else if (isHidden && currentY < 40) {
         document.body.classList.remove('topbar-hidden');
         setIsScrolled(false);
+        const h = document.querySelector('.header');
+        if (h) document.documentElement.style.setProperty('--header-bottom', `${Math.round(60 + h.getBoundingClientRect().height)}px`);
       }
 
     };
@@ -110,6 +131,21 @@ const Header = ({ isScrolled: forceScrolled }) => {
     };
   }, [isMenuOpen]);
 
+  // Reset all menu/dropdown state on every route change.
+  // Briefly disable pointer-events on the nav so the CSS :hover state drops,
+  // closing hover-based dropdowns on desktop without removing hover behaviour.
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setOpenDropdown(null);
+    setOpenSubSection(null);
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      nav.style.pointerEvents = 'none';
+      const t = setTimeout(() => { nav.style.pointerEvents = ''; }, 300);
+      return () => clearTimeout(t);
+    }
+  }, [location.pathname]);
+
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
@@ -125,7 +161,7 @@ const Header = ({ isScrolled: forceScrolled }) => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
-            <img src="/ST_Logo.png" alt="St Lawrence Academy" className="logo-img" />
+            <img src="/images/general/logo.png" alt="St Lawrence Academy" className="logo-img" />
             <div className="logo-text">
               <h1 className="school-name">
                 <span className="name-line-1">ST. LAWRENCE</span>
@@ -294,7 +330,7 @@ const Header = ({ isScrolled: forceScrolled }) => {
                     </div>
                   </div>
                   <div className="dropdown-img-panel">
-                    <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy" />
+                    <img src="/images/secondary/assembly_overview.JPG" alt="St. Lawrence Academy" />
                     <div className="dropdown-img-caption">
                       <span>St. Lawrence Academy</span>
                       <p>Juba, South Sudan</p>

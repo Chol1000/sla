@@ -17,7 +17,7 @@ const Campus = () => {
       {/* ── Hero ── */}
       <section className="campus-hero">
         <div className="campus-hero-bg">
-          <img src="/sla_school_overview.jpg" alt="St. Lawrence Academy Campus" />
+          <img src="/images/primary/primary_school_gate.JPG" alt="St. Lawrence Academy Campus" />
         </div>
         <div className="campus-hero-overlay"></div>
         <div className="campus-hero-content">
@@ -94,7 +94,7 @@ const Campus = () => {
             </div>
 
             <div className="campus-location-img reveal">
-              <img src="/sla_school_gate.jpg" alt="St. Lawrence Academy entrance" />
+              <img src="/images/secondary/school_gate.jpg" alt="St. Lawrence Academy entrance" />
             </div>
 
           </div>
@@ -124,22 +124,22 @@ const Campus = () => {
               </div>
               <img
                 className="campus-level-feature"
-                src="/sla_nursery_0.jpg"
+                src="/images/nursery/nursery.JPG"
                 alt="Nursery School"
               />
             </div>
             <div className="campus-level-grid">
               <div className="campus-level-grid-item">
-                <img src="/sla_nursery_3.jpg" alt="Nursery" />
+                <img src="/images/nursery/nursery_group_pic.JPG" alt="Nursery" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_nursery_4.jpg" alt="Nursery" />
+                <img src="/images/nursery/nursery_kids.JPG" alt="Nursery" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_nursery_5.jpg" alt="Nursery" />
+                <img src="/images/nursery/nursery_pic.JPG" alt="Nursery" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_nursery_6.jpg" alt="Nursery" />
+                <img src="/images/nursery/nursery_pic_1.JPG" alt="Nursery" />
               </div>
             </div>
             <div className="campus-gallery-link">
@@ -170,22 +170,22 @@ const Campus = () => {
               </div>
               <img
                 className="campus-level-feature"
-                src="/sla_primary_14.jpg"
+                src="/images/primary/primary_campus.jpg"
                 alt="Primary School"
               />
             </div>
             <div className="campus-level-grid">
               <div className="campus-level-grid-item">
-                <img src="/sla_pupils_1.jpg" alt="Primary" />
+                <img src="/images/primary/pupils.JPG" alt="Primary" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_pupils_2.jpg" alt="Primary" />
+                <img src="/images/primary/pupils_1.JPG" alt="Primary" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_pupils_8.jpg" alt="Primary" />
+                <img src="/images/primary/pupils_pic.JPG" alt="Primary" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_pupils_9.jpg" alt="Primary" />
+                <img src="/images/primary/pupils_pic_1.JPG" alt="Primary" />
               </div>
             </div>
             <div className="campus-gallery-link">
@@ -216,22 +216,22 @@ const Campus = () => {
               </div>
               <img
                 className="campus-level-feature"
-                src="/sla_secondary_school.jpg"
+                src="/images/secondary/secondary_students.JPG"
                 alt="Secondary School"
               />
             </div>
             <div className="campus-level-grid">
               <div className="campus-level-grid-item">
-                <img src="/sla_students_22.jpg" alt="Secondary" />
+                <img src="/images/secondary/students_5.JPG" alt="Secondary" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_students_23.jpg" alt="Secondary" />
+                <img src="/images/secondary/students_in_class.JPG" alt="Secondary" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_students_24.jpg" alt="Secondary" />
+                <img src="/images/secondary/admin_with_students.JPG" alt="Secondary" />
               </div>
               <div className="campus-level-grid-item">
-                <img src="/sla_students_25.jpg" alt="Secondary" />
+                <img src="/images/secondary/sla_students_25.jpg" alt="Secondary" />
               </div>
             </div>
             <div className="campus-gallery-link">
@@ -257,10 +257,10 @@ const Campus = () => {
           </div>
           <div className="campus-grounds-grid">
             {[
-              '/sla_school_view.jpg',
-              '/sla_assembly.jpg',
-              '/sla_school_view_4.jpg',
-              '/sla_assembly_1.jpg',
+              '/images/secondary/school_view.jpg',
+              '/images/secondary/assembly.JPG',
+              '/images/primary/school_view_4.jpg',
+              '/images/secondary/assembly_1.JPG',
             ].map((img, i) => (
               <div className="campus-grounds-item" key={i}>
                 <img src={img} alt={`Campus grounds ${i + 1}`} />

@@ -17,7 +17,7 @@ const AdmissionsContact = () => {
       {/* ── Hero ── */}
       <section className="adm-contact-hero">
         <div className="adm-contact-hero-bg">
-          <img src="/sla_school_gate.jpg" alt="St. Lawrence Academy" />
+          <img src="/images/primary/primary_school_gate.JPG" alt="St. Lawrence Academy Primary School gate" />
         </div>
         <div className="adm-contact-hero-overlay"></div>
         <div className="adm-contact-hero-content">
