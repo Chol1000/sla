@@ -703,7 +703,7 @@
   }
 
   .nursery-gallery-row .nursery-gallery-cell:last-child {
-    grid-column: 1 / -1;
+    grid-column: auto;
   }
 
   .nursery-schedule-row {

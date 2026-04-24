@@ -326,7 +326,7 @@ const Nursery = () => {
           </div>
           <div className="nursery-gallery-row">
             <div className="nursery-gallery-cell">
-              <img src="/images/nursery/nursery_pic_3.JPG" alt="Nursery learning activity" />
+              <img src="/images/nursery/kids_in_class.jpg" alt="Nursery learning activity" />
             </div>
             <div className="nursery-gallery-cell">
               <img src="/images/nursery/nursery_group_pic_1.JPG" alt="Nursery play session" />
