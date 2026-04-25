@@ -22,7 +22,7 @@ body.topbar-hidden .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 44px;
 }
 
 .topbar-left {

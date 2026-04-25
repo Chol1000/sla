@@ -2,7 +2,7 @@
   background-color: var(--primary-white);
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
   position: fixed;
-  top: 60px;
+  top: 44px;
   left: 0;
   right: 0;
   z-index: 1000;
@@ -34,7 +34,7 @@ body.topbar-hidden .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 0;
+  padding: 0.35rem 0;
 }
 
 .logo {
@@ -46,7 +46,7 @@ body.topbar-hidden .header {
 }
 
 .logo-img {
-  height: 76px;
+  height: 60px;
   width: auto;
   margin-right: 14px;
   align-self: center;
@@ -228,7 +228,7 @@ body.topbar-hidden .header {
 /* ── Mega-menu: anchored to the header bar, full width ── */
 .dropdown-menu {
   position: fixed;
-  top: var(--header-bottom, calc(60px + 65px)); /* set by JS to exact header bottom */
+  top: var(--header-bottom, calc(44px + 65px)); /* set by JS to exact header bottom */
   left: 0;
   right: 0;
   width: 100%;
@@ -534,7 +534,7 @@ body.dark-theme .menu-toggle:focus {
   }
 
   .logo-img {
-    height: 65px;
+    height: 54px;
     margin-right: 10px;
   }
 
@@ -576,7 +576,7 @@ body.dark-theme .menu-toggle:focus {
   }
 
   .logo-img {
-    height: 60px;
+    height: 50px;
     margin-right: 10px;
   }
 

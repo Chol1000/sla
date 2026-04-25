@@ -80,7 +80,7 @@ const Header = ({ isScrolled: forceScrolled }) => {
         document.body.classList.remove('topbar-hidden');
         setIsScrolled(false);
         const h = document.querySelector('.header');
-        if (h) document.documentElement.style.setProperty('--header-bottom', `${Math.round(60 + h.getBoundingClientRect().height)}px`);
+        if (h) document.documentElement.style.setProperty('--header-bottom', `${Math.round(44 + h.getBoundingClientRect().height)}px`);
       }
 
     };
