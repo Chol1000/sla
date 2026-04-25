@@ -504,7 +504,7 @@ const Home = () => {
           <div className="campus-tour-image-side">
             <div className="campus-tour-slide active" style={{backgroundImage: 'url(/images/secondary/students_in_class.JPG)'}}></div>
             <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/primary/primary_campus_1.jpg)'}}></div>
-            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/basketball_game.JPG)'}}></div>
+            <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/football_interclasses.JPG)'}}></div>
             <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/assembly.JPG)'}}></div>
             <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/library.jpg)'}}></div>
             <div className="campus-tour-slide" style={{backgroundImage: 'url(/images/secondary/st_chapel.JPG)'}}></div>
