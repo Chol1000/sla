@@ -52,7 +52,7 @@ const PTA = () => {
       {/* ── Hero ── */}
       <section className="pta-hero">
         <div className="pta-hero-bg">
-          <img src="/images/general/pta_meeting.jpg" alt="PTA Meeting at St. Lawrence Academy" />
+          <img src="/images/secondary/alumni_visit.jpg" alt="PTA Meeting at St. Lawrence Academy" />
         </div>
         <div className="pta-hero-overlay"></div>
         <div className="pta-hero-content">
