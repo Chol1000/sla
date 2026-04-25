@@ -37,7 +37,7 @@ const Header = ({ isScrolled: forceScrolled }) => {
       if (!header) return;
       const headerHeight = header.getBoundingClientRect().height;
       const topbarVisible = !document.body.classList.contains('topbar-hidden');
-      const topbarHeight = topbarVisible ? 60 : 0;
+      const topbarHeight = topbarVisible ? 44 : 0;
       document.documentElement.style.setProperty('--header-bottom', `${Math.round(topbarHeight + headerHeight)}px`);
     };
     updateHeaderBottom();

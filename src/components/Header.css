@@ -2,25 +2,25 @@
   background-color: var(--primary-white);
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
   position: fixed;
-  top: 44px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, transform 0.4s ease, opacity 0.4s ease;
-  transform: translateY(0);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, opacity 0.4s ease;
+  transform: translateY(44px);
   opacity: 1;
-  will-change: top;
+  will-change: transform;
 }
 
 /* Topbar gone → header slides to top */
 body.topbar-hidden .header {
-  top: 0;
+  transform: translateY(0);
 }
 
 /* Header never hides — always visible */
 
-.header-hidden {
-  transform: translateY(-100%);
+.header.header-hidden {
+  transform: translateY(-100%) !important;
   opacity: 0;
 }
 
