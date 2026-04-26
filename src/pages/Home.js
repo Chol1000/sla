@@ -8,12 +8,6 @@ import { setPageMeta } from '../utils/pageMeta';
 
 const HERO_SLIDES = [
   {
-    img: '/images/primary/primary_campus.jpg',
-    bgPos: 'center center',
-    title: 'Excellence in Education',
-    desc: 'St. Lawrence Academy — a leading school in Juba offering quality Nursery, Primary, and Secondary education built on academic rigour, strong values, and genuine care for every child.',
-  },
-  {
     img: '/images/secondary/morning_assembly.JPG',
     bgPos: 'center 40%',
     title: 'Building Character Daily',
@@ -30,6 +24,12 @@ const HERO_SLIDES = [
     bgPos: 'center center',
     title: 'Where Dreams Begin',
     desc: 'Join the St. Lawrence Academy family — trusted by parents across Juba since 2020 for education that genuinely prepares children for life, university, and the world.',
+  },
+  {
+    img: '/images/primary/primary_campus.jpg',
+    bgPos: 'center center',
+    title: 'Excellence in Education',
+    desc: 'St. Lawrence Academy — a leading school in Juba offering quality Nursery, Primary, and Secondary education built on academic rigour, strong values, and genuine care for every child.',
   },
   {
     img: '/images/secondary/assembly_1.JPG',

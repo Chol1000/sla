@@ -18,14 +18,17 @@
 
 .contact-hero-bg {
   position: absolute;
-  inset: 0;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .contact-hero-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 40%;
+  object-position: center 30%;
   display: block;
 }
 
