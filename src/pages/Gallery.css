@@ -334,6 +334,9 @@
     overflow-x: auto;
     scrollbar-width: none;
     padding-bottom: 0;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
   }
   .gallery-filters::-webkit-scrollbar { display: none; }
 
