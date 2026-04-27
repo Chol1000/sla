@@ -324,8 +324,8 @@
 }
 
 .cs-value-accent {
-  width: 5px;
-  background: linear-gradient(to bottom, #7e1a19, #c8a96e);
+  width: 4px;
+  background: #c8a96e;
   flex-shrink: 0;
 }
 
