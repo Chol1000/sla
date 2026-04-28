@@ -193,6 +193,7 @@ else:
         'https://sla.pythonanywhere.com',
         'https://www.stlawrenceacademy.edu',
         'https://stlawrenceacademy.edu',
+        'https://sla-three-alpha.vercel.app',
     ]
     CORS_ALLOW_CREDENTIALS = True
 
